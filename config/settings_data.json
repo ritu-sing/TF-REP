@@ -7,10 +7,8 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "current": {
-    "logo_height": 36,
-    "logo_height_mobile": 28,
     "type_body_font": "inter_n4",
     "type_subheading_font": "inter_n5",
     "type_heading_font": "inter_n7",
@@ -54,9 +52,8 @@
     "button_border_radius_primary": 14,
     "secondary_button_border_width": 1,
     "button_border_radius_secondary": 14,
-    "button_font_weight_secondary": "default",
     "cart_type": "drawer",
-    "cart_price_font": "subheading",
+    "cart_price_font": "secondary",
     "show_cart_note": false,
     "show_add_discount_code": true,
     "drawer_drop_shadow": true,
@@ -77,7 +74,6 @@
     "variant_button_border_width": 1,
     "variant_button_radius": 14,
     "variant_button_width": "equal-width-buttons",
-    "content_for_index": [],
     "color_schemes": {
       "scheme-1": {
         "settings": {
@@ -125,7 +121,7 @@
           "foreground": "#000000cf",
           "primary": "#000000cf",
           "primary_hover": "#ffffff",
-          "border": "#dfdfdf",
+          "border": "#DFDFDF",
           "shadow": "#000000",
           "primary_button_background": "#000000",
           "primary_button_text": "#ffffff",
@@ -278,8 +274,8 @@
         "settings": {
           "background": "rgba(0,0,0,0)",
           "foreground_heading": "#ffffff",
-          "foreground": "#f2f2f2",
-          "primary": "#eaeaea",
+          "foreground": "#ffffff",
+          "primary": "#ffffff",
           "primary_hover": "#ffffffb0",
           "border": "#e6e6e6",
           "shadow": "#000000",
@@ -351,11 +347,91 @@
           "selected_variant_hover_text_color": "#ffffff",
           "selected_variant_hover_border_color": "#1a1a1a"
         }
+      },
+      "scheme-7": {
+        "settings": {
+          "background": "#ffffff",
+          "foreground_heading": "#680040",
+          "foreground": "#000000cf",
+          "primary": "#680040",
+          "primary_hover": "#4d0030",
+          "border": "#0000000f",
+          "shadow": "#000000",
+          "primary_button_background": "#680040",
+          "primary_button_text": "#ffffff",
+          "primary_button_border": "#680040",
+          "primary_button_hover_background": "#4d0030",
+          "primary_button_hover_text": "#ffffff",
+          "primary_button_hover_border": "#4d0030",
+          "secondary_button_background": "rgba(0,0,0,0)",
+          "secondary_button_text": "#680040",
+          "secondary_button_border": "#680040",
+          "secondary_button_hover_background": "#fafafa",
+          "secondary_button_hover_text": "#4d0030",
+          "secondary_button_hover_border": "#4d0030",
+          "input_background": "#ffffffc7",
+          "input_text_color": "#333333",
+          "input_border_color": "#dfdfdf",
+          "input_hover_background": "#00000003",
+          "variant_background_color": "#ffffff",
+          "variant_text_color": "#000000",
+          "variant_border_color": "#00000021",
+          "variant_hover_background_color": "#f5f5f5",
+          "variant_hover_text_color": "#000000",
+          "variant_hover_border_color": "#e6e6e6",
+          "selected_variant_background_color": "#000000",
+          "selected_variant_text_color": "#ffffff",
+          "selected_variant_border_color": "#000000",
+          "selected_variant_hover_background_color": "#1a1a1a",
+          "selected_variant_hover_text_color": "#ffffff",
+          "selected_variant_hover_border_color": "#1a1a1a"
+        }
+      },
+      "scheme-8": {
+        "settings": {
+          "background": "#680040",
+          "foreground_heading": "#FFFFFF",
+          "foreground": "#FFFFFFcf",
+          "primary": "#FFFFFF",
+          "primary_hover": "#f0f0f0",
+          "border": "#FFFFFF1a",
+          "shadow": "#000000",
+          "primary_button_background": "#FFFFFF",
+          "primary_button_text": "#680040",
+          "primary_button_border": "#FFFFFF",
+          "primary_button_hover_background": "#f0f0f0",
+          "primary_button_hover_text": "#680040",
+          "primary_button_hover_border": "#f0f0f0",
+          "secondary_button_background": "rgba(0,0,0,0)",
+          "secondary_button_text": "#FFFFFF",
+          "secondary_button_border": "#FFFFFF",
+          "secondary_button_hover_background": "rgba(255,255,255,0.15)",
+          "secondary_button_hover_text": "#FFFFFF",
+          "secondary_button_hover_border": "#FFFFFF",
+          "input_background": "#6800406b",
+          "input_text_color": "#FFFFFF",
+          "input_border_color": "#FFFFFF3d",
+          "input_hover_background": "#ffffff14",
+          "variant_background_color": "#FFFFFF",
+          "variant_text_color": "#680040",
+          "variant_border_color": "#FFFFFF3d",
+          "variant_hover_background_color": "#f0f0f0",
+          "variant_hover_text_color": "#680040",
+          "variant_hover_border_color": "#FFFFFF5c",
+          "selected_variant_background_color": "#FFFFFF",
+          "selected_variant_text_color": "#680040",
+          "selected_variant_border_color": "#FFFFFF",
+          "selected_variant_hover_background_color": "#FFFFFF",
+          "selected_variant_hover_text_color": "#680040",
+          "selected_variant_hover_border_color": "#FFFFFF"
+        }
       }
-    }
+    },
+    "logo_height": 36,
+    "logo_height_mobile": 28
   },
   "presets": {
-    "Default": {
+    "Horizon": {
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -628,6 +704,84 @@
             "selected_variant_hover_background_color": "#1a1a1a",
             "selected_variant_hover_text_color": "#ffffff",
             "selected_variant_hover_border_color": "#1a1a1a"
+          }
+        },
+        "scheme-7": {
+          "settings": {
+            "background": "#ffffff",
+            "foreground_heading": "#680040",
+            "foreground": "#000000cf",
+            "primary": "#680040",
+            "primary_hover": "#4d0030",
+            "border": "#0000000f",
+            "shadow": "#000000",
+            "primary_button_background": "#680040",
+            "primary_button_text": "#ffffff",
+            "primary_button_border": "#680040",
+            "primary_button_hover_background": "#4d0030",
+            "primary_button_hover_text": "#ffffff",
+            "primary_button_hover_border": "#4d0030",
+            "secondary_button_background": "rgba(0,0,0,0)",
+            "secondary_button_text": "#680040",
+            "secondary_button_border": "#680040",
+            "secondary_button_hover_background": "#fafafa",
+            "secondary_button_hover_text": "#4d0030",
+            "secondary_button_hover_border": "#4d0030",
+            "input_background": "#ffffffc7",
+            "input_text_color": "#333333",
+            "input_border_color": "#dfdfdf",
+            "input_hover_background": "#00000003",
+            "variant_background_color": "#ffffff",
+            "variant_text_color": "#000000",
+            "variant_border_color": "#00000021",
+            "variant_hover_background_color": "#f5f5f5",
+            "variant_hover_text_color": "#000000",
+            "variant_hover_border_color": "#e6e6e6",
+            "selected_variant_background_color": "#000000",
+            "selected_variant_text_color": "#ffffff",
+            "selected_variant_border_color": "#000000",
+            "selected_variant_hover_background_color": "#1a1a1a",
+            "selected_variant_hover_text_color": "#ffffff",
+            "selected_variant_hover_border_color": "#1a1a1a"
+          }
+        },
+        "scheme-8": {
+          "settings": {
+            "background": "#680040",
+            "foreground_heading": "#FFFFFF",
+            "foreground": "#FFFFFFcf",
+            "primary": "#FFFFFF",
+            "primary_hover": "#f0f0f0",
+            "border": "#FFFFFF1a",
+            "shadow": "#000000",
+            "primary_button_background": "#FFFFFF",
+            "primary_button_text": "#680040",
+            "primary_button_border": "#FFFFFF",
+            "primary_button_hover_background": "#f0f0f0",
+            "primary_button_hover_text": "#680040",
+            "primary_button_hover_border": "#f0f0f0",
+            "secondary_button_background": "rgba(0,0,0,0)",
+            "secondary_button_text": "#FFFFFF",
+            "secondary_button_border": "#FFFFFF",
+            "secondary_button_hover_background": "rgba(255,255,255,0.15)",
+            "secondary_button_hover_text": "#FFFFFF",
+            "secondary_button_hover_border": "#FFFFFF",
+            "input_background": "#6800406b",
+            "input_text_color": "#FFFFFF",
+            "input_border_color": "#FFFFFF3d",
+            "input_hover_background": "#ffffff14",
+            "variant_background_color": "#FFFFFF",
+            "variant_text_color": "#680040",
+            "variant_border_color": "#FFFFFF3d",
+            "variant_hover_background_color": "#f0f0f0",
+            "variant_hover_text_color": "#680040",
+            "variant_hover_border_color": "#FFFFFF5c",
+            "selected_variant_background_color": "#FFFFFF",
+            "selected_variant_text_color": "#680040",
+            "selected_variant_border_color": "#FFFFFF",
+            "selected_variant_hover_background_color": "#FFFFFF",
+            "selected_variant_hover_text_color": "#680040",
+            "selected_variant_hover_border_color": "#FFFFFF"
           }
         }
       }
