@@ -19,7 +19,6 @@
           "settings": {
             "text": "Holiday Sale: Buy 2 Get 1 FREE FOR LIFE when you subscribe.",
             "link": "",
-            "button_text": "SHOP NOW",
             "font": "var(--font-subheading--family)",
             "font_size": "0.75rem",
             "weight": "400",
