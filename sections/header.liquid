@@ -1111,6 +1111,65 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
+
+  /* ================================
+   * Floating Pill Header
+   * ================================ */
+
+  /* Remove the flat full-width background from the closed underlay so only the pill is visible */
+  .header .header__underlay-closed {
+    background: transparent;
+  }
+
+  /* Apply pill shape to the top-row columns container */
+  .header__row--top .header__columns {
+    border-radius: 999px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding-inline: var(--padding-sm);
+  }
+
+  /* Add vertical breathing room around the pill for the floating effect */
+  .header .header__row--top {
+    padding-block: var(--padding-xs);
+  }
+
+  /* Remove border-bottom from the pill row — the pill has its own border */
+  .header .header__row--top:not(.divider--page-width),
+  .header .header__row--top.divider--page-width .header__columns {
+    border-bottom: none;
+  }
+
+  /* Make the submenu underlay transparent in the header area, opaque below for mega menus */
+  .header .header__underlay-open {
+    background: linear-gradient(
+      transparent 0 var(--header-height),
+      var(--color-submenu) var(--header-height) 100%
+    );
+  }
+
+  /* Handle submenu overlap bottom row case */
+  [data-submenu-overlap-bottom-row] .header__underlay-open {
+    background: linear-gradient(
+      transparent 0 var(--top-row-height),
+      var(--color-submenu) var(--top-row-height) 100%
+    );
+  }
+
+  /* Mobile pill adjustments */
+  @media screen and (max-width: 749px) {
+    .header__row--top .header__columns {
+      padding-inline: var(--padding-xs);
+      padding-block: var(--padding-3xs);
+    }
+  }
+
+  /* Drawer mode pill adjustments (touch/small screens triggering drawer layout) */
+  #header-component[data-menu-style='drawer'] .header__row--top .header__columns {
+    padding-inline: var(--padding-xs);
+    padding-block: var(--padding-3xs);
+  }
 {% endstylesheet %}
 
 {% unless request.design_mode %}
