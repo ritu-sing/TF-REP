@@ -14,24 +14,28 @@
         "badge_1": {
           "type": "trust-badge",
           "settings": {
+            "icon_type": "parent-owned",
             "label": "Parent Owned"
           }
         },
         "badge_2": {
           "type": "trust-badge",
           "settings": {
+            "icon_type": "third-party-tested",
             "label": "3rd Party Tested"
           }
         },
         "badge_3": {
           "type": "trust-badge",
           "settings": {
+            "icon_type": "allergen-free",
             "label": "Allergen Free"
           }
         },
         "badge_4": {
           "type": "trust-badge",
           "settings": {
+            "icon_type": "usda-organic",
             "label": "USDA Organic"
           }
         }
