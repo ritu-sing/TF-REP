@@ -87,7 +87,7 @@
     style: slideshow_style,
     slides: slides,
     slide_count: slide_count,
-    show_arrows: false,
+    show_arrows: show_arrows_val,
     auto_hide_controls: true,
     infinite: false,
     controls: controls
@@ -96,9 +96,12 @@
 
 {% stylesheet %}
   .curated-reviews__heading {
-    margin: 0 0 var(--margin-4xl);
+    margin: 0 0 var(--margin-5xl);
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
+    font-size: var(--font-h3--size);
+    line-height: var(--font-h3--line-height);
+    letter-spacing: var(--font-h3--letter-spacing);
     color: var(--color-foreground-heading);
   }
 
@@ -112,7 +115,7 @@
 
   .curated-reviews__slide {
     flex: 0 0 auto;
-    width: 100%;
+    width: 85%;
   }
 
   @media screen and (min-width: 750px) {
@@ -135,10 +138,10 @@
   .curated-reviews__card {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-sm);
-    padding: var(--padding-2xl);
+    gap: var(--gap-md);
+    padding: var(--padding-4xl);
     border: 1px solid var(--color-border);
-    border-radius: var(--style-border-radius-sm);
+    border-radius: var(--style-border-radius-lg);
     height: 100%;
   }
 
@@ -149,8 +152,8 @@
   }
 
   .curated-reviews__star {
-    width: 1.125rem;
-    height: 1.125rem;
+    width: 1.25rem;
+    height: 1.25rem;
     fill: rgb(var(--color-foreground-rgb) / var(--opacity-20));
   }
 
@@ -180,6 +183,8 @@
     align-items: center;
     gap: var(--gap-xs);
     flex-wrap: wrap;
+    padding-block-start: var(--padding-xs);
+    border-top: 1px solid var(--color-border);
   }
 
   .curated-reviews__name {
@@ -328,7 +333,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 48
+      "default": 60
     },
     {
       "type": "range",
@@ -338,7 +343,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 48
+      "default": 60
     }
   ],
   "blocks": [
@@ -409,7 +414,7 @@
         {
           "type": "review-card",
           "settings": {
-            "rating": 4,
+            "rating": 5,
             "review_text": "Great quality gummies that the whole family enjoys. I appreciate the transparency about ingredients. Would definitely recommend to other parents!",
             "reviewer_name": "Michael R.",
             "verified": true,
