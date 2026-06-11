@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "hero_banner_Fg7xQp": {
       "type": "hero-banner",
@@ -14,24 +15,28 @@
         "badge_1": {
           "type": "trust-badge",
           "settings": {
+            "icon_type": "parent-owned",
             "label": "Parent Owned"
           }
         },
         "badge_2": {
           "type": "trust-badge",
           "settings": {
+            "icon_type": "third-party-tested",
             "label": "3rd Party Tested"
           }
         },
         "badge_3": {
           "type": "trust-badge",
           "settings": {
+            "icon_type": "allergen-free",
             "label": "Allergen Free"
           }
         },
         "badge_4": {
           "type": "trust-badge",
           "settings": {
+            "icon_type": "usda-organic",
             "label": "USDA Organic"
           }
         }
@@ -48,6 +53,7 @@
         "heading": "Gummies That Start with Real Fruit. Not Candy.",
         "description": "Daily nutrition made from real ingredients, without the sugar rush or unnecessary extras.",
         "button_text": "Shop Starter Pack",
+        "desktop_min_height": 580,
         "desktop_image_position": "right",
         "show_trust_badges": true,
         "color_scheme": "scheme-7",
