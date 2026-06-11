@@ -338,11 +338,66 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "curated_reviews_Hn4kLm": {
+      "type": "curated-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review-card",
+          "settings": {
+            "rating": 5,
+            "review_text": "We love these vitamins! My kids ask for them every morning. The taste is great and I feel good knowing they are getting clean, plant-based nutrition.",
+            "reviewer_name": "Sarah M.",
+            "verified": true,
+            "verified_label": "Verified Buyer"
+          }
+        },
+        "review_2": {
+          "type": "review-card",
+          "settings": {
+            "rating": 5,
+            "review_text": "Finally a vitamin my picky eater will take! No artificial junk, and they actually taste like real fruit. We have been using them for 3 months now and love the results.",
+            "reviewer_name": "Jessica T.",
+            "verified": true,
+            "verified_label": "Verified Buyer"
+          }
+        },
+        "review_3": {
+          "type": "review-card",
+          "settings": {
+            "rating": 5,
+            "review_text": "Great quality gummies that the whole family enjoys. I appreciate the transparency about ingredients. Would definitely recommend to other parents!",
+            "reviewer_name": "Michael R.",
+            "verified": true,
+            "verified_label": "Verified Buyer"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "settings": {
+        "heading": "What Our Customers Say",
+        "heading_alignment": "center",
+        "star_color": "#FFB800",
+        "columns": 3,
+        "gap": 24,
+        "show_arrows": true,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
     "hero_banner_Fg7xQp",
     "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "product_list_fa6P9H",
+    "curated_reviews_Hn4kLm"
   ]
 }
