@@ -5,23 +5,50 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="section section--full-width hero-banner color-{{ section.settings.color_scheme }} spacing-style"
-  style="{% render 'spacing-style', settings: section.settings %}"
+  style="--hero-banner-min-height: {{ section.settings.desktop_min_height | default: 500 }}px; {% render 'spacing-style', settings: section.settings %}"
 >
   <div class="hero-banner__grid{% if image_position == 'left' %} hero-banner__grid--image-left{% endif %}">
     <div class="hero-banner__image">
       {% if section.settings.image != blank %}
-        {% assign sizes_val = '(min-width: 750px) 50vw, 100vw' %}
-        {{
-          section.settings.image
-          | image_url: width: section.settings.image.width
-          | image_tag:
-            sizes: sizes_val,
-            widths: '375,550,750,1100,1500',
-            loading: 'eager',
-            fetchpriority: 'high',
-            class: 'hero-banner__image-el',
-            alt: section.settings.image.alt
-        }}
+        {% if section.settings.image_mobile != blank %}
+          {% assign desktop_sizes = '(min-width: 750px) 50vw, 100vw' %}
+          {{
+            section.settings.image
+            | image_url: width: section.settings.image.width
+            | image_tag:
+              sizes: desktop_sizes,
+              widths: '375,550,750,1100,1500',
+              loading: 'eager',
+              fetchpriority: 'high',
+              class: 'hero-banner__image-el hero-banner__image-el--desktop',
+              alt: section.settings.image.alt
+          }}
+          {% assign mobile_sizes = '100vw' %}
+          {{
+            section.settings.image_mobile
+            | image_url: width: section.settings.image_mobile.width
+            | image_tag:
+              sizes: mobile_sizes,
+              widths: '375,550,750',
+              loading: 'eager',
+              fetchpriority: 'high',
+              class: 'hero-banner__image-el hero-banner__image-el--mobile',
+              alt: section.settings.image_mobile.alt
+          }}
+        {% else %}
+          {% assign sizes_val = '(min-width: 750px) 50vw, 100vw' %}
+          {{
+            section.settings.image
+            | image_url: width: section.settings.image.width
+            | image_tag:
+              sizes: sizes_val,
+              widths: '375,550,750,1100,1500',
+              loading: 'eager',
+              fetchpriority: 'high',
+              class: 'hero-banner__image-el',
+              alt: section.settings.image.alt
+          }}
+        {% endif %}
       {% else %}
         {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-banner__placeholder' }}
       {% endif %}
@@ -80,7 +107,7 @@
   .hero-banner__image {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 3;
   }
 
   .hero-banner__image-el {
@@ -201,24 +228,56 @@
     color: var(--color-foreground);
   }
 
+  .hero-banner__image-el--mobile {
+    display: none;
+  }
+
   @media screen and (max-width: 749px) {
+    .hero-banner__content {
+      padding: 24px 16px;
+    }
+
+    .hero-banner__heading {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    .hero-banner__subtitle {
+      font-size: 14px;
+      line-height: 14px;
+      letter-spacing: 1px;
+    }
+
+    .hero-banner__description {
+      font-size: 16px;
+      line-height: 22px;
+    }
+
     .hero-banner__button {
       width: 100%;
+    }
+
+    .hero-banner__badges {
+      justify-content: flex-start;
+    }
+
+    .hero-banner__image-el--mobile {
+      display: block;
+    }
+
+    .hero-banner__image-el--desktop {
+      display: none;
     }
   }
 
   @media screen and (min-width: 750px) {
     .hero-banner__grid {
       grid-template-columns: 1fr 1fr;
-      min-height: 500px;
+      min-height: var(--hero-banner-min-height, 500px);
     }
 
-    .hero-banner__grid--image-left {
-      direction: rtl;
-    }
-
-    .hero-banner__grid--image-left > * {
-      direction: ltr;
+    .hero-banner__grid--image-left .hero-banner__image {
+      order: -1;
     }
 
     .hero-banner__image {
@@ -243,6 +302,11 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image"
     },
     {
       "type": "header",
@@ -280,6 +344,12 @@
     {
       "type": "header",
       "content": "Layout"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Desktop min height",
+      "default": 500
     },
     {
       "type": "select",
