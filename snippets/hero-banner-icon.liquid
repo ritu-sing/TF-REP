@@ -1,0 +1,33 @@
+{% doc %}
+  Hero Banner Trust Badge Icon
+
+  Renders a single trust badge with a 40x40 icon and a centered label below.
+
+  @param {object} icon - Shopify image object from image_picker (optional)
+  @param {string} label - Badge label text (required)
+  @param {string} icon_color - Icon accent color for placeholder (default: '#680040')
+
+  @example
+    {% render 'hero-banner-icon', icon: block.settings.icon, label: block.settings.label %}
+{% enddoc %}
+
+{% liquid
+  assign label = label | default: ''
+  assign icon_color = icon_color | default: '#680040'
+%}
+
+<div class="hero-banner__badge">
+  <div class="hero-banner__badge-icon">
+    {% if icon != blank %}
+      {{ icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: label, class: 'hero-banner__badge-img' }}
+    {% else %}
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" stroke="{{ icon_color }}" stroke-width="1.5" fill="none" />
+        <circle cx="20" cy="20" r="6" fill="{{ icon_color }}" />
+      </svg>
+    {% endif %}
+  </div>
+  {% if label != blank %}
+    <span class="hero-banner__badge-label">{{ label | escape }}</span>
+  {% endif %}
+</div>

@@ -1,0 +1,392 @@
+{% liquid
+  assign image_position = section.settings.desktop_image_position | default: 'right'
+%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--full-width hero-banner color-{{ section.settings.color_scheme }} spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="hero-banner__grid{% if image_position == 'left' %} hero-banner__grid--image-left{% endif %}">
+    <div class="hero-banner__image">
+      {% if section.settings.image != blank %}
+        {% assign sizes_val = '(min-width: 750px) 50vw, 100vw' %}
+        {{
+          section.settings.image
+          | image_url: width: section.settings.image.width
+          | image_tag:
+            sizes: sizes_val,
+            widths: '375,550,750,1100,1500',
+            loading: 'eager',
+            fetchpriority: 'high',
+            class: 'hero-banner__image-el',
+            alt: section.settings.image.alt
+        }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-banner__placeholder' }}
+      {% endif %}
+    </div>
+
+    <div class="hero-banner__content">
+      <div class="hero-banner__text-block">
+        {% if section.settings.subtitle != blank %}
+          <p class="hero-banner__subtitle">{{ section.settings.subtitle | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="hero-banner__heading">{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <p class="hero-banner__description">{{ section.settings.description | escape }}</p>
+        {% endif %}
+      </div>
+
+      {% if section.settings.button_text != blank %}
+        <a
+          {% if section.settings.button_link != blank %}
+            href="{{ section.settings.button_link }}"
+          {% else %}
+            role="link" aria-disabled="true"
+          {% endif %}
+          class="button hero-banner__button"
+        >
+          {{ section.settings.button_text | escape }}
+        </a>
+      {% endif %}
+
+      {% if section.settings.show_trust_badges and section.blocks.size > 0 %}
+        <div class="hero-banner__badges">
+          {% for block in section.blocks %}
+            {% if block.type == 'trust-badge' %}
+              <div {{ block.shopify_attributes }}>
+                {% render 'hero-banner-icon', icon: block.settings.icon, label: block.settings.label %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .hero-banner__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .hero-banner__image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+  }
+
+  .hero-banner__image-el {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .hero-banner__grid:hover .hero-banner__image-el {
+    transform: scale(1.03);
+  }
+
+  .hero-banner__placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-banner__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 16px 24px 16px;
+    background-color: var(--color-background);
+  }
+
+  .hero-banner__text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero-banner__subtitle {
+    font-family: var(--font-body--family, sans-serif);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    margin: 0;
+  }
+
+  .hero-banner__heading {
+    font-family: var(--font-heading--family, sans-serif);
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    color: var(--color-foreground-heading);
+    margin: 0;
+  }
+
+  .hero-banner__description {
+    font-family: var(--font-body--family, sans-serif);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--color-foreground);
+    margin: 0;
+  }
+
+  .hero-banner__button {
+    border-radius: 24px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 14px;
+    padding-block: 16px;
+    padding-inline: 24px;
+    width: fit-content;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+  }
+
+  .hero-banner__button:hover {
+    opacity: 0.9;
+  }
+
+  .hero-banner__badges {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 6px;
+  }
+
+  .hero-banner__badge {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    width: 75px;
+  }
+
+  .hero-banner__badge-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hero-banner__badge-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .hero-banner__badge-label {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    color: var(--color-foreground);
+  }
+
+  @media screen and (min-width: 750px) {
+    .hero-banner__grid {
+      grid-template-columns: 1fr 1fr;
+      min-height: 500px;
+    }
+
+    .hero-banner__grid--image-left {
+      direction: rtl;
+    }
+
+    .hero-banner__grid--image-left > * {
+      direction: ltr;
+    }
+
+    .hero-banner__image {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+
+    .hero-banner__content {
+      align-self: center;
+      padding: 48px 40px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "1M+ UNITS SOLD | 10K+ 5 STAR REVIEWS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Gummies That Start with Real Fruit. Not Candy."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Daily nutrition made from real ingredients, without the sugar rush or unnecessary extras."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop Starter Pack"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_image_position",
+      "label": "Desktop image position",
+      "default": "right",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Show trust badges",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust-badge",
+      "name": "Trust Badge",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Badge"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner",
+      "blocks": [
+        {
+          "type": "trust-badge",
+          "settings": {
+            "label": "Parent Owned"
+          }
+        },
+        {
+          "type": "trust-badge",
+          "settings": {
+            "label": "3rd Party Tested"
+          }
+        },
+        {
+          "type": "trust-badge",
+          "settings": {
+            "label": "Allergen Free"
+          }
+        },
+        {
+          "type": "trust-badge",
+          "settings": {
+            "label": "USDA Organic"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

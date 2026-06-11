@@ -8,6 +8,53 @@
  * ------------------------------------------------------------
  */{
   "sections": {
+    "hero_banner_Fg7xQp": {
+      "type": "hero-banner",
+      "blocks": {
+        "badge_1": {
+          "type": "trust-badge",
+          "settings": {
+            "label": "Parent Owned"
+          }
+        },
+        "badge_2": {
+          "type": "trust-badge",
+          "settings": {
+            "label": "3rd Party Tested"
+          }
+        },
+        "badge_3": {
+          "type": "trust-badge",
+          "settings": {
+            "label": "Allergen Free"
+          }
+        },
+        "badge_4": {
+          "type": "trust-badge",
+          "settings": {
+            "label": "USDA Organic"
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "badge_4"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/llama-naturals-june-2024-shot-19-mobile-14816191.jpg",
+        "subtitle": "1M+ UNITS SOLD | 10K+ 5 STAR REVIEWS",
+        "heading": "Gummies That Start with Real Fruit. Not Candy.",
+        "description": "Daily nutrition made from real ingredients, without the sugar rush or unnecessary extras.",
+        "button_text": "Shop Starter Pack",
+        "desktop_image_position": "right",
+        "show_trust_badges": true,
+        "color_scheme": "scheme-7",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -284,6 +331,7 @@
     }
   },
   "order": [
+    "hero_banner_Fg7xQp",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
