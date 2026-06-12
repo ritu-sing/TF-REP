@@ -99,9 +99,11 @@
     margin: 0 0 var(--margin-5xl);
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
+    font-style: var(--font-heading--style);
     font-size: var(--font-h3--size);
     line-height: var(--font-h3--line-height);
     letter-spacing: var(--font-h3--letter-spacing);
+    text-transform: var(--font-h3--case);
     color: var(--color-foreground-heading);
   }
 
@@ -138,8 +140,9 @@
   .curated-reviews__card {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-md);
+    gap: var(--gap-lg);
     padding: var(--padding-4xl);
+    background-color: var(--color-background);
     border: 1px solid var(--color-border);
     border-radius: var(--style-border-radius-lg);
     height: 100%;
@@ -165,6 +168,7 @@
     font-family: var(--font-body--family);
     font-size: var(--font-paragraph--size);
     line-height: var(--font-paragraph--line-height);
+    letter-spacing: var(--font-paragraph--letter-spacing);
     color: var(--color-foreground);
     margin: 0;
     flex-grow: 1;
@@ -191,6 +195,7 @@
     font-family: var(--font-subheading--family);
     font-weight: var(--font-subheading--weight);
     font-size: var(--font-size--sm);
+    line-height: var(--line-height--body-normal);
     color: var(--color-foreground-heading);
   }
 
@@ -200,6 +205,7 @@
     gap: var(--gap-3xs);
     font-family: var(--font-body--family);
     font-size: var(--font-size--xs);
+    line-height: var(--line-height--body-normal);
     color: var(--color-primary);
   }
 
