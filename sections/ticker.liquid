@@ -1,0 +1,256 @@
+<script
+  src="{{ 'marquee.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{% assign gap_between_elements = section.settings.gap_between_elements %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<marquee-component
+  class="section spacing-style gap-style color-{{ section.settings.color_scheme }}"
+  style="
+    {%- render 'spacing-style', settings: section.settings -%};
+    {%- render 'gap-style', value: gap_between_elements, name: 'marquee-gap' -%}
+    --marquee-direction: {{ section.settings.movement_direction }};
+  "
+  data-speed-factor="20"
+  data-movement-direction="{{ section.settings.movement_direction }}"
+>
+  <div
+    class="ticker__wrapper"
+    ref="wrapper"
+  >
+    <div
+      class="ticker__content"
+      ref="content"
+    >
+      <div
+        class="ticker__items"
+        ref="marqueeItems[]"
+      >
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  </div>
+</marquee-component>
+
+{% stylesheet %}
+  marquee-component {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .ticker__wrapper {
+    display: flex;
+    gap: var(--marquee-gap);
+    width: fit-content;
+    white-space: nowrap;
+  }
+
+  .ticker__content {
+    min-width: max-content;
+    display: flex;
+    gap: var(--marquee-gap);
+  }
+
+  .ticker__content :is(p, h1, h2, h3, h4, h5, h6) {
+    white-space: nowrap;
+  }
+
+  .ticker__content .ticker__items * {
+    max-width: none;
+  }
+
+  .ticker__items {
+    min-width: max-content;
+    display: flex;
+    gap: var(--marquee-gap);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ticker__items > * {
+    align-content: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    marquee-component:not([data-disabled]) .ticker__wrapper {
+      animation: ticker-motion var(--marquee-speed) linear infinite var(--marquee-direction);
+    }
+
+    @keyframes ticker-motion {
+      to {
+        transform: translate3d(calc(-50% - (var(--marquee-gap) / 2)), 0, 0);
+      }
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ticker",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "text"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "_divider"
+    }
+  ],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-8"
+    },
+    {
+      "type": "select",
+      "id": "movement_direction",
+      "label": "Scroll direction",
+      "options": [
+        {
+          "value": "reverse",
+          "label": "Left to right"
+        },
+        {
+          "value": "normal",
+          "label": "Right to left"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "gap_between_elements",
+      "label": "Gap between items",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ticker",
+      "blocks": {
+        "item_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Free Shipping on Orders $50+</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "sep_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>✦</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "item_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>USDA Organic</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "sep_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>✦</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "item_3": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Allergen Free</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "sep_3": {
+          "type": "text",
+          "settings": {
+            "text": "<p>✦</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "item_4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Parent-Owned Brand</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        }
+      },
+      "block_order": ["item_1", "sep_1", "item_2", "sep_2", "item_3", "sep_3", "item_4"]
+    }
+  ]
+}
+{% endschema %}
