@@ -1,0 +1,18 @@
+{
+  "attribution": {
+    "commit": ""
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/Users/ritusingla/.theme-factory/workspace/TF-REP/.claude/tf-block-theme-dev.cjs\""
+          }
+        ]
+      }
+    ]
+  }
+}
