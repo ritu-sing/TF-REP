@@ -1,0 +1,913 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style hero-offer"
+  style="{%- render 'spacing-style', settings: section.settings -%}"
+>
+  <div class="hero-offer__inner">
+
+    {%- comment -%} Hero Image {%- endcomment -%}
+    <div class="hero-offer__image-wrap">
+      {%- if section.settings.hero_image != blank -%}
+        {%- assign hero_sizes = '(min-width: 750px) 50vw, 100vw' -%}
+        {{
+          section.settings.hero_image
+          | image_url: width: section.settings.hero_image.width
+          | image_tag:
+            sizes: hero_sizes,
+            widths: '390,780,1100',
+            loading: 'lazy',
+            alt: section.settings.hero_image.alt,
+            class: 'hero-offer__image-el'
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-offer__image-placeholder' }}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Content Panel {%- endcomment -%}
+    <div class="hero-offer__content">
+
+      {%- comment -%} Product Details block {%- endcomment -%}
+      <div class="hero-offer__product-details">
+
+        {%- comment -%} Rating row {%- endcomment -%}
+        <div class="hero-offer__rating" aria-label="Rating">
+          {%- assign full_stars = section.settings.full_stars | default: 4 -%}
+          {%- assign half_star_index = full_stars | plus: 1 -%}
+          {%- for i in (1..5) -%}
+            {%- if i <= full_stars -%}
+              <svg class="hero-offer__star" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M6 0.5l1.545 3.13 3.455.502-2.5 2.437.59 3.44L6 8.385 2.91 9.01l.59-3.44L1 3.132l3.455-.502z" fill="#F58232"/>
+              </svg>
+            {%- elsif i == half_star_index and section.settings.show_half_star -%}
+              <svg class="hero-offer__star hero-offer__star--half" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <clipPath id="hero-offer-half-clip-{{ section.id }}">
+                    <rect x="0" y="0" width="6" height="12"/>
+                  </clipPath>
+                </defs>
+                <path d="M6 0.5l1.545 3.13 3.455.502-2.5 2.437.59 3.44L6 8.385 2.91 9.01l.59-3.44L1 3.132l3.455-.502z" fill="#e0e0e0"/>
+                <path d="M6 0.5l1.545 3.13 3.455.502-2.5 2.437.59 3.44L6 8.385 2.91 9.01l.59-3.44L1 3.132l3.455-.502z" fill="#F58232" clip-path="url(#hero-offer-half-clip-{{ section.id }})"/>
+              </svg>
+            {%- else -%}
+              <svg class="hero-offer__star hero-offer__star--empty" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M6 0.5l1.545 3.13 3.455.502-2.5 2.437.59 3.44L6 8.385 2.91 9.01l.59-3.44L1 3.132l3.455-.502z" fill="#e0e0e0"/>
+              </svg>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if section.settings.review_count != blank -%}
+            <span class="hero-offer__review-count">{{ section.settings.review_count }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Heading {%- endcomment -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="hero-offer__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- comment -%} Price row {%- endcomment -%}
+        <div class="hero-offer__price-row">
+          {%- if section.settings.current_price != blank -%}
+            <span class="hero-offer__price-current">{{ section.settings.current_price }}</span>
+          {%- endif -%}
+          {%- if section.settings.original_price != blank -%}
+            <span class="hero-offer__price-original">{{ section.settings.original_price }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Benefit bullets {%- endcomment -%}
+        {%- assign has_benefits = false -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'benefit' -%}
+            {%- assign has_benefits = true -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if has_benefits -%}
+          <ul class="hero-offer__benefits">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'benefit' -%}
+                <li class="hero-offer__benefit-item" {{ block.shopify_attributes }}>
+                  <span class="hero-offer__check-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="8" cy="8" r="7" fill="none" stroke="#000000" stroke-width="1.5"/>
+                      <path d="M5 8l2 2 4-4" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span class="hero-offer__benefit-text">{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Product item rows {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'product-item' -%}
+          <div class="hero-offer__product-row" {{ block.shopify_attributes }}>
+            <div class="hero-offer__product-icon">
+              {%- if block.settings.is_gift -%}
+                <svg width="25" height="28" viewBox="0 0 25 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="1" y="9" width="23" height="5" rx="1" fill="none" stroke="#FFFEF5" stroke-width="1.2"/>
+                  <rect x="3" y="14" width="19" height="13" rx="1" fill="none" stroke="#FFFEF5" stroke-width="1.2"/>
+                  <line x1="12.5" y1="9" x2="12.5" y2="27" stroke="#FFFEF5" stroke-width="1.2"/>
+                  <path d="M12.5 9 C12.5 9 9 7 9 4.5 C9 2.5 10.5 1.5 12 2.5 C12.5 3 12.5 4 12.5 4" fill="none" stroke="#FFFEF5" stroke-width="1.2" stroke-linecap="round"/>
+                  <path d="M12.5 9 C12.5 9 16 7 16 4.5 C16 2.5 14.5 1.5 13 2.5 C12.5 3 12.5 4 12.5 4" fill="none" stroke="#FFFEF5" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+              {%- elsif block.settings.thumbnail != blank -%}
+                {{
+                  block.settings.thumbnail
+                  | image_url: width: 80
+                  | image_tag:
+                    width: 40,
+                    height: 40,
+                    loading: 'lazy',
+                    alt: block.settings.title,
+                    class: 'hero-offer__product-thumb'
+                }}
+              {%- endif -%}
+            </div>
+            <div class="hero-offer__product-info">
+              <div class="hero-offer__product-header">
+                {%- if block.settings.title != blank -%}
+                  <span class="hero-offer__product-title">{{ block.settings.title }}</span>
+                {%- endif -%}
+                {%- assign has_tags = false -%}
+                {%- if block.settings.flavor != blank or block.settings.count != blank -%}
+                  {%- assign has_tags = true -%}
+                {%- endif -%}
+                {%- if has_tags -%}
+                  <div class="hero-offer__product-tags">
+                    {%- if block.settings.flavor != blank -%}
+                      <span class="hero-offer__tag">{{ block.settings.flavor }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.count != blank -%}
+                      <span class="hero-offer__tag">{{ block.settings.count }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.description != blank -%}
+                <span class="hero-offer__product-description">{{ block.settings.description }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} Benefits container: secondary badges + CTA + shipping {%- endcomment -%}
+      <div class="hero-offer__benefits-container">
+
+        {%- comment -%} Secondary benefit badges {%- endcomment -%}
+        <div class="hero-offer__secondary-benefits">
+          {%- assign badge_ids = 'benefit_badge_1,benefit_badge_2,benefit_badge_3,benefit_badge_4' | split: ',' -%}
+          {%- for badge_id in badge_ids -%}
+            {%- assign badge_val = section.settings[badge_id] -%}
+            {%- if badge_val != blank -%}
+              <span class="hero-offer__badge-item">
+                <span class="hero-offer__small-check" aria-hidden="true">
+                  <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 5l2 2 4-4" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="hero-offer__badge-text">{{ badge_val }}</span>
+                {%- if badge_id == 'benefit_badge_4' -%}
+                  <span class="hero-offer__info-icon" aria-label="More information">
+                    <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <circle cx="5" cy="5" r="4" fill="none" stroke="#000000" stroke-width="1"/>
+                      <line x1="5" y1="4.5" x2="5" y2="7" stroke="#000000" stroke-width="1.2" stroke-linecap="round"/>
+                      <circle cx="5" cy="3" r="0.6" fill="#000000"/>
+                    </svg>
+                  </span>
+                {%- endif -%}
+              </span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} CTA Button {%- endcomment -%}
+        <a
+          class="hero-offer__cta-button"
+          {% if section.settings.button_url != blank %}href="{{ section.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %}
+        >
+          <span class="hero-offer__cta-label">{{ section.settings.button_label | default: 'ADD TO CART' }}</span>
+          <div class="hero-offer__cta-price">
+            {%- if section.settings.original_price != blank -%}
+              <span class="hero-offer__cta-price-original">{{ section.settings.original_price }}</span>
+            {%- endif -%}
+            {%- if section.settings.current_price != blank -%}
+              <span class="hero-offer__cta-price-current">{{ section.settings.current_price }}</span>
+            {%- endif -%}
+          </div>
+        </a>
+
+        {%- comment -%} Shipping info row {%- endcomment -%}
+        <div class="hero-offer__shipping-row">
+          <span class="hero-offer__shipping-item">
+            <span class="hero-offer__shipping-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1" y="5" width="11" height="9" rx="1" fill="none" stroke="#000000" stroke-width="1"/>
+                <path d="M12 8h3l2 3v3h-5V8z" fill="none" stroke="#000000" stroke-width="1"/>
+                <circle cx="4.5" cy="14.5" r="1.5" fill="none" stroke="#000000" stroke-width="1"/>
+                <circle cx="13.5" cy="14.5" r="1.5" fill="none" stroke="#000000" stroke-width="1"/>
+                <line x1="1" y1="5" x2="1" y2="3" stroke="#000000" stroke-width="1"/>
+              </svg>
+            </span>
+            <span class="hero-offer__shipping-text">{{ section.settings.shipping_text | default: 'Delivered every month' }}</span>
+          </span>
+          <span class="hero-offer__shipping-item">
+            <span class="hero-offer__shipping-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 2 L16 5 L16 10 C16 13.5 13 16.5 9 17.5 C5 16.5 2 13.5 2 10 L2 5 Z" fill="none" stroke="#000000" stroke-width="1"/>
+                <path d="M6 9l2 2 4-4" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="hero-offer__shipping-text">{{ section.settings.guarantee_text | default: '100 Days Money Back Guarantee' }}</span>
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .hero-offer__inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-offer__image-wrap {
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .hero-offer__image-el {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-offer__image-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-offer__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 16px 56px 16px;
+    background-color: rgba(104, 0, 64, 0.05);
+  }
+
+  .hero-offer__product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-offer__rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hero-offer__star {
+    flex-shrink: 0;
+  }
+
+  .hero-offer__review-count {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: #680040;
+    margin-inline-start: 2px;
+  }
+
+  .hero-offer__heading {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    color: #680040;
+    margin: 0;
+  }
+
+  .hero-offer__price-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hero-offer__price-current {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: #680040;
+  }
+
+  .hero-offer__price-original {
+    font-family: sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: #4B413A;
+    text-decoration: line-through;
+  }
+
+  .hero-offer__benefits {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .hero-offer__benefit-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-offer__check-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+  }
+
+  .hero-offer__benefit-text {
+    font-family: sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+  }
+
+  .hero-offer__product-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .hero-offer__product-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    background-color: #680040;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-offer__product-thumb {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-offer__product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero-offer__product-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .hero-offer__product-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    color: #680040;
+    text-transform: uppercase;
+  }
+
+  .hero-offer__product-tags {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .hero-offer__tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    padding: 2px 6px;
+    background-color: rgba(104, 0, 64, 0.12);
+    color: #4B413A;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .hero-offer__product-description {
+    font-family: sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+  }
+
+  .hero-offer__benefits-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-offer__secondary-benefits {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    padding-block: 2px;
+  }
+
+  .hero-offer__badge-item {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hero-offer__small-check {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10px;
+    height: 10px;
+  }
+
+  .hero-offer__badge-text {
+    font-family: sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #000000;
+  }
+
+  .hero-offer__info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    margin-inline-start: 2px;
+  }
+
+  .hero-offer__cta-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 24px;
+    padding: 16px 24px;
+    background-color: #680040;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hero-offer__cta-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 14px;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+
+  .hero-offer__cta-price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hero-offer__cta-price-original {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-decoration: line-through;
+  }
+
+  .hero-offer__cta-price-current {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 14px;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+
+  .hero-offer__shipping-row {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-offer__shipping-item {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .hero-offer__shipping-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero-offer__shipping-text {
+    font-family: sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #000000;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .hero-offer__inner {
+      display: flex;
+      flex-direction: row;
+      max-width: 900px;
+      margin-inline: auto;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .hero-offer__image-wrap {
+      width: 50%;
+      flex-shrink: 0;
+      border-radius: 12px 0 0 12px;
+      aspect-ratio: auto;
+      min-height: 500px;
+    }
+
+    .hero-offer__image-el {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-offer__content {
+      flex: 1;
+      border-radius: 0 12px 12px 0;
+      padding: 32px 24px 40px 24px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero Offer",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "range",
+      "id": "full_stars",
+      "label": "Full stars",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_half_star",
+      "label": "Show half star",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "(5,870)"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Try the Complete Wellness Bundle: Free Mystery Gift + Free Elderberry FOR LIFE."
+    },
+    {
+      "type": "text",
+      "id": "current_price",
+      "label": "Current price",
+      "default": "US$63.89"
+    },
+    {
+      "type": "text",
+      "id": "original_price",
+      "label": "Original price",
+      "default": "US$77.99"
+    },
+    {
+      "type": "header",
+      "content": "Benefit Badges"
+    },
+    {
+      "type": "text",
+      "id": "benefit_badge_1",
+      "label": "Benefit badge 1",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "benefit_badge_2",
+      "label": "Benefit badge 2",
+      "default": "Lifetime discount"
+    },
+    {
+      "type": "text",
+      "id": "benefit_badge_3",
+      "label": "Benefit badge 3",
+      "default": "Free Samples"
+    },
+    {
+      "type": "text",
+      "id": "benefit_badge_4",
+      "label": "Benefit badge 4",
+      "default": "Easily skip or cancel anytime"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "ADD TO CART"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Shipping Info"
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Shipping text",
+      "default": "Delivered every month"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "100 Days Money Back Guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        { "value": "page-width", "label": "Page" },
+        { "value": "full-width", "label": "Full" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Benefit text",
+          "default": "Key product benefit"
+        }
+      ]
+    },
+    {
+      "type": "product-item",
+      "name": "Product item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Thumbnail"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_gift",
+          "label": "Is gift item",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product title",
+          "default": "Product Name"
+        },
+        {
+          "type": "text",
+          "id": "flavor",
+          "label": "Flavor"
+        },
+        {
+          "type": "text",
+          "id": "count",
+          "label": "Count"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Product description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Offer",
+      "settings": {
+        "full_stars": 4,
+        "show_half_star": true,
+        "review_count": "(5,870)",
+        "heading": "Try the Complete Wellness Bundle: Free Mystery Gift + Free Elderberry FOR LIFE.",
+        "current_price": "US$63.89",
+        "original_price": "US$77.99",
+        "benefit_badge_1": "Free Shipping",
+        "benefit_badge_2": "Lifetime discount",
+        "benefit_badge_3": "Free Samples",
+        "benefit_badge_4": "Easily skip or cancel anytime",
+        "button_label": "ADD TO CART",
+        "shipping_text": "Delivered every month",
+        "guarantee_text": "100 Days Money Back Guarantee"
+      },
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "13 Essential vitamins & iodine for brain, immunity & mood."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Made from real fruit, no sugar cane or synthetics"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Clinician backed, health-care worker approved"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Made for picky eaters - 77% love the taste immediately"
+          }
+        },
+        {
+          "type": "product-item",
+          "settings": {
+            "is_gift": false,
+            "title": "Multivitamin Gummies",
+            "flavor": "Strawberry",
+            "count": "90ct",
+            "description": "13 Essential Vitamins + Iodine"
+          }
+        },
+        {
+          "type": "product-item",
+          "settings": {
+            "is_gift": false,
+            "title": "Prebiotic & Probiotic Gummies",
+            "flavor": "Mixed Berry",
+            "count": "60ct",
+            "description": "Gut Health & Digestion"
+          }
+        },
+        {
+          "type": "product-item",
+          "settings": {
+            "is_gift": false,
+            "title": "FREE FOR LIFE Elderberry Gummies",
+            "count": "90ct",
+            "description": "Immunity Boosters"
+          }
+        },
+        {
+          "type": "product-item",
+          "settings": {
+            "is_gift": true,
+            "title": "FREE Mystery Gift",
+            "description": "Something fun for your kiddo!"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

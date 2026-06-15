@@ -62,6 +62,105 @@
         "padding-block-end": 0
       }
     },
+    "hero_offer_section": {
+      "type": "hero-offer",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "text": "13 Essential vitamins & iodine for brain, immunity & mood."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Made from real fruit, no sugar cane or synthetics"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Clinician backed, health-care worker approved"
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "text": "Made for picky eaters - 77% love the taste immediately"
+          }
+        },
+        "product_1": {
+          "type": "product-item",
+          "settings": {
+            "thumbnail": "shopify://shop_images/image-19-mobile-157615967.png",
+            "is_gift": false,
+            "title": "Multivitamin Gummies",
+            "flavor": "Strawberry",
+            "count": "90ct",
+            "description": "13 Essential Vitamins + Iodine"
+          }
+        },
+        "product_2": {
+          "type": "product-item",
+          "settings": {
+            "thumbnail": "shopify://shop_images/image-18-mobile-157615798.png",
+            "is_gift": false,
+            "title": "Prebiotic & Probiotic Gummies",
+            "flavor": "Mixed Berry",
+            "count": "60ct",
+            "description": "Gut Health & Digestion"
+          }
+        },
+        "product_3": {
+          "type": "product-item",
+          "settings": {
+            "thumbnail": "shopify://shop_images/product-thumbnail-mobile-14816384.png",
+            "is_gift": false,
+            "title": "FREE FOR LIFE Elderberry Gummies",
+            "count": "90ct",
+            "description": "Immunity Boosters"
+          }
+        },
+        "product_4": {
+          "type": "product-item",
+          "settings": {
+            "is_gift": true,
+            "title": "FREE Mystery Gift",
+            "description": "Something fun for your kiddo!"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4",
+        "product_1",
+        "product_2",
+        "product_3",
+        "product_4"
+      ],
+      "settings": {
+        "hero_image": "shopify://shop_images/hero-image-content-mobile-19941259.png",
+        "full_stars": 4,
+        "show_half_star": true,
+        "review_count": "(5,870)",
+        "heading": "Try the Complete Wellness Bundle: Free Mystery Gift + Free Elderberry FOR LIFE.",
+        "current_price": "US$63.89",
+        "original_price": "US$77.99",
+        "benefit_badge_1": "Free Shipping",
+        "benefit_badge_2": "Lifetime discount",
+        "benefit_badge_3": "Free Samples",
+        "benefit_badge_4": "Easily skip or cancel anytime",
+        "button_label": "ADD TO CART",
+        "button_url": "",
+        "shipping_text": "Delivered every month",
+        "guarantee_text": "100 Days Money Back Guarantee",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -396,6 +495,7 @@
   },
   "order": [
     "hero_banner_Fg7xQp",
+    "hero_offer_section",
     "hero_jVaWmY",
     "product_list_fa6P9H",
     "curated_reviews_Hn4kLm"
