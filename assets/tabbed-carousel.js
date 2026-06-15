@@ -134,7 +134,7 @@ class TabbedCarousel extends Component {
     if (!variantId) return;
 
     btn.classList.add('is-loading');
-    const originalText = btn.textContent;
+    const originalText = btn.textContent ?? 'ADD';
     btn.textContent = '...';
 
     try {
@@ -153,8 +153,7 @@ class TabbedCarousel extends Component {
       btn.classList.add('is-added');
       btn.textContent = '✓';
 
-      // Refresh cart count
-      this.#refreshCart();
+      this.#refreshCart(variantId);
 
       setTimeout(() => {
         btn.classList.remove('is-added');
@@ -166,30 +165,32 @@ class TabbedCarousel extends Component {
     }
   }
 
-  /** Fetch updated cart and broadcast to Horizon's cart bubble */
-  async #refreshCart() {
+  /**
+   * Fetch updated cart and fire Horizon's 'cart:update' event so the
+   * cart-icon and cart-drawer components update their counts.
+   * @param {string} [variantId]
+   */
+  async #refreshCart(variantId) {
     try {
       const cart = await fetch('/cart.js', {
         headers: { Accept: 'application/json' },
       }).then((r) => r.json());
 
-      const count = cart.item_count ?? 0;
+      const itemCount = cart.item_count ?? 0;
 
-      // Horizon cart bubble listens for this event
-      document.dispatchEvent(
-        new CustomEvent('cart:refresh', { bubbles: true, detail: { count } })
-      );
-
-      // Also update count badges directly for resilience
-      for (const el of document.querySelectorAll('[data-cart-count]')) {
-        el.textContent = String(count);
-      }
-      for (const el of document.querySelectorAll('.cart-count-bubble')) {
-        el.textContent = String(count);
-        el.toggleAttribute('hidden', count === 0);
-      }
+      // Horizon listens for 'cart:update' with detail.data.itemCount
+      const cartEvent = new Event('cart:update', { bubbles: true });
+      /** @type {any} */ (cartEvent).detail = {
+        resource: cart,
+        data: {
+          itemCount,
+          variantId: variantId ? String(variantId) : undefined,
+          source: 'tabbed-carousel',
+        },
+      };
+      document.dispatchEvent(cartEvent);
     } catch {
-      // Cart refresh is non-critical
+      // Non-critical — cart bubble will correct on next page load
     }
   }
 

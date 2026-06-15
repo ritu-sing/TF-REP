@@ -105,6 +105,7 @@
                     <div
                       class="tabbed-carousel__card"
                       data-product-handle="{{ product.handle }}"
+                      data-product-url="{{ product.url }}"
                     >
                       <a href="{{ product.url }}" class="tabbed-carousel__card-media-link" tabindex="-1" aria-hidden="true">
                         <div class="tabbed-carousel__card-media">
@@ -494,6 +495,25 @@
   font-weight:   500;
   padding:       3px 8px;
   border-radius: 4px;
+}
+
+/* Full-card PDP click — title link pseudo-overlay covers the body;
+   interactive elements (image link, pills, ADD btn) float above it. */
+.tabbed-carousel__card-title-link {
+  position: static;
+}
+.tabbed-carousel__card-title-link::after {
+  content:  '';
+  position: absolute;
+  inset:    0;
+  z-index:  0;
+}
+.tabbed-carousel__card-media-link,
+.tabbed-carousel__variant-pills,
+.tabbed-carousel__add-btn,
+.tabbed-carousel__card-price {
+  position: relative;
+  z-index:  1;
 }
 
 /* ── Card body ── */
