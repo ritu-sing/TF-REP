@@ -241,13 +241,15 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    background-color: #FDF0F2;
+    border-radius: 12px;
+    overflow: hidden;
   }
 
   .hero-offer__image-wrap {
-    border-radius: 12px;
-    overflow: hidden;
     width: 100%;
     aspect-ratio: 1 / 1;
+    overflow: hidden;
   }
 
   .hero-offer__image-el {
@@ -466,7 +468,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 10px 14px;
     justify-content: center;
     align-items: center;
     padding-block: 2px;
@@ -491,8 +493,8 @@
   .hero-offer__badge-text {
     font-family: sans-serif;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
+    font-size: 11px;
+    line-height: 16px;
     color: #000000;
   }
 
@@ -590,19 +592,15 @@
 
   @media screen and (min-width: 750px) {
     .hero-offer__inner {
-      display: flex;
       flex-direction: row;
       max-width: 1100px;
       margin-inline: auto;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(104, 0, 64, 0.15);
     }
 
     .hero-offer__image-wrap {
-      width: 48%;
+      width: 45%;
       flex-shrink: 0;
-      border-radius: 12px 0 0 12px;
       aspect-ratio: auto;
     }
 
@@ -613,8 +611,11 @@
 
     .hero-offer__content {
       flex: 1;
-      border-radius: 0 12px 12px 0;
       padding: 40px 40px 32px 40px;
+    }
+
+    .hero-offer__secondary-benefits {
+      flex-wrap: nowrap;
     }
   }
 {% endstylesheet %}
