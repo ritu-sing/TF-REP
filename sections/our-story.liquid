@@ -91,6 +91,72 @@
   color: var(--color-background);
 }
 
+.our-story__features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.our-story__feature-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.our-story__feature-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  color: rgb(var(--color-foreground-rgb));
+}
+
+.our-story__feature-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.our-story__feature-title {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.our-story__feature-description {
+  font-family: var(--font-body--family);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: rgb(var(--color-foreground-rgb) / 0.75);
+  margin: 0;
+}
+
+.our-story__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.our-story__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border: 1.5px solid rgb(var(--color-foreground-rgb) / 0.35);
+  border-radius: 999px;
+  font-family: var(--font-body--family);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground-rgb) / 0.8);
+  text-align: center;
+  line-height: 1.2;
+}
+
 @media screen and (min-width: 750px) {
   .our-story {
     grid-template-columns: 1fr 1fr;
@@ -111,9 +177,12 @@
 }
 {% endstylesheet %}
 
+{%- assign feature_blocks = section.blocks | where: 'type', 'feature-item' -%}
+{%- assign badge_blocks = section.blocks | where: 'type', 'badge' -%}
+
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style our-story our-story--image-{{ section.settings.image_position }}"
-  style="{%- render 'spacing-style', settings: section.settings -%}"
+  style="{%- render 'spacing-style', settings: section.settings -%}{%- if section.settings.background_color != blank and section.settings.background_color != 'rgba(0,0,0,0)' -%}background-color: {{ section.settings.background_color }};{%- endif -%}"
 >
   <div class="our-story__media">
     {%- if section.settings.image != blank -%}
@@ -136,6 +205,37 @@
       <div class="our-story__body">{{ section.settings.body }}</div>
     {%- endif -%}
 
+    {%- if feature_blocks.size > 0 -%}
+      <div class="our-story__features">
+        {%- for block in feature_blocks -%}
+          <div class="our-story__feature-item" {{ block.shopify_attributes }}>
+            <svg class="our-story__feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M7.5 12.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="our-story__feature-text">
+              {%- if block.settings.title != blank -%}
+                <p class="our-story__feature-title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="our-story__feature-description">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if badge_blocks.size > 0 -%}
+      <div class="our-story__badges">
+        {%- for block in badge_blocks -%}
+          {%- if block.settings.label != blank -%}
+            <span class="our-story__badge" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
     {%- if section.settings.button_label != blank -%}
       <a
         class="our-story__button"
@@ -154,6 +254,35 @@
 {% schema %}
 {
   "name": "Our Story",
+  "blocks": [
+    {
+      "type": "feature-item",
+      "name": "Feature item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    },
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        }
+      ]
+    }
+  ],
   "settings": [
     {
       "type": "image_picker",
@@ -224,6 +353,12 @@
         }
       ],
       "default": "full-width"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color override",
+      "info": "Overrides the color scheme background. Leave blank to use color scheme."
     },
     {
       "type": "color_scheme",

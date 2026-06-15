@@ -378,6 +378,83 @@
     },
     "our_story_section": {
       "type": "our-story",
+      "blocks": {
+        "feature_1": {
+          "type": "feature-item",
+          "settings": {
+            "title": "75+ Iterations To Get It Right",
+            "description": "It took 75+ trials with real organic fruit to create a gummy that delivers real nutrition kids love."
+          }
+        },
+        "feature_2": {
+          "type": "feature-item",
+          "settings": {
+            "title": "Clean Ingredients. Clear Conscience.",
+            "description": "No added cane sugar, no artificial junk – third-party tested and made in GMP-certified facilities."
+          }
+        },
+        "feature_3": {
+          "type": "feature-item",
+          "settings": {
+            "title": "Built By Dads Who Get It",
+            "description": "We created the vitamin we wanted for our own kids, with better ingredients and zero compromises."
+          }
+        },
+        "badge_soy": {
+          "type": "badge",
+          "settings": {
+            "label": "SOY"
+          }
+        },
+        "badge_eggs": {
+          "type": "badge",
+          "settings": {
+            "label": "EGGS"
+          }
+        },
+        "badge_dairy": {
+          "type": "badge",
+          "settings": {
+            "label": "DAIRY"
+          }
+        },
+        "badge_peanuts": {
+          "type": "badge",
+          "settings": {
+            "label": "PEANUTS"
+          }
+        },
+        "badge_tree_nuts": {
+          "type": "badge",
+          "settings": {
+            "label": "TREE NUTS"
+          }
+        },
+        "badge_shellfish": {
+          "type": "badge",
+          "settings": {
+            "label": "SHELL FISH"
+          }
+        },
+        "badge_wheat": {
+          "type": "badge",
+          "settings": {
+            "label": "WHEAT"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "badge_soy",
+        "badge_eggs",
+        "badge_dairy",
+        "badge_peanuts",
+        "badge_tree_nuts",
+        "badge_shellfish",
+        "badge_wheat"
+      ],
       "settings": {
         "eyebrow": "OUR STORY",
         "heading": "<p>Real Ingredients. Real Results. Really For Kids.</p>",
@@ -386,6 +463,7 @@
         "button_link": "",
         "image_position": "left",
         "section_width": "full-width",
+        "background_color": "#F5C0A8",
         "color_scheme": "scheme-1",
         "padding-block-start": 0,
         "padding-block-end": 0
