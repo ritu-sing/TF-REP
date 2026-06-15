@@ -382,25 +382,25 @@
         "tab_0": {
           "type": "tab",
           "settings": {
-            "tab_label": "All Products",
+            "tab_label": "KIDS",
             "max_products": 8,
-            "cta_text": "View All"
+            "cta_text": "SHOP ALL KIDS"
           }
         },
         "tab_1": {
           "type": "tab",
           "settings": {
-            "tab_label": "New Arrivals",
+            "tab_label": "ADULTS",
             "max_products": 8,
-            "cta_text": "View All"
+            "cta_text": "SHOP ALL ADULTS"
           }
         },
         "tab_2": {
           "type": "tab",
           "settings": {
-            "tab_label": "Best Sellers",
+            "tab_label": "BUNDLE & SAVE",
             "max_products": 8,
-            "cta_text": "View All"
+            "cta_text": "SHOP ALL BUNDLES"
           }
         }
       },
@@ -410,12 +410,10 @@
         "tab_2"
       ],
       "settings": {
-        "heading": "Shop Our Range",
-        "show_ticker": true,
-        "ticker_item_1": "Free Shipping",
-        "ticker_item_2": "Money-Back Guarantee",
-        "ticker_item_3": "Naturally Sourced",
-        "ticker_item_4": "USDA Organic",
+        "heading": "More Nutrition For Your Kid",
+        "show_guarantee": true,
+        "guarantee_heading": "100-Day Money-Back Guarantee",
+        "guarantee_subtext": "No Returns, No Hassle, No Questions.",
         "icons_style": "chevron",
         "columns": 4,
         "section_width": "page-width",

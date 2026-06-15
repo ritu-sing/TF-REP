@@ -1,43 +1,17 @@
-{%- comment -%} Section background — must precede the .section root to apply color scheme background
-  correctly. base.css forces background:transparent on .section, so background color is provided
-  by this absolutely-positioned sibling that fills the entire .shopify-section wrapper. {%- endcomment -%}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 
 <tabbed-carousel
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style tabbed-carousel"
-  style="{%- render 'spacing-style', settings: section.settings -%} --tabbed-carousel-columns: {{ section.settings.columns }};"
+  style="{%- render 'spacing-style', settings: section.settings -%} --tc-cols: {{ section.settings.columns }};"
 >
-  {%- comment -%} ── Header: heading, subheading, badge, tabs ── {%- endcomment -%}
-  <div class="tabbed-carousel__header">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="tabbed-carousel__heading">{{ section.settings.heading | escape }}</h2>
-    {%- endif -%}
+  <div class="tabbed-carousel__inner">
 
-    {%- if section.settings.subheading != blank -%}
-      <p class="tabbed-carousel__subheading">{{ section.settings.subheading | escape }}</p>
-    {%- endif -%}
+    {%- comment -%} ── Header: heading + tabs + badge ── {%- endcomment -%}
+    <div class="tabbed-carousel__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="tabbed-carousel__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
 
-    {%- if section.settings.badge_image != blank or section.settings.badge_text != blank -%}
-      <div class="tabbed-carousel__badge" aria-hidden="true">
-        {%- if section.settings.badge_image != blank -%}
-          {{
-            section.settings.badge_image
-            | image_url: width: 120
-            | image_tag: width: 120, loading: 'lazy', alt: ''
-          }}
-        {%- else -%}
-          <span class="tabbed-carousel__badge-text">{{ section.settings.badge_text | escape }}</span>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
-    {%- comment -%} Tab buttons — count tab-type blocks only for consistent indices {%- endcomment -%}
-    {%- assign tab_count = 0 -%}
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'tab' -%}{%- assign tab_count = tab_count | plus: 1 -%}{%- endif -%}
-    {%- endfor -%}
-
-    {%- if tab_count > 0 -%}
       <div class="tabbed-carousel__tabs" role="tablist">
         {%- assign tab_btn_index = 0 -%}
         {%- for block in section.blocks -%}
@@ -51,480 +25,810 @@
               ref="tabs[]"
               on:click="/handleTabClick"
               type="button"
-            >
-              {{ block.settings.tab_label | escape }}
-            </button>
+            >{{ block.settings.tab_label | default: 'Tab' }}</button>
             {%- assign tab_btn_index = tab_btn_index | plus: 1 -%}
           {%- endif -%}
         {%- endfor -%}
       </div>
-    {%- endif -%}
-  </div>
 
-  {%- comment -%} ── Tab panels — one per tab block ── {%- endcomment -%}
-  {%- assign panel_index = 0 -%}
-  {%- for block in section.blocks -%}
-    {%- if block.type == 'tab' -%}
-      <div
-        class="tabbed-carousel__panel{% if panel_index == 0 %} is-active{% endif %}"
-        role="tabpanel"
-        id="tabpanel-{{ block.id }}"
-        data-panel-index="{{ panel_index }}"
-        ref="panels[]"
-        {{ block.shopify_attributes }}
-      >
-        {%- comment -%} Carousel track with product cards {%- endcomment -%}
-        <div
-          class="tabbed-carousel__track"
-          ref="tracks[]"
-          data-panel-index="{{ panel_index }}"
-        >
-          {%- assign card_limit = block.settings.max_products | default: 8 -%}
-          {%- assign card_count = 0 -%}
-
-          {%- if block.settings.collection != blank -%}
-            {%- for product in block.settings.collection.products limit: card_limit -%}
-              {%- assign card_count = card_count | plus: 1 -%}
-              <div class="tabbed-carousel__card">
-                <a
-                  href="{{ product.url }}"
-                  class="tabbed-carousel__card-link"
-                  aria-label="{{ product.title | escape }}"
-                >
-                  <div class="tabbed-carousel__card-media">
-                    {%- assign card_image = product.featured_image -%}
-                    {%- if card_image != blank -%}
-                      {%- assign card_img_alt = card_image.alt | default: product.title -%}
-                      {{
-                        card_image
-                        | image_url: width: 400
-                        | image_tag:
-                          sizes: '(min-width: 750px) 25vw, 50vw',
-                          widths: '200,300,400,600',
-                          loading: 'lazy',
-                          alt: card_img_alt
-                      }}
-                    {%- else -%}
-                      {{ 'product-1' | placeholder_svg_tag: 'tabbed-carousel__card-placeholder' }}
-                    {%- endif -%}
-                  </div>
-                  <div class="tabbed-carousel__card-body">
-                    <p class="tabbed-carousel__card-title">{{ product.title | escape }}</p>
-                    <p class="tabbed-carousel__card-price">
-                      {%- if product.compare_at_price_min > product.price_min -%}
-                        <s class="tabbed-carousel__card-compare-price">{{ product.compare_at_price_min | money }}</s>
-                      {%- endif -%}
-                      <span>{{ product.price_min | money }}</span>
-                    </p>
-                  </div>
-                </a>
-              </div>
-            {%- endfor -%}
-          {%- endif -%}
-
-          {%- comment -%} Placeholder cards when no collection is assigned or it has no products {%- endcomment -%}
-          {%- if card_count == 0 -%}
-            {%- for i in (1..4) -%}
-              <div class="tabbed-carousel__card tabbed-carousel__card--placeholder">
-                <div class="tabbed-carousel__card-media">
-                  {{ 'product-1' | placeholder_svg_tag: 'tabbed-carousel__card-placeholder' }}
-                </div>
-                <div class="tabbed-carousel__card-body">
-                  <p class="tabbed-carousel__card-title">Product title</p>
-                  <p class="tabbed-carousel__card-price"><span>$0.00</span></p>
-                </div>
-              </div>
-            {%- endfor -%}
-          {%- endif -%}
+      {%- if section.settings.badge_image != blank -%}
+        <div class="tabbed-carousel__badge" aria-hidden="true">
+          {{
+            section.settings.badge_image
+            | image_url: width: 130
+            | image_tag: width: 130, loading: 'lazy', alt: ''
+          }}
         </div>
+      {%- endif -%}
+    </div>
 
-        {%- comment -%} Controls: prev arrow, progress bar, next arrow {%- endcomment -%}
-        <div class="tabbed-carousel__controls">
-          <button
-            class="tabbed-carousel__arrow tabbed-carousel__arrow--prev"
-            type="button"
-            ref="prevArrows[]"
-            on:click="/handlePrevClick"
-            disabled
-            aria-label="Previous"
-          >
-            {%- if section.settings.icons_style == 'arrow' -%}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="20" height="20">
-                <path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            {%- else -%}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="20" height="20">
-                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            {%- endif -%}
-          </button>
+    {%- comment -%} ── Tab panels ── {%- endcomment -%}
+    {%- assign panel_index = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'tab' -%}
+        <div
+          class="tabbed-carousel__panel{% if panel_index == 0 %} is-active{% endif %}"
+          role="tabpanel"
+          id="tabpanel-{{ block.id }}"
+          data-panel-index="{{ panel_index }}"
+          ref="panels[]"
+          {{ block.shopify_attributes }}
+        >
+
+          <div class="tabbed-carousel__carousel-wrapper">
+
+            <button
+              class="tabbed-carousel__arrow tabbed-carousel__arrow--prev"
+              type="button"
+              ref="prevArrows[]"
+              on:click="/handlePrevClick"
+              disabled
+              aria-label="Previous"
+            >
+              {%- if section.settings.icons_style == 'arrow' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {%- else -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {%- endif -%}
+            </button>
+
+            <div class="tabbed-carousel__track-clip">
+              <div
+                class="tabbed-carousel__track"
+                ref="tracks[]"
+                data-panel-index="{{ panel_index }}"
+              >
+                {%- liquid
+                  assign card_limit = block.settings.max_products | default: 8
+                  assign card_count = 0
+                -%}
+
+                {%- if block.settings.collection != blank -%}
+                  {%- for product in block.settings.collection.products limit: card_limit -%}
+                    {%- assign card_count = card_count | plus: 1 -%}
+
+                    {%- comment -%} Qty badge: look for Count / Size option first -%}
+                    {%- endcomment -%}
+                    {%- assign qty_badge = '' -%}
+                    {%- for opt in product.options -%}
+                      {%- assign opt_l = opt | downcase -%}
+                      {%- if opt_l == 'count' or opt_l == 'size' or opt_l == 'quantity' -%}
+                        {%- assign qty_badge = product.variants.first.options[forloop.index0] -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
+                    {%- comment -%} Rating metafields {%- endcomment -%}
+                    {%- assign rating_value = product.metafields.reviews.rating.value -%}
+                    {%- assign rating_count = product.metafields.reviews.rating_count.value -%}
+
+                    <div
+                      class="tabbed-carousel__card"
+                      data-product-handle="{{ product.handle }}"
+                    >
+                      <a href="{{ product.url }}" class="tabbed-carousel__card-media-link" tabindex="-1" aria-hidden="true">
+                        <div class="tabbed-carousel__card-media">
+                          {%- if product.featured_image != blank -%}
+                            {{
+                              product.featured_image
+                              | image_url: width: 500
+                              | image_tag:
+                                widths: '250,375,500',
+                                sizes: '(min-width: 750px) 25vw, 50vw',
+                                loading: 'lazy',
+                                alt: product.featured_image.alt | default: product.title | escape
+                            }}
+                          {%- else -%}
+                            {{ 'product-1' | placeholder_svg_tag: 'tabbed-carousel__placeholder-svg' }}
+                          {%- endif -%}
+                          {%- if qty_badge != blank -%}
+                            <span class="tabbed-carousel__qty-badge">{{ qty_badge }}</span>
+                          {%- endif -%}
+                        </div>
+                      </a>
+
+                      <div class="tabbed-carousel__card-body">
+
+                        {%- comment -%} Rating -%}
+                        {%- endcomment -%}
+                        {%- if rating_value != blank -%}
+                          {%- assign rating_num = rating_value | times: 1.0 -%}
+                          {%- assign rating_half_threshold = rating_num | plus: 0.5 -%}
+                          <div class="tabbed-carousel__rating" aria-label="{{ rating_num }} out of 5 stars">
+                            <span class="tabbed-carousel__stars">
+                              {%- for i in (1..5) -%}
+                                {%- assign i_float = i | times: 1.0 -%}
+                                {%- if i_float <= rating_num -%}
+                                  <span class="tabbed-carousel__star is-full">★</span>
+                                {%- elsif i_float <= rating_half_threshold -%}
+                                  <span class="tabbed-carousel__star is-half">★</span>
+                                {%- else -%}
+                                  <span class="tabbed-carousel__star is-empty">★</span>
+                                {%- endif -%}
+                              {%- endfor -%}
+                            </span>
+                            {%- if rating_count != blank -%}
+                              <span class="tabbed-carousel__review-count">({{ rating_count }})</span>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+
+                        <a href="{{ product.url }}" class="tabbed-carousel__card-title-link">
+                          <p class="tabbed-carousel__card-title">{{ product.title }}</p>
+                        </a>
+
+                        {%- if product.description != blank -%}
+                          <p class="tabbed-carousel__card-desc">{{ product.description | strip_html | truncate: 60 }}</p>
+                        {%- endif -%}
+
+                        {%- comment -%} Variant pills -%}
+                        {%- endcomment -%}
+                        {%- unless product.has_only_default_variant -%}
+                          <div class="tabbed-carousel__variant-pills">
+                            {%- for variant in product.variants -%}
+                              {%- assign option_val = variant.options[0] -%}
+                              {%- liquid
+                                assign swatch_color = '#AAAAAA'
+                                assign opt_lower = option_val | downcase
+                                case opt_lower
+                                  when 'cherry'
+                                    assign swatch_color = '#C41A20'
+                                  when 'strawberry'
+                                    assign swatch_color = '#E87090'
+                                  when 'mango peach', 'peach mango'
+                                    assign swatch_color = '#F5A31A'
+                                  when 'mixed berry'
+                                    assign swatch_color = '#7B5EA7'
+                                  when 'raspberry'
+                                    assign swatch_color = '#D4154B'
+                                  when 'elderberry'
+                                    assign swatch_color = '#5B3584'
+                                  when 'watermelon'
+                                    assign swatch_color = '#F75E6F'
+                                  when 'orange'
+                                    assign swatch_color = '#F5620F'
+                                  when 'grape'
+                                    assign swatch_color = '#7B5EA7'
+                                  when 'lemon'
+                                    assign swatch_color = '#F5D547'
+                                  when 'apple'
+                                    assign swatch_color = '#6AAF2C'
+                                  when 'tropical'
+                                    assign swatch_color = '#FF9F0A'
+                                  when 'blueberry'
+                                    assign swatch_color = '#4A6FA5'
+                                  when 'original'
+                                    assign swatch_color = '#8B9EB7'
+                                  when 'vitamin c'
+                                    assign swatch_color = '#F5A31A'
+                                endcase
+                              -%}
+                              <button
+                                class="tabbed-carousel__variant-pill{% if forloop.first %} is-active{% endif %}"
+                                data-variant-id="{{ variant.id }}"
+                                data-price="{{ variant.price }}"
+                                data-compare-price="{{ variant.compare_at_price }}"
+                                data-available="{{ variant.available }}"
+                                type="button"
+                                on:click="/handleVariantClick"
+                              >
+                                <span class="tabbed-carousel__variant-dot" style="background: {{ swatch_color }};"></span>
+                                {{ option_val }}
+                              </button>
+                            {%- endfor -%}
+                          </div>
+                        {%- endunless -%}
+
+                        <div class="tabbed-carousel__card-footer">
+                          <div class="tabbed-carousel__card-price" ref="priceDisplays[]">
+                            {%- assign fv = product.variants.first -%}
+                            <span class="tabbed-carousel__price-current">{{ fv.price | money }}</span>
+                            {%- if fv.compare_at_price > fv.price -%}
+                              <s class="tabbed-carousel__price-compare">{{ fv.compare_at_price | money }}</s>
+                            {%- endif -%}
+                          </div>
+                          <button
+                            class="tabbed-carousel__add-btn"
+                            type="button"
+                            data-variant-id="{{ product.variants.first.id }}"
+                            aria-label="Add {{ product.title | escape }} to cart"
+                            on:click="/handleAddToCart"
+                          >ADD</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                {%- endif -%}
+
+                {%- if card_count == 0 -%}
+                  {%- for i in (1..4) -%}
+                    <div class="tabbed-carousel__card tabbed-carousel__card--placeholder">
+                      <div class="tabbed-carousel__card-media">
+                        {{ 'product-1' | placeholder_svg_tag: 'tabbed-carousel__placeholder-svg' }}
+                        <span class="tabbed-carousel__qty-badge">90ct</span>
+                      </div>
+                      <div class="tabbed-carousel__card-body">
+                        <p class="tabbed-carousel__card-title">Product Title</p>
+                        <p class="tabbed-carousel__card-desc">Complete Health maintenance.</p>
+                        <div class="tabbed-carousel__card-footer">
+                          <div class="tabbed-carousel__card-price">
+                            <span class="tabbed-carousel__price-current">$43.19</span>
+                            <s class="tabbed-carousel__price-compare">$51.98</s>
+                          </div>
+                          <button class="tabbed-carousel__add-btn" type="button" disabled>ADD</button>
+                        </div>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+            </div>
+
+            <button
+              class="tabbed-carousel__arrow tabbed-carousel__arrow--next"
+              type="button"
+              ref="nextArrows[]"
+              on:click="/handleNextClick"
+              aria-label="Next"
+            >
+              {%- if section.settings.icons_style == 'arrow' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true"><path d="M5 12h14M12 19l7-7-7-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {%- else -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {%- endif -%}
+            </button>
+
+          </div>
 
           <div class="tabbed-carousel__progress">
-            <div
-              class="tabbed-carousel__progress-bar"
-              ref="progressBars[]"
-            ></div>
+            <div class="tabbed-carousel__progress-bar" ref="progressBars[]"></div>
           </div>
 
-          <button
-            class="tabbed-carousel__arrow tabbed-carousel__arrow--next"
-            type="button"
-            ref="nextArrows[]"
-            on:click="/handleNextClick"
-            aria-label="Next"
-          >
-            {%- if section.settings.icons_style == 'arrow' -%}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="20" height="20">
-                <path d="M5 12h14M12 19l7-7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            {%- else -%}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="20" height="20">
-                <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+          {%- comment -%} Mobile guarantee (section-level, hidden on desktop) -%}
+          {%- endcomment -%}
+          {%- if section.settings.show_guarantee -%}
+            <div class="tabbed-carousel__guarantee">
+              {%- assign guarantee_img = section.settings.guarantee_image | default: section.settings.badge_image -%}
+              {%- if guarantee_img != blank -%}
+                {{
+                  guarantee_img
+                  | image_url: width: 90
+                  | image_tag: width: 90, loading: 'lazy', alt: '', class: 'tabbed-carousel__guarantee-img'
+                }}
+              {%- endif -%}
+              <div class="tabbed-carousel__guarantee-copy">
+                {%- if section.settings.guarantee_heading != blank -%}
+                  <strong>{{ section.settings.guarantee_heading }}</strong>
+                {%- endif -%}
+                {%- if section.settings.guarantee_subtext != blank -%}
+                  <span>{{ section.settings.guarantee_subtext }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.cta_text != blank -%}
+            {%- assign cta_href = block.settings.cta_url -%}
+            {%- if cta_href == blank and block.settings.collection != blank -%}
+              {%- assign cta_href = block.settings.collection.url -%}
             {%- endif -%}
-          </button>
+            <div class="tabbed-carousel__cta">
+              <a href="{{ cta_href }}" class="tabbed-carousel__cta-btn">{{ block.settings.cta_text | upcase }}</a>
+            </div>
+          {%- endif -%}
+
         </div>
+        {%- assign panel_index = panel_index | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
 
-        {%- comment -%} CTA link — rendered only when cta_text is set {%- endcomment -%}
-        {%- if block.settings.cta_text != blank -%}
-          {%- assign cta_href = block.settings.cta_url -%}
-          {%- if cta_href == blank and block.settings.collection != blank -%}
-            {%- assign cta_href = block.settings.collection.url -%}
-          {%- endif -%}
-          <div class="tabbed-carousel__cta">
-            <a href="{{ cta_href }}" class="button">{{ block.settings.cta_text | escape }}</a>
-          </div>
-        {%- endif -%}
-      </div>
-
-      {%- assign panel_index = panel_index | plus: 1 -%}
-    {%- endif -%}
-  {%- endfor -%}
-
-  {%- comment -%} ── Mobile guarantee ticker (hidden on desktop via CSS) ── {%- endcomment -%}
-  {%- if section.settings.show_ticker -%}
-    <div class="tabbed-carousel__ticker" aria-hidden="true">
-      <div class="tabbed-carousel__ticker-inner">
-        {%- for n in (1..2) -%}
-          {%- if section.settings.ticker_item_1 != blank -%}
-            <span class="tabbed-carousel__ticker-sep" aria-hidden="true">✦</span>
-            <span class="tabbed-carousel__ticker-item">{{ section.settings.ticker_item_1 }}</span>
-          {%- endif -%}
-          {%- if section.settings.ticker_item_2 != blank -%}
-            <span class="tabbed-carousel__ticker-sep" aria-hidden="true">✦</span>
-            <span class="tabbed-carousel__ticker-item">{{ section.settings.ticker_item_2 }}</span>
-          {%- endif -%}
-          {%- if section.settings.ticker_item_3 != blank -%}
-            <span class="tabbed-carousel__ticker-sep" aria-hidden="true">✦</span>
-            <span class="tabbed-carousel__ticker-item">{{ section.settings.ticker_item_3 }}</span>
-          {%- endif -%}
-          {%- if section.settings.ticker_item_4 != blank -%}
-            <span class="tabbed-carousel__ticker-sep" aria-hidden="true">✦</span>
-            <span class="tabbed-carousel__ticker-item">{{ section.settings.ticker_item_4 }}</span>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    </div>
-  {%- endif -%}
+  </div>
 
   <script src="{{ 'tabbed-carousel.js' | asset_url }}" type="module"></script>
 </tabbed-carousel>
 
 {% stylesheet %}
-  /* ── Root ── */
-  .tabbed-carousel {
-    position: relative;
-    display: block;
-  }
 
-  /* ── Header ── */
+/* ── Brand tokens ── */
+.tabbed-carousel {
+  --tc-accent:    #3D1534;
+  --tc-card-bg:   #FAF0F5;
+  --tc-star:      #FFB800;
+  --tc-radius:    12px;
+  --tc-gap:       20px;
+}
+
+/* ── Inner wrapper ── */
+.tabbed-carousel__inner {
+  position: relative;
+}
+
+/* ── Header ── */
+.tabbed-carousel__header {
+  position: relative;
+  text-align: center;
+  margin-block-end: 32px;
+}
+
+.tabbed-carousel__heading {
+  margin: 0 0 24px;
+  font-family: var(--font-heading--family);
+  font-style:   var(--font-heading--style);
+  font-weight:  var(--font-heading--weight);
+  font-size:    clamp(1.75rem, 3vw, 2.5rem);
+  line-height:  1.15;
+  color:        var(--tc-accent);
+}
+
+/* ── Tabs ── */
+.tabbed-carousel__tabs {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1.5px solid rgb(var(--color-foreground-rgb) / 0.15);
+  gap: 0;
+}
+
+.tabbed-carousel__tab {
+  background:    transparent;
+  border:        none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1.5px;
+  padding:       12px 28px;
+  font-family:   var(--font-body--family);
+  font-size:     0.875rem;
+  font-weight:   500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color:         rgb(var(--color-foreground-rgb) / 0.55);
+  cursor:        pointer;
+  white-space:   nowrap;
+  transition:    color 0.2s, border-color 0.2s;
+}
+
+.tabbed-carousel__tab.is-active {
+  color:        var(--tc-accent);
+  border-bottom-color: var(--tc-accent);
+  font-weight:  700;
+}
+
+.tabbed-carousel__tab:hover:not(.is-active) {
+  color: rgb(var(--color-foreground-rgb) / 0.8);
+}
+
+/* ── Badge (desktop top-right) ── */
+.tabbed-carousel__badge {
+  display: none;
+}
+@media screen and (min-width: 750px) {
+  .tabbed-carousel__badge {
+    display: block;
+    position: absolute;
+    top: -8px;
+    inset-inline-end: 0;
+    width: 130px;
+    height: 130px;
+  }
+  .tabbed-carousel__badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+/* ── Panels ── */
+.tabbed-carousel__panel {
+  display: none;
+}
+.tabbed-carousel__panel.is-active {
+  display: block;
+}
+
+/* ── Carousel wrapper ── */
+.tabbed-carousel__carousel-wrapper {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin-block-start: 28px;
+}
+
+.tabbed-carousel__track-clip {
+  overflow: hidden;
+  padding: 8px 2px 12px; /* vertical for card shadows/hover */
+}
+
+.tabbed-carousel__track {
+  display: flex;
+  gap: var(--tc-gap);
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.tabbed-carousel__track::-webkit-scrollbar { display: none; }
+
+/* ── Cards ── */
+.tabbed-carousel__card {
+  flex: 0 0 calc(
+    (100% - (var(--tc-cols) - 1) * var(--tc-gap)) / var(--tc-cols)
+  );
+  scroll-snap-align: start;
+  background:    var(--tc-card-bg);
+  border-radius: var(--tc-radius);
+  overflow:      hidden;
+  display:       flex;
+  flex-direction: column;
+}
+
+.tabbed-carousel__card-media-link {
+  display: block;
+  text-decoration: none;
+}
+
+.tabbed-carousel__card-media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--tc-card-bg);
+  overflow: hidden;
+}
+
+.tabbed-carousel__card-media img,
+.tabbed-carousel__placeholder-svg {
+  width:  100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 12px;
+}
+
+/* Qty badge bottom-right of image */
+.tabbed-carousel__qty-badge {
+  position:      absolute;
+  bottom:        10px;
+  inset-inline-end: 10px;
+  background:    rgb(255 255 255 / 0.92);
+  color:         rgb(var(--color-foreground-rgb) / 0.75);
+  font-size:     0.7rem;
+  font-family:   var(--font-body--family);
+  font-weight:   500;
+  padding:       3px 8px;
+  border-radius: 4px;
+}
+
+/* ── Card body ── */
+.tabbed-carousel__card-body {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+  padding:        14px 14px 16px;
+  flex:           1;
+}
+
+/* Rating */
+.tabbed-carousel__rating {
+  display:     flex;
+  align-items: center;
+  gap:         4px;
+}
+
+.tabbed-carousel__stars {
+  display:   flex;
+  gap:       1px;
+  color:     var(--tc-star);
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.tabbed-carousel__star.is-empty {
+  opacity: 0.25;
+}
+.tabbed-carousel__star.is-half {
+  opacity: 0.6;
+}
+
+.tabbed-carousel__review-count {
+  font-size:  0.75rem;
+  color:      rgb(var(--color-foreground-rgb) / 0.55);
+  font-family: var(--font-body--family);
+}
+
+/* Title */
+.tabbed-carousel__card-title-link {
+  text-decoration: none;
+  color: inherit;
+}
+.tabbed-carousel__card-title {
+  margin:      0;
+  font-family: var(--font-body--family);
+  font-size:   0.9rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color:       var(--color-foreground);
+}
+.tabbed-carousel__card-title-link:hover .tabbed-carousel__card-title {
+  text-decoration: underline;
+}
+
+/* Description */
+.tabbed-carousel__card-desc {
+  margin:     0;
+  font-size:  0.8rem;
+  color:      rgb(var(--color-foreground-rgb) / 0.6);
+  line-height: 1.4;
+  font-family: var(--font-body--family);
+}
+
+/* Variant pills */
+.tabbed-carousel__variant-pills {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       6px;
+  margin-block-start: 2px;
+}
+
+.tabbed-carousel__variant-pill {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           5px;
+  padding:       5px 10px 5px 7px;
+  background:    transparent;
+  border:        1.5px solid rgb(var(--color-foreground-rgb) / 0.2);
+  border-radius: 100px;
+  font-size:     0.75rem;
+  font-family:   var(--font-body--family);
+  color:         rgb(var(--color-foreground-rgb) / 0.8);
+  cursor:        pointer;
+  white-space:   nowrap;
+  transition:    border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.tabbed-carousel__variant-pill.is-active {
+  border-color: var(--tc-accent);
+  background:   rgb(61 21 52 / 0.06);
+  color:        var(--tc-accent);
+  font-weight:  600;
+}
+
+.tabbed-carousel__variant-dot {
+  width:         10px;
+  height:        10px;
+  border-radius: 50%;
+  flex-shrink:   0;
+  border:        1px solid rgb(0 0 0 / 0.1);
+}
+
+/* Card footer: price + ADD */
+.tabbed-carousel__card-footer {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             8px;
+  margin-block-start: auto;
+  padding-block-start: 8px;
+}
+
+.tabbed-carousel__card-price {
+  display:     flex;
+  align-items: baseline;
+  gap:         6px;
+  flex-wrap:   wrap;
+}
+
+.tabbed-carousel__price-current {
+  font-family: var(--font-body--family);
+  font-size:   0.95rem;
+  font-weight: 700;
+  color:       var(--tc-accent);
+}
+
+.tabbed-carousel__price-compare {
+  font-size:      0.8rem;
+  color:          rgb(var(--color-foreground-rgb) / 0.45);
+  text-decoration: line-through;
+  font-family:    var(--font-body--family);
+}
+
+.tabbed-carousel__add-btn {
+  flex-shrink:   0;
+  padding:       10px 20px;
+  background:    var(--tc-accent);
+  color:         #fff;
+  border:        none;
+  border-radius: 100px;
+  font-family:   var(--font-body--family);
+  font-size:     0.8rem;
+  font-weight:   700;
+  letter-spacing: 0.06em;
+  cursor:        pointer;
+  transition:    opacity 0.2s, transform 0.15s;
+  white-space:   nowrap;
+}
+.tabbed-carousel__add-btn:hover { opacity: 0.88; }
+.tabbed-carousel__add-btn:active { transform: scale(0.97); }
+.tabbed-carousel__add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.tabbed-carousel__add-btn.is-loading { opacity: 0.7; pointer-events: none; }
+.tabbed-carousel__add-btn.is-added {
+  background: #2d7a2d;
+}
+
+/* ── Arrows ── */
+.tabbed-carousel__arrow {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           44px;
+  height:          44px;
+  background:      var(--color-background, #fff);
+  border:          1.5px solid rgb(var(--color-foreground-rgb) / 0.2);
+  border-radius:   50%;
+  cursor:          pointer;
+  color:           var(--color-foreground);
+  flex-shrink:     0;
+  transition:      opacity 0.2s, border-color 0.2s;
+  padding:         0;
+}
+.tabbed-carousel__arrow:disabled {
+  opacity: 0.3;
+  cursor:  not-allowed;
+}
+.tabbed-carousel__arrow:not(:disabled):hover {
+  border-color: rgb(var(--color-foreground-rgb) / 0.5);
+}
+
+/* ── Progress bar ── */
+.tabbed-carousel__progress {
+  height:       2px;
+  background:   rgb(var(--color-foreground-rgb) / 0.12);
+  border-radius: 1px;
+  overflow:     hidden;
+  margin-block-start: 20px;
+}
+.tabbed-carousel__progress-bar {
+  height:     100%;
+  width:      0%;
+  background: var(--tc-accent);
+  border-radius: 1px;
+  transition: width 0.1s linear;
+}
+
+/* ── Mobile guarantee banner ── */
+.tabbed-carousel__guarantee {
+  display:         flex;
+  align-items:     center;
+  gap:             14px;
+  padding:         16px 20px;
+  background:      var(--tc-card-bg);
+  border-radius:   var(--tc-radius);
+  margin-block-start: 20px;
+}
+.tabbed-carousel__guarantee-img {
+  width:      72px;
+  height:     72px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.tabbed-carousel__guarantee-copy {
+  display:        flex;
+  flex-direction: column;
+  gap:            4px;
+}
+.tabbed-carousel__guarantee-copy strong {
+  font-size:   0.9rem;
+  font-weight: 700;
+  color:       var(--tc-accent);
+  font-family: var(--font-body--family);
+}
+.tabbed-carousel__guarantee-copy span {
+  font-size:   0.8rem;
+  color:       rgb(var(--color-foreground-rgb) / 0.65);
+  font-family: var(--font-body--family);
+}
+
+/* ── CTA ── */
+.tabbed-carousel__cta {
+  text-align:       center;
+  margin-block-start: 24px;
+}
+.tabbed-carousel__cta-btn {
+  display:       inline-block;
+  padding:       14px 48px;
+  background:    transparent;
+  border:        1.5px solid var(--tc-accent);
+  border-radius: 100px;
+  font-family:   var(--font-body--family);
+  font-size:     0.85rem;
+  font-weight:   700;
+  letter-spacing: 0.1em;
+  color:         var(--tc-accent);
+  text-decoration: none;
+  width:         min(100%, 480px);
+  text-align:    center;
+  transition:    background 0.2s, color 0.2s;
+}
+.tabbed-carousel__cta-btn:hover {
+  background: var(--tc-accent);
+  color:      #fff;
+}
+
+/* ── Mobile overrides ── */
+@media screen and (max-width: 749px) {
   .tabbed-carousel__header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-md, 0.9rem);
-    margin-block-end: var(--margin-xl, 1.25rem);
+    text-align: left;
+    margin-block-end: 24px;
   }
 
   .tabbed-carousel__heading {
-    margin: 0;
-    font-family: var(--font-h2--family);
-    font-style: var(--font-h2--style);
-    font-weight: var(--font-h2--weight);
-    font-size: var(--font-h2--size);
-    line-height: var(--font-h2--line-height);
-    letter-spacing: var(--font-h2--letter-spacing);
-    text-transform: var(--font-h2--case);
-    color: var(--color-foreground-heading);
+    font-size:   clamp(1.5rem, 7vw, 2rem);
+    margin-block-end: 16px;
   }
 
-  .tabbed-carousel__subheading {
-    margin: 0;
-    font-family: var(--font-paragraph--family);
-    font-size: var(--font-paragraph--size);
-    line-height: var(--font-paragraph--line-height);
-    color: var(--color-foreground);
-  }
-
-  /* ── Badge ── */
-  .tabbed-carousel__badge {
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .tabbed-carousel__badge img {
-    display: block;
-    width: 120px;
-    height: auto;
-  }
-
-  .tabbed-carousel__badge-text {
-    display: inline-block;
-    padding: 6px 14px;
-    background: var(--color-primary);
-    color: var(--color-background);
-    font-size: var(--font-size--sm);
-    font-family: var(--font-subheading--family);
-    font-weight: var(--font-subheading--weight);
-    border-radius: 24px;
-  }
-
-  /* ── Tabs ── */
   .tabbed-carousel__tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-block-end: var(--margin-2xl, 1.5rem);
+    justify-content:    flex-start;
+    overflow-x:         auto;
+    scrollbar-width:    none;
+    border-bottom-color: rgb(var(--color-foreground-rgb) / 0.12);
   }
+  .tabbed-carousel__tabs::-webkit-scrollbar { display: none; }
 
   .tabbed-carousel__tab {
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    padding: 8px 16px;
-    font-family: var(--font-paragraph--family);
-    font-size: var(--font-paragraph--size);
-    color: var(--color-foreground);
-    transition: border-color 0.2s ease;
-    white-space: nowrap;
+    padding: 10px 18px;
+    font-size: 0.8rem;
   }
 
-  .tabbed-carousel__tab.is-active {
-    border-bottom-color: currentColor;
-    font-weight: 600;
-  }
-
-  .tabbed-carousel__tab:hover {
-    border-bottom-color: currentColor;
-  }
-
-  /* ── Panels ── */
-  .tabbed-carousel__panel {
-    display: none;
-  }
-
-  .tabbed-carousel__panel.is-active {
-    display: block;
-  }
-
-  /* ── Track ── */
-  .tabbed-carousel__track {
-    display: flex;
-    gap: var(--tabbed-carousel-card-gap, 20px);
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .tabbed-carousel__track::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* ── Cards ── */
-  .tabbed-carousel__card {
-    flex: 0 0 auto;
-    width: calc(
-      (100% - (var(--tabbed-carousel-columns) - 1) * var(--tabbed-carousel-card-gap, 20px))
-      / var(--tabbed-carousel-columns)
-    );
-    scroll-snap-align: start;
-    min-width: 0;
-    overflow-wrap: break-word;
-  }
-
-  .tabbed-carousel__card-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .tabbed-carousel__card-link:hover .tabbed-carousel__card-title {
-    text-decoration: underline;
-  }
-
-  .tabbed-carousel__card-media {
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    border-radius: var(--style-border-radius-md, 8px);
-    background: rgb(var(--color-foreground-rgb) / var(--opacity-5, 0.05));
-  }
-
-  .tabbed-carousel__card-media img,
-  .tabbed-carousel__card-placeholder {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .tabbed-carousel__card-body {
-    padding-block-start: 12px;
-  }
-
-  .tabbed-carousel__card-title {
-    margin: 0 0 4px;
-    font-family: var(--font-paragraph--family);
-    font-size: var(--font-size--sm);
-    line-height: 1.4;
-    color: var(--color-foreground);
-  }
-
-  .tabbed-carousel__card-price {
-    margin: 0;
-    font-family: var(--font-paragraph--family);
-    font-size: var(--font-size--sm);
-    color: var(--color-foreground);
-    display: flex;
-    gap: 8px;
-    align-items: baseline;
-  }
-
-  .tabbed-carousel__card-compare-price {
-    opacity: var(--opacity-50, 0.5);
-    text-decoration: line-through;
-  }
-
-  /* ── Controls ── */
-  .tabbed-carousel__controls {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-block-start: 24px;
+  .tabbed-carousel__carousel-wrapper {
+    grid-template-columns: 0 1fr 0;
+    gap: 0;
+    margin-block-start: 20px;
   }
 
   .tabbed-carousel__arrow {
-    background: transparent;
-    border: 1px solid var(--color-border);
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    color: var(--color-foreground);
-    transition: opacity 0.2s ease;
-    padding: 0;
-  }
-
-  .tabbed-carousel__arrow:disabled {
-    opacity: var(--opacity-30, 0.3);
-    cursor: not-allowed;
-  }
-
-  .tabbed-carousel__arrow:not(:disabled):hover {
-    background: rgb(var(--color-foreground-rgb) / var(--opacity-5, 0.05));
-  }
-
-  .tabbed-carousel__progress {
-    flex: 1;
-    height: 2px;
-    background: rgb(var(--color-foreground-rgb) / var(--opacity-20, 0.2));
-    border-radius: 1px;
-    overflow: hidden;
-  }
-
-  .tabbed-carousel__progress-bar {
-    height: 100%;
-    width: 0%;
-    background: var(--color-primary);
-    border-radius: 1px;
-    transition: width 0.1s linear;
-  }
-
-  /* ── CTA ── */
-  .tabbed-carousel__cta {
-    text-align: center;
-    margin-block-start: 32px;
-  }
-
-  /* ── Ticker (mobile only) ── */
-  .tabbed-carousel__ticker {
     display: none;
-    overflow: hidden;
-    margin-block-start: 24px;
   }
 
-  .tabbed-carousel__ticker-inner {
-    display: flex;
-    white-space: nowrap;
-    animation: tabbed-carousel-ticker 24s linear infinite;
+  .tabbed-carousel__track {
+    gap: 12px;
   }
 
-  .tabbed-carousel__ticker-item {
-    padding-inline: 8px;
-    font-family: var(--font-body--family);
-    font-size: var(--font-size--sm);
-    color: var(--color-foreground);
+  .tabbed-carousel__card {
+    flex: 0 0 calc(50% - 6px);
   }
 
-  .tabbed-carousel__ticker-sep {
-    padding-inline: 8px;
-    opacity: var(--opacity-40, 0.4);
-    color: var(--color-foreground);
+  .tabbed-carousel__card-body {
+    padding: 10px 10px 12px;
+    gap: 4px;
   }
 
-  @keyframes tabbed-carousel-ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  .tabbed-carousel__card-title {
+    font-size: 0.82rem;
   }
 
-  /* ── Mobile overrides ── */
-  @media screen and (max-width: 749px) {
-    .tabbed-carousel {
-      --tabbed-carousel-columns: 1.3;
-    }
-
-    .tabbed-carousel__tabs {
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .tabbed-carousel__tabs::-webkit-scrollbar {
-      display: none;
-    }
-
-    .tabbed-carousel__ticker {
-      display: block;
-    }
-
-    .tabbed-carousel__badge {
-      position: static;
-      align-self: flex-start;
-    }
+  .tabbed-carousel__card-desc {
+    font-size: 0.75rem;
   }
 
-  /* ── Desktop: badge positioned absolutely ── */
-  @media screen and (min-width: 750px) {
-    .tabbed-carousel__badge {
-      position: absolute;
-      top: 0;
-      inset-inline-end: 0;
-    }
+  .tabbed-carousel__price-current {
+    font-size: 0.875rem;
   }
+
+  .tabbed-carousel__add-btn {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+  }
+
+  .tabbed-carousel__cta-btn {
+    width: 100%;
+    padding: 14px 24px;
+  }
+}
+
+/* ── Desktop ── */
+@media screen and (min-width: 750px) {
+  .tabbed-carousel__guarantee {
+    display: none; /* shown only on mobile */
+  }
+}
+
 {% endstylesheet %}
 
 {% schema %}
@@ -542,22 +846,11 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Shop Our Range"
-    },
-    {
-      "type": "text",
-      "id": "subheading",
-      "label": "Subheading"
+      "default": "More Nutrition For Your Kid"
     },
     {
       "type": "header",
       "content": "Badge"
-    },
-    {
-      "type": "text",
-      "id": "badge_text",
-      "label": "Badge text",
-      "default": "New Arrival"
     },
     {
       "type": "image_picker",
@@ -566,37 +859,30 @@
     },
     {
       "type": "header",
-      "content": "Mobile Ticker"
+      "content": "Mobile Guarantee"
     },
     {
       "type": "checkbox",
-      "id": "show_ticker",
-      "label": "Show ticker",
+      "id": "show_guarantee",
+      "label": "Show guarantee banner on mobile",
       "default": true
     },
     {
-      "type": "text",
-      "id": "ticker_item_1",
-      "label": "Ticker item 1",
-      "default": "Free Shipping"
+      "type": "image_picker",
+      "id": "guarantee_image",
+      "label": "Guarantee badge image"
     },
     {
       "type": "text",
-      "id": "ticker_item_2",
-      "label": "Ticker item 2",
-      "default": "Money-Back Guarantee"
+      "id": "guarantee_heading",
+      "label": "Guarantee heading",
+      "default": "100-Day Money-Back Guarantee"
     },
     {
       "type": "text",
-      "id": "ticker_item_3",
-      "label": "Ticker item 3",
-      "default": "Naturally Sourced"
-    },
-    {
-      "type": "text",
-      "id": "ticker_item_4",
-      "label": "Ticker item 4",
-      "default": "Vet Approved"
+      "id": "guarantee_subtext",
+      "label": "Guarantee subtext",
+      "default": "No Returns, No Hassle, No Questions."
     },
     {
       "type": "header",
@@ -605,7 +891,7 @@
     {
       "type": "select",
       "id": "icons_style",
-      "label": "Icon style",
+      "label": "Arrow style",
       "options": [
         { "value": "arrow", "label": "Arrow" },
         { "value": "chevron", "label": "Chevron" }
@@ -619,7 +905,7 @@
     {
       "type": "range",
       "id": "columns",
-      "label": "Products per row",
+      "label": "Products per row (desktop)",
       "min": 2,
       "max": 5,
       "step": 1,
@@ -675,7 +961,7 @@
           "type": "text",
           "id": "tab_label",
           "label": "Tab label",
-          "default": "Tab"
+          "default": "KIDS"
         },
         {
           "type": "collection",
@@ -694,8 +980,8 @@
         {
           "type": "text",
           "id": "cta_text",
-          "label": "CTA text",
-          "default": "View All"
+          "label": "CTA button text",
+          "default": "SHOP ALL KIDS"
         },
         {
           "type": "url",
@@ -715,19 +1001,22 @@
         {
           "type": "tab",
           "settings": {
-            "tab_label": "All Products"
+            "tab_label": "KIDS",
+            "cta_text": "SHOP ALL KIDS"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "tab_label": "New Arrivals"
+            "tab_label": "ADULTS",
+            "cta_text": "SHOP ALL ADULTS"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "tab_label": "Best Sellers"
+            "tab_label": "BUNDLE & SAVE",
+            "cta_text": "SHOP ALL BUNDLES"
           }
         }
       ]
