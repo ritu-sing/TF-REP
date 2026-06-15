@@ -231,128 +231,276 @@
           "type": "text",
           "settings": {
             "text": "<p>10,000+ 5-Star Reviews</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
             "case": "uppercase",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "sep_a": {
           "type": "text",
           "settings": {
             "text": "<p>✦</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "item_b": {
           "type": "text",
           "settings": {
             "text": "<p>USDA Organic Certified</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
             "case": "uppercase",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "sep_b": {
           "type": "text",
           "settings": {
             "text": "<p>✦</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "item_c": {
           "type": "text",
           "settings": {
             "text": "<p>3rd Party Lab Tested</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
             "case": "uppercase",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "sep_c": {
           "type": "text",
           "settings": {
             "text": "<p>✦</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "item_d": {
           "type": "text",
           "settings": {
             "text": "<p>Allergen Free Formula</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
             "case": "uppercase",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "sep_d": {
           "type": "text",
           "settings": {
             "text": "<p>✦</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "item_e": {
           "type": "text",
           "settings": {
             "text": "<p>Parent-Owned Brand</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
             "case": "uppercase",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "sep_e": {
           "type": "text",
           "settings": {
             "text": "<p>✦</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "item_f": {
           "type": "text",
           "settings": {
             "text": "<p>100-Day Money Back Guarantee</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
             "case": "uppercase",
             "wrap": "nowrap",
-            "width": "fit-content"
-          }
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -374,6 +522,58 @@
         "gap_between_elements": 40,
         "padding-block-start": 14,
         "padding-block-end": 14
+      }
+    },
+    "tabbed_carousel_main": {
+      "type": "tabbed-carousel",
+      "blocks": {
+        "tab_0": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "KIDS",
+            "collection": "",
+            "max_products": 8,
+            "cta_text": "SHOP ALL KIDS",
+            "cta_url": ""
+          }
+        },
+        "tab_1": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "ADULTS",
+            "collection": "",
+            "max_products": 8,
+            "cta_text": "SHOP ALL ADULTS",
+            "cta_url": ""
+          }
+        },
+        "tab_2": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "BUNDLE & SAVE",
+            "collection": "",
+            "max_products": 8,
+            "cta_text": "SHOP ALL BUNDLES",
+            "cta_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "tab_0",
+        "tab_1",
+        "tab_2"
+      ],
+      "settings": {
+        "heading": "More Nutrition For Your Kid",
+        "show_guarantee": true,
+        "guarantee_heading": "100-Day Money-Back Guarantee",
+        "guarantee_subtext": "No Returns, No Hassle, No Questions.",
+        "icons_style": "chevron",
+        "columns": 4,
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 60
       }
     },
     "our_story_section": {
@@ -456,66 +656,21 @@
         "badge_wheat"
       ],
       "settings": {
+        "image": "shopify://shop_images/2121776be9b8435eed6aae8af19dfe80bb068e3c.png",
         "eyebrow": "OUR STORY",
         "heading": "<p>Real Ingredients. Real Results. Really For Kids.</p>",
-        "body": "<p>We started Llama Naturals because our own kids deserved better. Better ingredients, better nutrition, and better taste — without the artificial junk. Every gummy we make is crafted from real fruit, certified organic, and third-party tested so you can feel confident in every bite.</p>",
-        "button_label": "Learn More",
+        "body": "",
+        "button_label": "",
         "button_link": "",
         "image_position": "left",
         "section_width": "full-width",
-        "left_panel_bg": "#E8B49A",
-        "right_panel_bg": "#EDBA9D",
+        "left_panel_bg": "#F5B390",
+        "right_panel_bg": "#FCDAC4",
         "show_divider": true,
-        "divider_color": "#3D1534",
+        "divider_color": "#3d1534",
         "color_scheme": "scheme-9",
         "padding-block-start": 0,
         "padding-block-end": 0
-      }
-    },
-    "tabbed_carousel_main": {
-      "type": "tabbed-carousel",
-      "blocks": {
-        "tab_0": {
-          "type": "tab",
-          "settings": {
-            "tab_label": "KIDS",
-            "max_products": 8,
-            "cta_text": "SHOP ALL KIDS"
-          }
-        },
-        "tab_1": {
-          "type": "tab",
-          "settings": {
-            "tab_label": "ADULTS",
-            "max_products": 8,
-            "cta_text": "SHOP ALL ADULTS"
-          }
-        },
-        "tab_2": {
-          "type": "tab",
-          "settings": {
-            "tab_label": "BUNDLE & SAVE",
-            "max_products": 8,
-            "cta_text": "SHOP ALL BUNDLES"
-          }
-        }
-      },
-      "block_order": [
-        "tab_0",
-        "tab_1",
-        "tab_2"
-      ],
-      "settings": {
-        "heading": "More Nutrition For Your Kid",
-        "show_guarantee": true,
-        "guarantee_heading": "100-Day Money-Back Guarantee",
-        "guarantee_subtext": "No Returns, No Hassle, No Questions.",
-        "icons_style": "chevron",
-        "columns": 4,
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 60,
-        "padding-block-end": 60
       }
     },
     "hero_jVaWmY": {
