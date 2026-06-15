@@ -105,6 +105,7 @@
       </div>
 
       {%- comment -%} Product item rows {%- endcomment -%}
+      <div class="hero-offer__product-list">
       {%- for block in section.blocks -%}
         {%- if block.type == 'product-item' -%}
           <div class="hero-offer__product-row" {{ block.shopify_attributes }}>
@@ -157,6 +158,7 @@
           </div>
         {%- endif -%}
       {%- endfor -%}
+      </div>
 
       {%- comment -%} Benefits container: secondary badges + CTA + shipping {%- endcomment -%}
       <div class="hero-offer__benefits-container">
@@ -266,8 +268,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 24px 16px 56px 16px;
-    background-color: rgba(104, 0, 64, 0.05);
+    padding: 24px 16px 32px 16px;
   }
 
   .hero-offer__product-details {
@@ -362,11 +363,23 @@
     color: #000000;
   }
 
+  .hero-offer__product-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
   .hero-offer__product-row {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     gap: 12px;
+    padding-block: 12px;
+  }
+
+  .hero-offer__product-row:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   .hero-offer__product-icon {
@@ -579,18 +592,18 @@
     .hero-offer__inner {
       display: flex;
       flex-direction: row;
-      max-width: 900px;
+      max-width: 1100px;
       margin-inline: auto;
       border-radius: 12px;
       overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .hero-offer__image-wrap {
-      width: 50%;
+      width: 48%;
       flex-shrink: 0;
       border-radius: 12px 0 0 12px;
       aspect-ratio: auto;
-      min-height: 500px;
     }
 
     .hero-offer__image-el {
@@ -601,7 +614,7 @@
     .hero-offer__content {
       flex: 1;
       border-radius: 0 12px 12px 0;
-      padding: 32px 24px 40px 24px;
+      padding: 40px 40px 32px 40px;
     }
   }
 {% endstylesheet %}
