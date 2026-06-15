@@ -142,6 +142,10 @@
       ],
       "settings": {
         "hero_image": "shopify://shop_images/hero-image-content-mobile-19941259.png",
+        "gallery_image_1": "shopify://shop_images/hero-image-content-mobile-19941259.png",
+        "gallery_image_2": "shopify://shop_images/image-19-mobile-157615967.png",
+        "gallery_image_3": "shopify://shop_images/image-18-mobile-157615798.png",
+        "gallery_image_4": "shopify://shop_images/product-thumbnail-mobile-14816384.png",
         "full_stars": 4,
         "show_half_star": true,
         "review_count": "(5,870)",

@@ -8,22 +8,63 @@
 >
   <div class="hero-offer__inner">
 
-    {%- comment -%} Hero Image {%- endcomment -%}
-    <div class="hero-offer__image-wrap">
-      {%- if section.settings.hero_image != blank -%}
-        {%- assign hero_sizes = '(min-width: 750px) 50vw, 100vw' -%}
-        {{
-          section.settings.hero_image
-          | image_url: width: section.settings.hero_image.width
-          | image_tag:
-            sizes: hero_sizes,
-            widths: '390,780,1100',
-            loading: 'lazy',
-            alt: section.settings.hero_image.alt,
-            class: 'hero-offer__image-el'
-        }}
-      {%- else -%}
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-offer__image-placeholder' }}
+    {%- comment -%} Gallery: main image + thumbnail strip {%- endcomment -%}
+    <div class="hero-offer__gallery" id="hero-offer-gallery-{{ section.id }}">
+      {%- assign main_display_image = section.settings.gallery_image_1 | default: section.settings.hero_image -%}
+      <div class="hero-offer__image-wrap">
+        {%- if main_display_image != blank -%}
+          {%- assign hero_sizes = '(min-width: 750px) 50vw, 100vw' -%}
+          {{
+            main_display_image
+            | image_url: width: main_display_image.width
+            | image_tag:
+              sizes: hero_sizes,
+              widths: '390,780,1100',
+              loading: 'lazy',
+              alt: main_display_image.alt,
+              class: 'hero-offer__image-el hero-offer__main-img'
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-offer__image-placeholder' }}
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Thumbnail strip — only renders when at least one gallery image is set {%- endcomment -%}
+      {%- assign has_gallery_thumbs = false -%}
+      {%- for i in (1..5) -%}
+        {%- assign gkey = 'gallery_image_' | append: i -%}
+        {%- if section.settings[gkey] != blank -%}
+          {%- assign has_gallery_thumbs = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if has_gallery_thumbs -%}
+        <div class="hero-offer__thumbs">
+          {%- for i in (1..5) -%}
+            {%- assign gkey = 'gallery_image_' | append: i -%}
+            {%- assign gimg = section.settings[gkey] -%}
+            {%- if gimg != blank -%}
+              <button
+                class="hero-offer__thumb{% if forloop.first %} hero-offer__thumb--active{% endif %}"
+                type="button"
+                data-src="{{ gimg | image_url: width: 1100 }}"
+                data-srcset="{{ gimg | image_url: width: 390 }} 390w, {{ gimg | image_url: width: 780 }} 780w, {{ gimg | image_url: width: 1100 }} 1100w"
+                data-alt="{{ gimg.alt | escape }}"
+                aria-label="{{ gimg.alt | default: 'Gallery image' | escape }}"
+              >
+                {{
+                  gimg
+                  | image_url: width: 120
+                  | image_tag:
+                    width: 60,
+                    height: 60,
+                    loading: 'lazy',
+                    alt: gimg.alt
+                }}
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
       {%- endif -%}
     </div>
 
@@ -236,6 +277,36 @@
   </div>
 </div>
 
+<script>
+(function() {
+  var galleryId = 'hero-offer-gallery-{{ section.id }}';
+  function initGallery() {
+    var gallery = document.getElementById(galleryId);
+    if (!gallery) return;
+    var mainImg = gallery.querySelector('.hero-offer__main-img');
+    if (!mainImg) return;
+    var thumbs = gallery.querySelectorAll('.hero-offer__thumb');
+    thumbs.forEach(function(thumb) {
+      thumb.addEventListener('click', function() {
+        var src = this.getAttribute('data-src');
+        var srcset = this.getAttribute('data-srcset');
+        var alt = this.getAttribute('data-alt') || '';
+        if (src) mainImg.src = src;
+        if (srcset) mainImg.srcset = srcset;
+        mainImg.alt = alt;
+        thumbs.forEach(function(t) { t.classList.remove('hero-offer__thumb--active'); });
+        this.classList.add('hero-offer__thumb--active');
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGallery);
+  } else {
+    initGallery();
+  }
+})();
+</script>
+
 {% stylesheet %}
   .hero-offer__inner {
     display: flex;
@@ -244,6 +315,13 @@
     background-color: #FDF0F2;
     border-radius: 12px;
     overflow: hidden;
+  }
+
+  .hero-offer__gallery {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-shrink: 0;
   }
 
   .hero-offer__image-wrap {
@@ -264,6 +342,52 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .hero-offer__thumbs {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding: 10px 12px;
+    background-color: #ffffff;
+    border-top: 1px solid rgba(104, 0, 64, 0.1);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .hero-offer__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hero-offer__thumb {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    background: none;
+    padding: 2px;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease;
+  }
+
+  .hero-offer__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+  }
+
+  .hero-offer__thumb--active {
+    border-color: #680040;
+  }
+
+  .hero-offer__thumb:hover:not(.hero-offer__thumb--active) {
+    border-color: rgba(104, 0, 64, 0.4);
   }
 
   .hero-offer__content {
@@ -598,10 +722,15 @@
       border: 1px solid rgba(104, 0, 64, 0.15);
     }
 
-    .hero-offer__image-wrap {
+    .hero-offer__gallery {
       width: 46%;
       flex-shrink: 0;
+    }
+
+    .hero-offer__image-wrap {
+      flex: 1;
       aspect-ratio: auto;
+      min-height: 0;
     }
 
     .hero-offer__image-el {
@@ -634,7 +763,40 @@
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero image"
+      "label": "Hero image (fallback)"
+    },
+    {
+      "type": "header",
+      "content": "Gallery Images"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add up to 5 gallery thumbnails. Image 1 is the default main image. Clicking a thumbnail swaps the main image."
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_1",
+      "label": "Gallery image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_2",
+      "label": "Gallery image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_3",
+      "label": "Gallery image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_4",
+      "label": "Gallery image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_5",
+      "label": "Gallery image 5"
     },
     {
       "type": "header",
