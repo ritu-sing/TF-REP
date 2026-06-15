@@ -630,6 +630,85 @@
         "padding-block-end": 60
       }
     },
+    "comparison_table_section": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "label": "Real fruit ingredients",
+            "llama_has": true,
+            "competitor_has": false
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "label": "No added cane sugar",
+            "llama_has": true,
+            "competitor_has": false
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "USDA Organic Certified",
+            "llama_has": true,
+            "competitor_has": false
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "Third-party lab tested",
+            "llama_has": true,
+            "competitor_has": false
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Allergen free formula",
+            "llama_has": true,
+            "competitor_has": false
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "label": "100-day money back guarantee",
+            "llama_has": true,
+            "competitor_has": false
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
+      ],
+      "settings": {
+        "heading": "Why Choose Llama Naturals?",
+        "llama_col_label": "Llama Naturals",
+        "competitor_col_label": "Other Brands",
+        "show_cta": true,
+        "cta_text": "Shop Now",
+        "cta_url": "",
+        "llama_col_bg": "#3d1534",
+        "llama_col_fg": "#ffffff",
+        "check_icon_color": "#3d1534",
+        "cross_icon_color": "#b0b0b0",
+        "cta_bg_color": "#3d1534",
+        "cta_text_color": "#ffffff",
+        "color_scheme": "scheme-7",
+        "section_width": "page-width",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "our_story_section": {
       "type": "our-story",
       "blocks": {
@@ -1013,6 +1092,7 @@
     "tabbed_carousel_main",
     "our_story_section",
     "social_proof_section",
+    "comparison_table_section",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
