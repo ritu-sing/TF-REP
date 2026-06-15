@@ -376,6 +376,21 @@
         "padding-block-end": 14
       }
     },
+    "our_story_section": {
+      "type": "our-story",
+      "settings": {
+        "eyebrow": "OUR STORY",
+        "heading": "<p>Real Ingredients. Real Results. Really For Kids.</p>",
+        "body": "<p>We started Llama Naturals because our own kids deserved better. Better ingredients, better nutrition, and better taste — without the artificial junk. Every gummy we make is crafted from real fruit, certified organic, and third-party tested so you can feel confident in every bite.</p>",
+        "button_label": "Learn More",
+        "button_link": "",
+        "image_position": "left",
+        "section_width": "full-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "tabbed_carousel_main": {
       "type": "tabbed-carousel",
       "blocks": {
@@ -706,6 +721,7 @@
     "hero_offer_section",
     "ticker_below_hero_offer",
     "tabbed_carousel_main",
+    "our_story_section",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
