@@ -62,6 +62,60 @@
         "padding-block-end": 0
       }
     },
+    "curated_reviews_Hn4kLm": {
+      "type": "curated-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review-card",
+          "settings": {
+            "rating": 5,
+            "review_text": "We love these vitamins! My kids ask for them every morning. The taste is great and I feel good knowing they are getting clean, plant-based nutrition.",
+            "reviewer_name": "Sarah M.",
+            "verified": true,
+            "verified_label": "Verified Buyer"
+          }
+        },
+        "review_2": {
+          "type": "review-card",
+          "settings": {
+            "rating": 5,
+            "review_text": "Finally a vitamin my picky eater will take! No artificial junk, and they actually taste like real fruit. We have been using them for 3 months now and love the results.",
+            "reviewer_name": "Jessica T.",
+            "verified": true,
+            "verified_label": "Verified Buyer"
+          }
+        },
+        "review_3": {
+          "type": "review-card",
+          "settings": {
+            "rating": 5,
+            "review_text": "Great quality gummies that the whole family enjoys. I appreciate the transparency about ingredients. Would definitely recommend to other parents!",
+            "reviewer_name": "Michael R.",
+            "verified": true,
+            "verified_label": "Verified Buyer"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "settings": {
+        "heading": "What Our Customers Say",
+        "heading_alignment": "center",
+        "star_color": "#ffb800",
+        "columns": 3,
+        "gap": 24,
+        "show_arrows": true,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "hero_offer_section": {
       "type": "hero-offer",
       "blocks": {
@@ -117,6 +171,7 @@
             "thumbnail": "shopify://shop_images/product-thumbnail-mobile-14816384.png",
             "is_gift": false,
             "title": "FREE FOR LIFE Elderberry Gummies",
+            "flavor": "",
             "count": "90ct",
             "description": "Immunity Boosters"
           }
@@ -126,6 +181,8 @@
           "settings": {
             "is_gift": true,
             "title": "FREE Mystery Gift",
+            "flavor": "",
+            "count": "",
             "description": "Something fun for your kiddo!"
           }
         }
@@ -156,10 +213,12 @@
         "benefit_badge_2": "Lifetime discount",
         "benefit_badge_3": "Free Samples",
         "benefit_badge_4": "Easily skip or cancel anytime",
+        "cta_product": "",
         "button_label": "ADD TO CART",
         "button_url": "",
         "shipping_text": "Delivered every month",
         "guarantee_text": "100 Days Money Back Guarantee",
+        "section_width": "page-width",
         "color_scheme": "scheme-1",
         "padding-block-start": 0,
         "padding-block-end": 0
@@ -441,67 +500,13 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "curated_reviews_Hn4kLm": {
-      "type": "curated-reviews",
-      "blocks": {
-        "review_1": {
-          "type": "review-card",
-          "settings": {
-            "rating": 5,
-            "review_text": "We love these vitamins! My kids ask for them every morning. The taste is great and I feel good knowing they are getting clean, plant-based nutrition.",
-            "reviewer_name": "Sarah M.",
-            "verified": true,
-            "verified_label": "Verified Buyer"
-          }
-        },
-        "review_2": {
-          "type": "review-card",
-          "settings": {
-            "rating": 5,
-            "review_text": "Finally a vitamin my picky eater will take! No artificial junk, and they actually taste like real fruit. We have been using them for 3 months now and love the results.",
-            "reviewer_name": "Jessica T.",
-            "verified": true,
-            "verified_label": "Verified Buyer"
-          }
-        },
-        "review_3": {
-          "type": "review-card",
-          "settings": {
-            "rating": 5,
-            "review_text": "Great quality gummies that the whole family enjoys. I appreciate the transparency about ingredients. Would definitely recommend to other parents!",
-            "reviewer_name": "Michael R.",
-            "verified": true,
-            "verified_label": "Verified Buyer"
-          }
-        }
-      },
-      "block_order": [
-        "review_1",
-        "review_2",
-        "review_3"
-      ],
-      "settings": {
-        "heading": "What Our Customers Say",
-        "heading_alignment": "center",
-        "star_color": "#FFB800",
-        "columns": 3,
-        "gap": 24,
-        "show_arrows": true,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 60,
-        "padding-block-end": 60
-      }
     }
   },
   "order": [
     "hero_banner_Fg7xQp",
+    "curated_reviews_Hn4kLm",
     "hero_offer_section",
     "hero_jVaWmY",
-    "product_list_fa6P9H",
-    "curated_reviews_Hn4kLm"
+    "product_list_fa6P9H"
   ]
 }
