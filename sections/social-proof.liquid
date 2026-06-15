@@ -1,0 +1,477 @@
+<social-proof-section>
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --social-proof-columns: {{ section.settings.video_columns }};
+  }
+</style>
+
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style"
+  style="{%- render 'spacing-style', settings: section.settings -%}"
+>
+  <div class="social-proof__inner">
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="social-proof__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- comment -%} ── Stats bar ── {%- endcomment -%}
+    {%- assign has_stats = false -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'stat' -%}
+        {%- assign has_stats = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_stats -%}
+      <div class="social-proof__stats">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="social-proof__stat" {{ block.shopify_attributes }}>
+              <span class="social-proof__stat-number">{{- block.settings.number -}}</span>
+              <span class="social-proof__stat-label">{{ block.settings.label | escape }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ── Video grid ── {%- endcomment -%}
+    {%- assign has_videos = false -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'video-card' -%}
+        {%- assign has_videos = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_videos -%}
+      <div class="social-proof__videos">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'video-card' -%}
+            <div class="social-proof__video-card" {{ block.shopify_attributes }}>
+              <div class="social-proof__video-wrapper">
+
+                {%- if block.settings.video != blank -%}
+                  {%- assign video_poster = block.settings.video.preview_image | image_url: width: 600 -%}
+                  <video
+                    class="social-proof__video"
+                    muted
+                    playsinline
+                    loop
+                    preload="none"
+                    poster="{{ video_poster }}"
+                  >
+                    {%- for source in block.settings.video.sources -%}
+                      <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                    {%- endfor -%}
+                  </video>
+
+                  <button
+                    class="social-proof__play-btn"
+                    type="button"
+                    aria-label="Play video"
+                    on:click="/togglePlay"
+                  >
+                    <span class="social-proof__play-icon" aria-hidden="true">
+                      <svg class="social-proof__icon-play" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <path d="M8 5v14l11-7z" fill="currentColor"/>
+                      </svg>
+                      <svg class="social-proof__icon-pause" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/>
+                      </svg>
+                    </span>
+                  </button>
+
+                {%- elsif block.settings.poster_image != blank -%}
+                  {%- assign poster_alt = block.settings.caption | default: '' -%}
+                  {{
+                    block.settings.poster_image
+                    | image_url: width: 600
+                    | image_tag:
+                      class: 'social-proof__poster',
+                      loading: 'lazy',
+                      alt: poster_alt
+                  }}
+                {%- endif -%}
+
+                {%- if block.settings.product_link != blank -%}
+                  <a
+                    class="social-proof__arrow-link"
+                    href="{{ block.settings.product_link }}"
+                    aria-label="Shop this product"
+                  >
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                  </a>
+                {%- endif -%}
+
+              </div>
+
+              {%- if block.settings.caption != blank -%}
+                <p class="social-proof__caption">{{ block.settings.caption | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+  <script src="{{ 'social-proof.js' | asset_url }}" type="module"></script>
+</social-proof-section>
+
+{% stylesheet %}
+  /* ── Section inner ── */
+  .social-proof__inner {
+    width: 100%;
+  }
+
+  /* ── Heading ── */
+  .social-proof__heading {
+    margin: 0 0 var(--margin-5xl);
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-style: var(--font-heading--style);
+    font-size: var(--font-h2--size);
+    line-height: var(--font-h2--line-height);
+    letter-spacing: var(--font-h2--letter-spacing);
+    text-transform: var(--font-h2--case);
+    color: var(--color-foreground-heading);
+    text-align: center;
+  }
+
+  /* ── Stats ── */
+  .social-proof__stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-block-end: 48px;
+    padding-block: 32px;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  @media screen and (min-width: 750px) {
+    .social-proof__stats {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  }
+
+  .social-proof__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .social-proof__stat-number {
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: var(--font-h2--size);
+    line-height: 1;
+    color: var(--color-primary);
+  }
+
+  .social-proof__stat-label {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--sm);
+    line-height: var(--line-height--body-normal);
+    color: var(--color-foreground);
+  }
+
+  /* ── Video grid ── */
+  .social-proof__videos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .social-proof__videos {
+      grid-template-columns: repeat(var(--social-proof-columns, 3), 1fr);
+    }
+  }
+
+  /* ── Video card ── */
+  .social-proof__video-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .social-proof__video-wrapper {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: rgb(var(--color-foreground-rgb) / 0.08);
+  }
+
+  .social-proof__video,
+  .social-proof__poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Play/Pause button ── */
+  .social-proof__play-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .social-proof__play-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: rgb(var(--color-foreground-rgb) / 0.6);
+    color: var(--color-background);
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+  }
+
+  .social-proof__play-btn:hover .social-proof__play-icon {
+    background-color: rgb(var(--color-foreground-rgb) / 0.8);
+  }
+
+  .social-proof__icon-play {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .social-proof__icon-pause {
+    display: none;
+    flex-shrink: 0;
+  }
+
+  /* Playing state: hide button; show on hover */
+  .social-proof__video-card.is-playing .social-proof__play-btn {
+    opacity: 0;
+  }
+
+  .social-proof__video-card.is-playing:hover .social-proof__play-btn {
+    opacity: 1;
+  }
+
+  /* Swap icons when playing */
+  .social-proof__video-card.is-playing .social-proof__icon-play {
+    display: none;
+  }
+
+  .social-proof__video-card.is-playing .social-proof__icon-pause {
+    display: block;
+  }
+
+  /* ── Arrow link ── */
+  .social-proof__arrow-link {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .social-proof__arrow-link:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+  }
+
+  /* ── Caption ── */
+  .social-proof__caption {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--sm);
+    line-height: var(--line-height--body-normal);
+    color: var(--color-foreground);
+    text-align: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Social Proof",
+  "class": "social-proof",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real Stories From Real Families"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        { "value": "page-width", "label": "Page" },
+        { "value": "full-width", "label": "Full" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "video_columns",
+      "label": "Video columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-7"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "95%"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Would Recommend"
+        }
+      ]
+    },
+    {
+      "type": "video-card",
+      "name": "Video card",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster_image",
+          "label": "Fallback image",
+          "info": "Shown when no video is uploaded"
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Product link"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Proof",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "77%",
+            "label": "Love The Taste Immediately"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "95%",
+            "label": "Would Recommend to a Friend"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "10K+",
+            "label": "5-Star Reviews"
+          }
+        },
+        {
+          "type": "video-card"
+        },
+        {
+          "type": "video-card"
+        },
+        {
+          "type": "video-card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

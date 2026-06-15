@@ -576,6 +576,60 @@
         "padding-block-end": 60
       }
     },
+    "social_proof_section": {
+      "type": "social-proof",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "77%",
+            "label": "Love The Taste Immediately"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "95%",
+            "label": "Would Recommend to a Friend"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "10K+",
+            "label": "5-Star Reviews"
+          }
+        },
+        "video_1": {
+          "type": "video-card",
+          "settings": {}
+        },
+        "video_2": {
+          "type": "video-card",
+          "settings": {}
+        },
+        "video_3": {
+          "type": "video-card",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "video_1",
+        "video_2",
+        "video_3"
+      ],
+      "settings": {
+        "heading": "Real Stories From Real Families",
+        "section_width": "page-width",
+        "video_columns": 3,
+        "color_scheme": "scheme-7",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "our_story_section": {
       "type": "our-story",
       "blocks": {
@@ -958,6 +1012,7 @@
     "ticker_below_hero_offer",
     "tabbed_carousel_main",
     "our_story_section",
+    "social_proof_section",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
