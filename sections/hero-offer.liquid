@@ -251,20 +251,44 @@
         </div>
 
         {%- comment -%} CTA Button {%- endcomment -%}
-        <a
-          class="hero-offer__cta-button"
-          {% if section.settings.button_url != blank %}href="{{ section.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %}
-        >
-          <span class="hero-offer__cta-label">{{ section.settings.button_label | default: 'ADD TO CART' }}</span>
-          <div class="hero-offer__cta-price">
-            {%- if section.settings.original_price != blank -%}
-              <span class="hero-offer__cta-price-original">{{ section.settings.original_price }}</span>
-            {%- endif -%}
-            {%- if section.settings.current_price != blank -%}
-              <span class="hero-offer__cta-price-current">{{ section.settings.current_price }}</span>
-            {%- endif -%}
-          </div>
-        </a>
+        {%- if section.settings.cta_product != blank -%}
+          {%- assign cta_variant = section.settings.cta_product.first_available_variant | default: section.settings.cta_product.variants.first -%}
+          <form
+            id="hero-offer-atc-{{ section.id }}"
+            action="/cart/add"
+            method="post"
+            class="hero-offer__cta-form"
+          >
+            <input type="hidden" name="id" value="{{ cta_variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="hero-offer__cta-button" data-atc-btn>
+              <span class="hero-offer__cta-label">{{ section.settings.button_label | default: 'ADD TO CART' }}</span>
+              <div class="hero-offer__cta-price">
+                {%- if section.settings.original_price != blank -%}
+                  <span class="hero-offer__cta-price-original">{{ section.settings.original_price }}</span>
+                {%- endif -%}
+                {%- if section.settings.current_price != blank -%}
+                  <span class="hero-offer__cta-price-current">{{ section.settings.current_price }}</span>
+                {%- endif -%}
+              </div>
+            </button>
+          </form>
+        {%- else -%}
+          <a
+            class="hero-offer__cta-button"
+            {% if section.settings.button_url != blank %}href="{{ section.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %}
+          >
+            <span class="hero-offer__cta-label">{{ section.settings.button_label | default: 'ADD TO CART' }}</span>
+            <div class="hero-offer__cta-price">
+              {%- if section.settings.original_price != blank -%}
+                <span class="hero-offer__cta-price-original">{{ section.settings.original_price }}</span>
+              {%- endif -%}
+              {%- if section.settings.current_price != blank -%}
+                <span class="hero-offer__cta-price-current">{{ section.settings.current_price }}</span>
+              {%- endif -%}
+            </div>
+          </a>
+        {%- endif -%}
 
         {%- comment -%} Shipping info row {%- endcomment -%}
         <div class="hero-offer__shipping-row">
@@ -298,6 +322,8 @@
 
 <script>
 (function() {
+
+  // Gallery: click thumbnail → show matching slide
   var galleryId = 'hero-offer-gallery-{{ section.id }}';
   function initGallery() {
     var gallery = document.getElementById(galleryId);
@@ -315,11 +341,58 @@
       });
     });
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initGallery);
-  } else {
-    initGallery();
+
+  // Add to cart: AJAX submit → dispatch cart:update → open cart drawer
+  var atcFormId = 'hero-offer-atc-{{ section.id }}';
+  function initAtc() {
+    var form = document.getElementById(atcFormId);
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = form.querySelector('[data-atc-btn]');
+      var labelEl = form.querySelector('.hero-offer__cta-label');
+      var origLabel = labelEl ? labelEl.textContent : '';
+      if (btn) btn.disabled = true;
+      if (labelEl) labelEl.textContent = 'Adding…';
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+        body: new URLSearchParams(new FormData(form)).toString()
+      })
+      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function() { return fetch('/cart.js', { headers: { 'X-Requested-With': 'XMLHttpRequest' } }); })
+      .then(function(r) { return r.json(); })
+      .then(function(cart) {
+        if (labelEl) labelEl.textContent = 'Added!';
+        // Notify the theme's cart drawer via its native event
+        var evt = new CustomEvent('cart:update', { bubbles: true, detail: { resource: cart, data: { itemCount: cart.item_count } } });
+        document.dispatchEvent(evt);
+        // Directly open cart-drawer-component if present
+        var drawer = document.querySelector('cart-drawer-component');
+        if (drawer && typeof drawer.open === 'function') drawer.open();
+        setTimeout(function() {
+          if (labelEl) labelEl.textContent = origLabel;
+          if (btn) btn.disabled = false;
+        }, 2000);
+      })
+      .catch(function() {
+        form.submit(); // fallback: full page add
+      });
+    });
   }
+
+  function init() {
+    initGallery();
+    initAtc();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
 })();
 </script>
 
@@ -657,6 +730,10 @@
     margin-inline-start: 2px;
   }
 
+  .hero-offer__cta-form {
+    width: 100%;
+  }
+
   .hero-offer__cta-button {
     display: flex;
     flex-direction: row;
@@ -668,6 +745,14 @@
     text-decoration: none;
     width: 100%;
     box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+
+  .hero-offer__cta-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 
   .hero-offer__cta-label {
@@ -903,6 +988,11 @@
       "content": "CTA Button"
     },
     {
+      "type": "product",
+      "id": "cta_product",
+      "label": "Product to add to cart"
+    },
+    {
       "type": "text",
       "id": "button_label",
       "label": "Button label",
@@ -911,7 +1001,7 @@
     {
       "type": "url",
       "id": "button_url",
-      "label": "Button URL"
+      "label": "Button URL (fallback when no product selected)"
     },
     {
       "type": "header",
