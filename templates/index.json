@@ -463,6 +463,10 @@
         "button_link": "",
         "image_position": "left",
         "section_width": "full-width",
+        "left_panel_bg": "#E8B49A",
+        "right_panel_bg": "#EDBA9D",
+        "show_divider": true,
+        "divider_color": "#3D1534",
         "color_scheme": "scheme-9",
         "padding-block-start": 0,
         "padding-block-end": 0

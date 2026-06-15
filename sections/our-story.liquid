@@ -11,6 +11,7 @@
   grid-area: media;
   overflow: hidden;
   aspect-ratio: 4 / 3;
+  position: relative;
 }
 
 .our-story__media img,
@@ -59,6 +60,7 @@
   font-weight: inherit;
   font-family: inherit;
   line-height: inherit;
+  color: inherit;
 }
 
 .our-story__body {
@@ -163,6 +165,21 @@
   word-break: break-word;
   overflow-wrap: break-word;
   padding: 4px;
+  position: relative;
+  overflow: visible;
+}
+
+.our-story__badge::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  right: -4px;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: rotate(-30deg);
+  transform-origin: center;
+  pointer-events: none;
 }
 
 @media screen and (min-width: 750px) {
@@ -179,6 +196,15 @@
     aspect-ratio: unset;
   }
 
+  .our-story__media--with-divider {
+    border-right: 1px solid var(--our-story-divider-color, rgba(0,0,0,0.15));
+  }
+
+  .our-story--image-right .our-story__media--with-divider {
+    border-right: none;
+    border-left: 1px solid var(--our-story-divider-color, rgba(0,0,0,0.15));
+  }
+
   .our-story__content {
     padding: 64px 56px;
   }
@@ -188,11 +214,27 @@
 {%- assign feature_blocks = section.blocks | where: 'type', 'feature-item' -%}
 {%- assign badge_blocks = section.blocks | where: 'type', 'badge' -%}
 
+{%- assign cs_id = section.settings.color_scheme -%}
+{%- assign cs = settings.color_schemes[cs_id] -%}
+{%- assign fg_rgb = cs.settings.foreground.rgb -%}
+{%- assign fg_heading_rgba = cs.settings.foreground_heading.rgba -%}
+{%- assign fg_heading_rgb = cs.settings.foreground_heading.rgb -%}
+
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style our-story our-story--image-{{ section.settings.image_position }}"
-  style="{%- render 'spacing-style', settings: section.settings -%}{%- if section.settings.background_color != blank and section.settings.background_color != 'rgba(0,0,0,0)' -%}background-color: {{ section.settings.background_color }};{%- endif -%}"
+  style="{%- render 'spacing-style', settings: section.settings -%}"
 >
-  <div class="our-story__media">
+  <div
+    class="our-story__media{% if section.settings.show_divider %} our-story__media--with-divider{% endif %}"
+    style="
+      {%- if section.settings.left_panel_bg != blank and section.settings.left_panel_bg != 'rgba(0,0,0,0)' -%}
+        background-color: {{ section.settings.left_panel_bg }};
+      {%- endif -%}
+      {%- if section.settings.show_divider -%}
+        --our-story-divider-color: {{ section.settings.divider_color }};
+      {%- endif -%}
+    "
+  >
     {%- if section.settings.image != blank -%}
       {%- render 'image', image: section.settings.image, class: 'our-story__image' -%}
     {%- else -%}
@@ -200,7 +242,20 @@
     {%- endif -%}
   </div>
 
-  <div class="our-story__content">
+  <div
+    class="our-story__content"
+    style="
+      {%- if section.settings.right_panel_bg != blank and section.settings.right_panel_bg != 'rgba(0,0,0,0)' -%}
+        background-color: {{ section.settings.right_panel_bg }};
+      {%- endif -%}
+      {%- if fg_rgb != blank -%}
+        --color-foreground-rgb: {{ fg_rgb }};
+        --color-foreground: rgb({{ fg_rgb }});
+        --color-foreground-heading: rgb({{ fg_heading_rgba }});
+        --color-foreground-heading-rgb: {{ fg_heading_rgb }};
+      {%- endif -%}
+    "
+  >
     {%- if section.settings.eyebrow != blank -%}
       <p class="our-story__eyebrow">{{ section.settings.eyebrow }}</p>
     {%- endif -%}
@@ -363,10 +418,38 @@
       "default": "full-width"
     },
     {
+      "type": "header",
+      "content": "Panel backgrounds"
+    },
+    {
       "type": "color",
-      "id": "background_color",
-      "label": "Background color override",
-      "info": "Overrides the color scheme background. Leave blank to use color scheme."
+      "id": "left_panel_bg",
+      "label": "Left panel background"
+    },
+    {
+      "type": "color",
+      "id": "right_panel_bg",
+      "label": "Right panel background"
+    },
+    {
+      "type": "header",
+      "content": "Panel divider"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider between panels",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider color",
+      "default": "#3D1534"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
     },
     {
       "type": "color_scheme",
