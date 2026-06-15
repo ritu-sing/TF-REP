@@ -376,6 +376,54 @@
         "padding-block-end": 14
       }
     },
+    "tabbed_carousel_main": {
+      "type": "tabbed-carousel",
+      "blocks": {
+        "tab_0": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "All Products",
+            "max_products": 8,
+            "cta_text": "View All"
+          }
+        },
+        "tab_1": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "New Arrivals",
+            "max_products": 8,
+            "cta_text": "View All"
+          }
+        },
+        "tab_2": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Best Sellers",
+            "max_products": 8,
+            "cta_text": "View All"
+          }
+        }
+      },
+      "block_order": [
+        "tab_0",
+        "tab_1",
+        "tab_2"
+      ],
+      "settings": {
+        "heading": "Shop Our Range",
+        "show_ticker": true,
+        "ticker_item_1": "Free Shipping",
+        "ticker_item_2": "Money-Back Guarantee",
+        "ticker_item_3": "Naturally Sourced",
+        "ticker_item_4": "USDA Organic",
+        "icons_style": "chevron",
+        "columns": 4,
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -659,6 +707,7 @@
     "curated_reviews_Hn4kLm",
     "hero_offer_section",
     "ticker_below_hero_offer",
+    "tabbed_carousel_main",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
