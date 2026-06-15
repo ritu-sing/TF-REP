@@ -326,6 +326,158 @@
         "padding-block-end": 0
       }
     },
+    "ticker_below_hero_offer": {
+      "type": "ticker",
+      "blocks": {
+        "item_a": {
+          "type": "text",
+          "settings": {
+            "text": "<p>10,000+ 5-Star Reviews</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "sep_a": {
+          "type": "text",
+          "settings": {
+            "text": "<p>✦</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "item_b": {
+          "type": "text",
+          "settings": {
+            "text": "<p>USDA Organic Certified</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "sep_b": {
+          "type": "text",
+          "settings": {
+            "text": "<p>✦</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "item_c": {
+          "type": "text",
+          "settings": {
+            "text": "<p>3rd Party Lab Tested</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "sep_c": {
+          "type": "text",
+          "settings": {
+            "text": "<p>✦</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "item_d": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Allergen Free Formula</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "sep_d": {
+          "type": "text",
+          "settings": {
+            "text": "<p>✦</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "item_e": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Parent-Owned Brand</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "sep_e": {
+          "type": "text",
+          "settings": {
+            "text": "<p>✦</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "item_f": {
+          "type": "text",
+          "settings": {
+            "text": "<p>100-Day Money Back Guarantee</p>",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        }
+      },
+      "block_order": [
+        "item_a",
+        "sep_a",
+        "item_b",
+        "sep_b",
+        "item_c",
+        "sep_c",
+        "item_d",
+        "sep_d",
+        "item_e",
+        "sep_e",
+        "item_f"
+      ],
+      "settings": {
+        "color_scheme": "scheme-8",
+        "movement_direction": "normal",
+        "gap_between_elements": 40,
+        "padding-block-start": 14,
+        "padding-block-end": 14
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -609,6 +761,7 @@
     "ticker_section",
     "curated_reviews_Hn4kLm",
     "hero_offer_section",
+    "ticker_below_hero_offer",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
