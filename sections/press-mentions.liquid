@@ -8,11 +8,13 @@
 
 <style>
   #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.section_bg_color }};
     --pm-border-color: {{ section.settings.border_color }};
     --pm-border-width: {{ section.settings.border_width }}px;
     --pm-logo-max-height: {{ section.settings.logo_max_height }}px;
     --pm-logo-opacity: {{ logo_opacity_val }};
     --pm-name-size: {{ section.settings.name_size }}px;
+    --pm-name-color: {{ section.settings.name_color }};
   }
 </style>
 
@@ -28,8 +30,11 @@
       <div class="press-mentions-ticker__items" ref="marqueeItems[]">
         {%- for block in section.blocks -%}
           <div class="press-mentions-ticker__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" class="press-mentions-ticker__link">
+            {%- endif -%}
+
             {%- if block.settings.logo != blank -%}
-              {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="press-mentions-ticker__link">{%- endif -%}
               {{-
                 block.settings.logo
                 | image_url: width: 400
@@ -38,11 +43,16 @@
                   loading: 'lazy',
                   alt: block.settings.publication_name
               -}}
-              {%- if block.settings.link != blank -%}</a>{%- endif -%}
-            {%- elsif block.settings.publication_name != blank -%}
-              {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="press-mentions-ticker__link">{%- endif -%}
-              <span class="press-mentions-ticker__name">{{ block.settings.publication_name | escape }}</span>
-              {%- if block.settings.link != blank -%}</a>{%- endif -%}
+            {%- endif -%}
+
+            {%- if block.settings.publication_name != blank -%}
+              <span class="press-mentions-ticker__name{% if block.settings.logo != blank %} press-mentions-ticker__name--with-logo{% endif %}">
+                {{- block.settings.publication_name | escape -}}
+              </span>
+            {%- endif -%}
+
+            {%- if block.settings.link != blank -%}
+              </a>
             {%- endif -%}
           </div>
         {%- endfor -%}
@@ -82,18 +92,11 @@
 
   .press-mentions-ticker__item {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 6px;
     flex-shrink: 0;
-  }
-
-  .press-mentions-ticker__name {
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: var(--pm-name-size, 20px);
-    color: var(--color-foreground-heading);
-    white-space: nowrap;
-    line-height: 1;
-    letter-spacing: 0.02em;
   }
 
   .press-mentions-ticker__logo {
@@ -105,9 +108,28 @@
     opacity: var(--pm-logo-opacity, 1);
   }
 
+  .press-mentions-ticker__name {
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: var(--pm-name-size, 20px);
+    color: var(--pm-name-color, var(--color-foreground-heading));
+    white-space: nowrap;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .press-mentions-ticker__name--with-logo {
+    font-size: calc(var(--pm-name-size, 20px) * 0.65);
+    opacity: 0.85;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
   .press-mentions-ticker__link {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 6px;
     text-decoration: none;
   }
 
@@ -135,6 +157,18 @@
     {
       "type": "header",
       "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Background color",
+      "default": "#A31C69"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Text color",
+      "default": "#ffffff"
     },
     {
       "type": "color",
@@ -267,6 +301,7 @@
           "type": "text",
           "id": "publication_name",
           "label": "Publication name",
+          "info": "Displayed below the logo. Also used as alt text and shown alone if no logo is uploaded.",
           "default": "Publication"
         },
         {

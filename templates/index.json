@@ -785,6 +785,8 @@
         "press_6"
       ],
       "settings": {
+        "section_bg_color": "#A31C69",
+        "name_color": "#ffffff",
         "border_color": "#8b1a6b",
         "border_width": 1,
         "name_size": 20,
