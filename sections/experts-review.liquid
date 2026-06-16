@@ -119,17 +119,25 @@
   style="{%- render 'spacing-style', settings: section.settings -%}"
 >
   {%- if section.settings.show_watermark -%}
+    {%- capture wm_inner -%}
+      {%- if section.settings.watermark_image != blank -%}
+        {{
+          section.settings.watermark_image
+          | image_url: width: 300
+          | image_tag:
+            loading: 'lazy',
+            class: 'experts-review__watermark-img',
+            alt: ''
+        }}
+      {%- else -%}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor" role="presentation" aria-hidden="true">
+          <path d="M50 5 C47 5 44 7 43 10 C42 13 43 17 46 19 L45 30 C43 34 41 38 40 43 L38 55 C36 60 34 65 32 72 L30 85 L36 85 L39 68 C41 63 42 60 43 56 L45 72 L48 87 L53 87 L50 72 L49 56 C51 53 55 53 57 56 L56 72 L53 87 L58 87 L61 72 L63 56 C64 60 65 63 67 68 L70 85 L76 85 L74 72 C72 65 70 60 68 55 L66 43 C65 38 63 34 61 30 L60 19 C63 17 64 13 63 10 C62 7 59 5 56 5 C54 4 52 4 50 5 Z"/>
+        </svg>
+      {%- endif -%}
+    {%- endcapture -%}
     <div class="experts-review__watermarks" aria-hidden="true">
-      <span class="experts-review__watermark experts-review__watermark--1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor" role="presentation" aria-hidden="true">
-          <path d="M50 5 C47 5 44 7 43 10 C42 13 43 17 46 19 L45 30 C43 34 41 38 40 43 L38 55 C36 60 34 65 32 72 L30 85 L36 85 L39 68 C41 63 42 60 43 56 L45 72 L48 87 L53 87 L50 72 L49 56 C51 53 55 53 57 56 L56 72 L53 87 L58 87 L61 72 L63 56 C64 60 65 63 67 68 L70 85 L76 85 L74 72 C72 65 70 60 68 55 L66 43 C65 38 63 34 61 30 L60 19 C63 17 64 13 63 10 C62 7 59 5 56 5 C54 4 52 4 50 5 Z"/>
-        </svg>
-      </span>
-      <span class="experts-review__watermark experts-review__watermark--2">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor" role="presentation" aria-hidden="true">
-          <path d="M50 5 C47 5 44 7 43 10 C42 13 43 17 46 19 L45 30 C43 34 41 38 40 43 L38 55 C36 60 34 65 32 72 L30 85 L36 85 L39 68 C41 63 42 60 43 56 L45 72 L48 87 L53 87 L50 72 L49 56 C51 53 55 53 57 56 L56 72 L53 87 L58 87 L61 72 L63 56 C64 60 65 63 67 68 L70 85 L76 85 L74 72 C72 65 70 60 68 55 L66 43 C65 38 63 34 61 30 L60 19 C63 17 64 13 63 10 C62 7 59 5 56 5 C54 4 52 4 50 5 Z"/>
-        </svg>
-      </span>
+      <span class="experts-review__watermark experts-review__watermark--1">{{ wm_inner }}</span>
+      <span class="experts-review__watermark experts-review__watermark--2">{{ wm_inner }}</span>
     </div>
   {%- endif -%}
 
@@ -311,9 +319,11 @@
     justify-content: center;
   }
 
-  .experts-review__watermark svg {
+  .experts-review__watermark svg,
+  .experts-review__watermark-img {
     width: 100%;
     height: 100%;
+    object-fit: contain;
   }
 
   .experts-review__watermark--1 {
@@ -613,6 +623,13 @@
       "id": "show_watermark",
       "label": "Show watermark",
       "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "watermark_image",
+      "label": "Watermark image",
+      "info": "Upload a custom image. Leave empty to use the default llama icon.",
+      "visible_if": "{{ section.settings.show_watermark }}"
     },
     {
       "type": "color",
