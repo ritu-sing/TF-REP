@@ -576,147 +576,6 @@
         "padding-block-end": 60
       }
     },
-    "social_proof_section": {
-      "type": "social-proof",
-      "blocks": {
-        "stat_1": {
-          "type": "stat",
-          "settings": {
-            "number": "77%",
-            "label": "Love The Taste Immediately"
-          }
-        },
-        "stat_2": {
-          "type": "stat",
-          "settings": {
-            "number": "95%",
-            "label": "Would Recommend to a Friend"
-          }
-        },
-        "stat_3": {
-          "type": "stat",
-          "settings": {
-            "number": "10K+",
-            "label": "5-Star Reviews"
-          }
-        },
-        "video_1": {
-          "type": "video-card",
-          "settings": {}
-        },
-        "video_2": {
-          "type": "video-card",
-          "settings": {}
-        },
-        "video_3": {
-          "type": "video-card",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "stat_1",
-        "stat_2",
-        "stat_3",
-        "video_1",
-        "video_2",
-        "video_3"
-      ],
-      "settings": {
-        "heading": "Real Stories From Real Families",
-        "section_width": "page-width",
-        "video_columns": 3,
-        "color_scheme": "scheme-7",
-        "padding-block-start": 60,
-        "padding-block-end": 60
-      }
-    },
-    "comparison_table_section": {
-      "type": "comparison-table",
-      "blocks": {
-        "row_1": {
-          "type": "row",
-          "settings": {
-            "label": "Made With",
-            "llama_value": "Fruits & Veggies",
-            "llama_has": true,
-            "competitor_value": "Sugar & Sweeteners",
-            "competitor_has": false
-          }
-        },
-        "row_2": {
-          "type": "row",
-          "settings": {
-            "label": "Vitamins",
-            "llama_value": "Whole Food",
-            "llama_has": true,
-            "competitor_value": "Synthetic",
-            "competitor_has": false
-          }
-        },
-        "row_3": {
-          "type": "row",
-          "settings": {
-            "label": "Certified Organic",
-            "llama_has": true,
-            "competitor_has": false
-          }
-        },
-        "row_4": {
-          "type": "row",
-          "settings": {
-            "label": "Vegan & Allergen Free",
-            "llama_has": true,
-            "competitor_has": false
-          }
-        },
-        "row_5": {
-          "type": "row",
-          "settings": {
-            "label": "Tastes Like",
-            "llama_value": "Real Fruit",
-            "llama_has": true,
-            "competitor_value": "Candy",
-            "competitor_has": false
-          }
-        },
-        "row_6": {
-          "type": "row",
-          "settings": {
-            "label": "Money Back Guarantee",
-            "llama_value": "100 Days",
-            "llama_has": true,
-            "competitor_has": false
-          }
-        }
-      },
-      "block_order": [
-        "row_1",
-        "row_2",
-        "row_3",
-        "row_4",
-        "row_5",
-        "row_6"
-      ],
-      "settings": {
-        "heading": "The Difference Is Clear...",
-        "llama_col_label": "LLAMA NATURALS",
-        "competitor_col_label": "REGULAR GUMMIES",
-        "show_cta": true,
-        "cta_text": "SHOP NOW",
-        "cta_url": "",
-        "section_bg_color": "#fdf5e4",
-        "llama_col_bg": "#edba9d",
-        "llama_col_fg": "#3d1534",
-        "check_icon_color": "#3d1534",
-        "cross_icon_color": "#e05a4e",
-        "cta_bg_color": "#3d1534",
-        "cta_text_color": "#ffffff",
-        "color_scheme": "scheme-7",
-        "section_width": "page-width",
-        "padding-block-start": 60,
-        "padding-block-end": 60
-      }
-    },
     "our_story_section": {
       "type": "our-story",
       "blocks": {
@@ -805,13 +664,168 @@
         "button_link": "",
         "image_position": "left",
         "section_width": "full-width",
-        "left_panel_bg": "#F5B390",
-        "right_panel_bg": "#FCDAC4",
+        "left_panel_bg": "#f5b390",
+        "right_panel_bg": "#fcdac4",
         "show_divider": true,
         "divider_color": "#3d1534",
         "color_scheme": "scheme-9",
         "padding-block-start": 0,
         "padding-block-end": 0
+      }
+    },
+    "social_proof_section": {
+      "type": "social-proof",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "77%",
+            "label": "Love The Taste Immediately"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "95%",
+            "label": "Would Recommend to a Friend"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "10K+",
+            "label": "5-Star Reviews"
+          }
+        },
+        "video_1": {
+          "type": "video-card",
+          "settings": {
+            "product_link": "",
+            "caption": ""
+          }
+        },
+        "video_2": {
+          "type": "video-card",
+          "settings": {
+            "product_link": "",
+            "caption": ""
+          }
+        },
+        "video_3": {
+          "type": "video-card",
+          "settings": {
+            "product_link": "",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "video_1",
+        "video_2",
+        "video_3"
+      ],
+      "settings": {
+        "heading": "Real Stories From Real Families",
+        "section_width": "page-width",
+        "video_columns": 3,
+        "color_scheme": "scheme-7",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
+    "comparison_table_section": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "label": "Made With",
+            "llama_value": "Fruits & Veggies",
+            "llama_has": true,
+            "competitor_value": "Sugar & Sweeteners",
+            "competitor_has": false
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "label": "Vitamins",
+            "llama_value": "Whole Food",
+            "llama_has": true,
+            "competitor_value": "Synthetic",
+            "competitor_has": false
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "Certified Organic",
+            "llama_value": "",
+            "llama_has": true,
+            "competitor_value": "",
+            "competitor_has": false
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "Vegan & Allergen Free",
+            "llama_value": "",
+            "llama_has": true,
+            "competitor_value": "",
+            "competitor_has": false
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Tastes Like",
+            "llama_value": "Real Fruit",
+            "llama_has": true,
+            "competitor_value": "Candy",
+            "competitor_has": false
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "label": "Money Back Guarantee",
+            "llama_value": "100 Days",
+            "llama_has": true,
+            "competitor_value": "",
+            "competitor_has": false
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
+      ],
+      "settings": {
+        "heading": "The Difference Is Clear...",
+        "llama_col_label": "LLAMA NATURALS",
+        "competitor_col_label": "REGULAR GUMMIES",
+        "show_cta": true,
+        "cta_text": "SHOP NOW",
+        "cta_url": "",
+        "section_bg_color": "#FFFEF5",
+        "llama_col_bg": "#ffc56e",
+        "llama_col_fg": "#680040",
+        "check_icon_color": "#680040",
+        "cross_icon_color": "#e05a4e",
+        "cta_bg_color": "#680040",
+        "cta_text_color": "#ffffff",
+        "section_width": "page-width",
+        "color_scheme": "scheme-9",
+        "padding-block-start": 60,
+        "padding-block-end": 60
       }
     },
     "hero_jVaWmY": {
