@@ -736,6 +736,56 @@
         "padding-block-end": 60
       }
     },
+    "press_mentions_section": {
+      "type": "press-mentions",
+      "blocks": {
+        "press_1": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "Forbes"
+          }
+        },
+        "press_2": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "Good Housekeeping"
+          }
+        },
+        "press_3": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "Motherly"
+          }
+        },
+        "press_4": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "The Bump"
+          }
+        }
+      },
+      "block_order": [
+        "press_1",
+        "press_2",
+        "press_3",
+        "press_4"
+      ],
+      "settings": {
+        "heading": "As Seen In",
+        "heading_alignment": "center",
+        "show_quotes": false,
+        "columns": 4,
+        "columns_mobile": "2",
+        "gap": 40,
+        "logo_max_height": 48,
+        "grayscale": false,
+        "logo_opacity": 80,
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "comparison_table_section": {
       "type": "comparison-table",
       "blocks": {
@@ -1200,8 +1250,9 @@
     "tabbed_carousel_main",
     "our_story_section",
     "social_proof_section",
-    "comparison_table_section",
+    "press_mentions_section",
     "experts_review_section",
+    "comparison_table_section",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
