@@ -1,156 +1,125 @@
+<script
+  src="{{ 'marquee.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
 {%- assign logo_opacity_val = section.settings.logo_opacity | divided_by: 100.0 -%}
-{%- assign grayscale_filter = 'none' -%}
-{%- if section.settings.grayscale -%}
-  {%- assign grayscale_filter = 'grayscale(100%)' -%}
-{%- endif -%}
 
 <style>
   #shopify-section-{{ section.id }} {
-    --press-mentions-columns: {{ section.settings.columns }};
-    --press-mentions-columns-mobile: {{ section.settings.columns_mobile }};
-    --press-mentions-gap: {{ section.settings.gap }}px;
-    --press-mentions-logo-max-height: {{ section.settings.logo_max_height }}px;
-    --press-mentions-logo-filter: {{ grayscale_filter }};
-    --press-mentions-logo-opacity: {{ logo_opacity_val }};
+    --pm-border-color: {{ section.settings.border_color }};
+    --pm-border-width: {{ section.settings.border_width }}px;
+    --pm-logo-max-height: {{ section.settings.logo_max_height }}px;
+    --pm-logo-opacity: {{ logo_opacity_val }};
+    --pm-name-size: {{ section.settings.name_size }}px;
   }
 </style>
 
-<div
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style"
-  style="{%- render 'spacing-style', settings: section.settings -%}"
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<marquee-component
+  class="section spacing-style color-{{ section.settings.color_scheme }} press-mentions-ticker"
+  style="{%- render 'spacing-style', settings: section.settings -%}; {%- render 'gap-style', value: section.settings.gap, name: 'marquee-gap' -%} --marquee-direction: {{ section.settings.movement_direction }};"
+  data-speed-factor="{{ section.settings.speed }}"
+  data-movement-direction="{{ section.settings.movement_direction }}"
 >
-  {%- if section.settings.heading != blank -%}
-    <h2
-      class="press-mentions__heading"
-      style="text-align: {{ section.settings.heading_alignment }};"
-    >
-      {{ section.settings.heading | escape }}
-    </h2>
-  {%- endif -%}
-
-  {%- if section.blocks.size > 0 -%}
-    <div class="press-mentions__logos">
-      {%- for block in section.blocks -%}
-        <div class="press-mentions__item" {{ block.shopify_attributes }}>
-          {%- if block.settings.link != blank -%}
-            <a
-              class="press-mentions__link"
-              href="{{ block.settings.link }}"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="{{ block.settings.publication_name | escape }}"
-            >
-          {%- endif -%}
-
-          {%- if block.settings.logo != blank -%}
-            {{
-              block.settings.logo
-              | image_url: width: 400
-              | image_tag:
-                class: 'press-mentions__logo',
-                loading: 'lazy',
-                alt: block.settings.publication_name
-            }}
-          {%- elsif block.settings.publication_name != blank -%}
-            <span class="press-mentions__publication-name">{{ block.settings.publication_name | escape }}</span>
-          {%- endif -%}
-
-          {%- if section.settings.show_quotes and block.settings.quote != blank -%}
-            <p class="press-mentions__quote">{{ block.settings.quote | escape }}</p>
-          {%- endif -%}
-
-          {%- if block.settings.link != blank -%}
-            </a>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
+  <div class="press-mentions-ticker__wrapper" ref="wrapper">
+    <div class="press-mentions-ticker__content" ref="content">
+      <div class="press-mentions-ticker__items" ref="marqueeItems[]">
+        {%- for block in section.blocks -%}
+          <div class="press-mentions-ticker__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.logo != blank -%}
+              {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="press-mentions-ticker__link">{%- endif -%}
+              {{-
+                block.settings.logo
+                | image_url: width: 400
+                | image_tag:
+                  class: 'press-mentions-ticker__logo',
+                  loading: 'lazy',
+                  alt: block.settings.publication_name
+              -}}
+              {%- if block.settings.link != blank -%}</a>{%- endif -%}
+            {%- elsif block.settings.publication_name != blank -%}
+              {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="press-mentions-ticker__link">{%- endif -%}
+              <span class="press-mentions-ticker__name">{{ block.settings.publication_name | escape }}</span>
+              {%- if block.settings.link != blank -%}</a>{%- endif -%}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
     </div>
-  {%- endif -%}
-</div>
+  </div>
+</marquee-component>
 
 {% stylesheet %}
-  .press-mentions__heading {
-    margin: 0 0 var(--margin-3xl);
+  .press-mentions-ticker {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-top: var(--pm-border-width, 1px) solid var(--pm-border-color, transparent);
+    border-bottom: var(--pm-border-width, 1px) solid var(--pm-border-color, transparent);
+  }
+
+  .press-mentions-ticker__wrapper {
+    display: flex;
+    gap: var(--marquee-gap, 60px);
+    width: fit-content;
+    white-space: nowrap;
+  }
+
+  .press-mentions-ticker__content {
+    min-width: max-content;
+    display: flex;
+    gap: var(--marquee-gap, 60px);
+  }
+
+  .press-mentions-ticker__items {
+    min-width: max-content;
+    display: flex;
+    gap: var(--marquee-gap, 60px);
+    align-items: center;
+  }
+
+  .press-mentions-ticker__item {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .press-mentions-ticker__name {
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
-    font-style: var(--font-heading--style);
-    font-size: var(--font-h3--size);
-    line-height: var(--font-h3--line-height);
-    letter-spacing: var(--font-h3--letter-spacing);
-    text-transform: var(--font-h3--case);
+    font-size: var(--pm-name-size, 20px);
     color: var(--color-foreground-heading);
+    white-space: nowrap;
+    line-height: 1;
+    letter-spacing: 0.02em;
   }
 
-  .press-mentions__logos {
-    display: grid;
-    grid-template-columns: repeat(var(--press-mentions-columns-mobile), 1fr);
-    gap: var(--press-mentions-gap, 32px);
-    align-items: center;
-    justify-items: center;
-  }
-
-  .press-mentions__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--gap-sm);
-    width: 100%;
-  }
-
-  .press-mentions__link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--gap-sm);
-    text-decoration: none;
-    width: 100%;
-  }
-
-  .press-mentions__logo {
-    max-height: var(--press-mentions-logo-max-height, 48px);
+  .press-mentions-ticker__logo {
+    max-height: var(--pm-logo-max-height, 36px);
     width: auto;
-    max-width: 100%;
+    max-width: none;
     object-fit: contain;
     display: block;
-    filter: var(--press-mentions-logo-filter, none);
-    opacity: var(--press-mentions-logo-opacity, 0.8);
-    transition: opacity 0.2s ease, filter 0.2s ease;
+    opacity: var(--pm-logo-opacity, 1);
   }
 
-  .press-mentions__item:hover .press-mentions__logo {
-    opacity: 1;
-    filter: none;
+  .press-mentions-ticker__link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
   }
 
-  .press-mentions__publication-name {
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: var(--font-h5--size, 1.125rem);
-    color: var(--color-foreground-heading);
-    text-align: center;
-    opacity: var(--press-mentions-logo-opacity, 0.8);
-    transition: opacity 0.2s ease;
-  }
+  @media (prefers-reduced-motion: no-preference) {
+    marquee-component:not([data-disabled]) .press-mentions-ticker__wrapper {
+      animation: pm-ticker-motion var(--marquee-speed) linear infinite var(--marquee-direction);
+    }
 
-  .press-mentions__item:hover .press-mentions__publication-name {
-    opacity: 1;
-  }
-
-  .press-mentions__quote {
-    font-family: var(--font-body--family);
-    font-size: var(--font-paragraph--size);
-    line-height: var(--font-paragraph--line-height);
-    color: rgb(var(--color-foreground-rgb) / 0.7);
-    text-align: center;
-    margin: 0;
-    font-style: italic;
-  }
-
-  @media screen and (min-width: 750px) {
-    .press-mentions__logos {
-      grid-template-columns: repeat(var(--press-mentions-columns), 1fr);
+    @keyframes pm-ticker-motion {
+      to {
+        transform: translate3d(calc(-50% - (var(--marquee-gap, 60px) / 2)), 0, 0);
+      }
     }
   }
 {% endstylesheet %}
@@ -158,66 +127,40 @@
 {% schema %}
 {
   "name": "Press mentions",
-  "class": "press-mentions",
+  "class": "press-mentions-ticker-section",
   "disabled_on": {
     "groups": ["header", "footer"]
   },
   "settings": [
     {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "As Seen In"
-    },
-    {
-      "type": "select",
-      "id": "heading_alignment",
-      "label": "Heading alignment",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
-      ],
-      "default": "center"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_quotes",
-      "label": "Show quotes",
-      "default": false
-    },
-    {
       "type": "header",
-      "content": "Layout"
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#8b1a6b"
     },
     {
       "type": "range",
-      "id": "columns",
-      "label": "Columns (desktop)",
-      "min": 2,
-      "max": 8,
-      "step": 1,
-      "default": 4
-    },
-    {
-      "type": "select",
-      "id": "columns_mobile",
-      "label": "Columns (mobile)",
-      "options": [
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" }
-      ],
-      "default": "2"
-    },
-    {
-      "type": "range",
-      "id": "gap",
-      "label": "Gap",
+      "id": "border_width",
+      "label": "Border thickness",
       "min": 0,
-      "max": 80,
-      "step": 4,
+      "max": 4,
+      "step": 1,
       "unit": "px",
-      "default": 40
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "label": "Name font size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 20
     },
     {
       "type": "header",
@@ -227,17 +170,11 @@
       "type": "range",
       "id": "logo_max_height",
       "label": "Logo max height",
-      "min": 24,
-      "max": 96,
+      "min": 20,
+      "max": 80,
       "step": 4,
       "unit": "px",
-      "default": 48
-    },
-    {
-      "type": "checkbox",
-      "id": "grayscale",
-      "label": "Grayscale logos",
-      "default": false
+      "default": 36
     },
     {
       "type": "range",
@@ -246,27 +183,50 @@
       "min": 50,
       "max": 100,
       "step": 5,
-      "default": 80
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Scroll"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed",
+      "min": 5,
+      "max": 60,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "movement_direction",
+      "label": "Scroll direction",
+      "options": [
+        { "value": "reverse", "label": "Left to right" },
+        { "value": "normal", "label": "Right to left" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between items",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
     },
     {
       "type": "header",
       "content": "Section"
     },
     {
-      "type": "select",
-      "id": "section_width",
-      "label": "Width",
-      "options": [
-        { "value": "page-width", "label": "Page" },
-        { "value": "full-width", "label": "Full" }
-      ],
-      "default": "page-width"
-    },
-    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
-      "default": "scheme-1"
+      "default": "scheme-8"
     },
     {
       "type": "header",
@@ -277,20 +237,20 @@
       "id": "padding-block-start",
       "label": "Top",
       "min": 0,
-      "max": 100,
+      "max": 60,
       "step": 1,
       "unit": "px",
-      "default": 60
+      "default": 16
     },
     {
       "type": "range",
       "id": "padding-block-end",
       "label": "Bottom",
       "min": 0,
-      "max": 100,
+      "max": 60,
       "step": 1,
       "unit": "px",
-      "default": 60
+      "default": 16
     }
   ],
   "blocks": [
@@ -310,11 +270,6 @@
           "default": "Publication"
         },
         {
-          "type": "textarea",
-          "id": "quote",
-          "label": "Quote"
-        },
-        {
           "type": "url",
           "id": "link",
           "label": "Link"
@@ -326,30 +281,12 @@
     {
       "name": "Press mentions",
       "blocks": [
-        {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "Forbes"
-          }
-        },
-        {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "Good Housekeeping"
-          }
-        },
-        {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "Motherly"
-          }
-        },
-        {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "The Bump"
-          }
-        }
+        { "type": "press-item", "settings": { "publication_name": "Parents." } },
+        { "type": "press-item", "settings": { "publication_name": "EREWHON" } },
+        { "type": "press-item", "settings": { "publication_name": "health" } },
+        { "type": "press-item", "settings": { "publication_name": "healthline" } },
+        { "type": "press-item", "settings": { "publication_name": "Forbes" } },
+        { "type": "press-item", "settings": { "publication_name": "Good Housekeeping" } }
       ]
     }
   ]

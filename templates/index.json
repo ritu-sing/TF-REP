@@ -742,25 +742,37 @@
         "press_1": {
           "type": "press-item",
           "settings": {
-            "publication_name": "Forbes"
+            "publication_name": "Parents."
           }
         },
         "press_2": {
           "type": "press-item",
           "settings": {
-            "publication_name": "Good Housekeeping"
+            "publication_name": "EREWHON"
           }
         },
         "press_3": {
           "type": "press-item",
           "settings": {
-            "publication_name": "Motherly"
+            "publication_name": "health"
           }
         },
         "press_4": {
           "type": "press-item",
           "settings": {
-            "publication_name": "The Bump"
+            "publication_name": "healthline"
+          }
+        },
+        "press_5": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "Forbes"
+          }
+        },
+        "press_6": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "Good Housekeeping"
           }
         }
       },
@@ -768,22 +780,22 @@
         "press_1",
         "press_2",
         "press_3",
-        "press_4"
+        "press_4",
+        "press_5",
+        "press_6"
       ],
       "settings": {
-        "heading": "As Seen In",
-        "heading_alignment": "center",
-        "show_quotes": false,
-        "columns": 4,
-        "columns_mobile": "2",
-        "gap": 40,
-        "logo_max_height": 48,
-        "grayscale": false,
-        "logo_opacity": 80,
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 60,
-        "padding-block-end": 60
+        "border_color": "#8b1a6b",
+        "border_width": 1,
+        "name_size": 20,
+        "logo_max_height": 36,
+        "logo_opacity": 100,
+        "speed": 20,
+        "movement_direction": "normal",
+        "gap": 60,
+        "color_scheme": "scheme-8",
+        "padding-block-start": 16,
+        "padding-block-end": 16
       }
     },
     "comparison_table_section": {
@@ -1250,8 +1262,8 @@
     "tabbed_carousel_main",
     "our_story_section",
     "social_proof_section",
-    "press_mentions_section",
     "experts_review_section",
+    "press_mentions_section",
     "comparison_table_section",
     "hero_jVaWmY",
     "product_list_fa6P9H"
