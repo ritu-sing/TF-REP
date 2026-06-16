@@ -96,6 +96,15 @@
     --experts-review-subheading-size: {{ section.settings.subheading_size }}px;
     --experts-review-review-text-size: {{ section.settings.review_text_size }}px;
     --experts-review-expert-name-size: {{ section.settings.expert_name_size }}px;
+    --experts-review-watermark-opacity: {{ section.settings.watermark_opacity | divided_by: 100.0 }};
+    --experts-review-wm1-x: {{ section.settings.watermark_1_x }}%;
+    --experts-review-wm1-y: {{ section.settings.watermark_1_y }}%;
+    --experts-review-wm2-x: {{ section.settings.watermark_2_x }}%;
+    --experts-review-wm2-y: {{ section.settings.watermark_2_y }}%;
+    --experts-review-wm1-x-mob: {{ section.settings.watermark_1_x_mobile }}%;
+    --experts-review-wm1-y-mob: {{ section.settings.watermark_1_y_mobile }}%;
+    --experts-review-wm2-x-mob: {{ section.settings.watermark_2_x_mobile }}%;
+    --experts-review-wm2-y-mob: {{ section.settings.watermark_2_y_mobile }}%;
   }
   #shopify-section-{{ section.id }} .experts-review__heading {
     color: {{ section.settings.heading_color }};
@@ -103,12 +112,6 @@
   #shopify-section-{{ section.id }} .experts-review__subheading {
     color: {{ section.settings.subheading_color }};
   }
-  {%- if section.settings.show_watermark -%}
-  #shopify-section-{{ section.id }} .experts-review__watermark {
-    opacity: {{ section.settings.watermark_opacity | divided_by: 100.0 }};
-    top: {{ section.settings.watermark_vertical }};
-  }
-  {%- endif -%}
 </style>
 
 <div
@@ -295,15 +298,14 @@
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
-    display: none;
   }
 
   .experts-review__watermark {
     position: absolute;
-    top: 50%;
     color: var(--experts-review-watermark-color, white);
     width: var(--experts-review-watermark-size, 160px);
     height: var(--experts-review-watermark-size, 160px);
+    opacity: var(--experts-review-watermark-opacity, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -315,12 +317,14 @@
   }
 
   .experts-review__watermark--1 {
-    left: 33.33%;
+    left: var(--experts-review-wm1-x-mob, 50%);
+    top: var(--experts-review-wm1-y-mob, 25%);
     transform: translate(-50%, -50%);
   }
 
   .experts-review__watermark--2 {
-    left: 66.66%;
+    left: var(--experts-review-wm2-x-mob, 50%);
+    top: var(--experts-review-wm2-y-mob, 75%);
     transform: translate(-50%, -50%);
   }
 
@@ -378,8 +382,14 @@
       transform: translateX(-50%);
     }
 
-    .experts-review__watermarks {
-      display: block;
+    .experts-review__watermark--1 {
+      left: var(--experts-review-wm1-x, 33%);
+      top: var(--experts-review-wm1-y, 50%);
+    }
+
+    .experts-review__watermark--2 {
+      left: var(--experts-review-wm2-x, 67%);
+      top: var(--experts-review-wm2-y, 50%);
     }
   }
 {% endstylesheet %}
@@ -633,15 +643,91 @@
       "visible_if": "{{ section.settings.show_watermark }}"
     },
     {
-      "type": "select",
-      "id": "watermark_vertical",
-      "label": "Watermark vertical position",
-      "options": [
-        { "value": "25%", "label": "Top" },
-        { "value": "50%", "label": "Center" },
-        { "value": "75%", "label": "Bottom" }
-      ],
-      "default": "50%",
+      "type": "range",
+      "id": "watermark_1_x",
+      "label": "Watermark 1 — X position (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 33,
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "range",
+      "id": "watermark_1_y",
+      "label": "Watermark 1 — Y position (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "range",
+      "id": "watermark_2_x",
+      "label": "Watermark 2 — X position (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 67,
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "range",
+      "id": "watermark_2_y",
+      "label": "Watermark 2 — Y position (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "range",
+      "id": "watermark_1_x_mobile",
+      "label": "Watermark 1 — X position (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "range",
+      "id": "watermark_1_y_mobile",
+      "label": "Watermark 1 — Y position (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 25,
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "range",
+      "id": "watermark_2_x_mobile",
+      "label": "Watermark 2 — X position (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "range",
+      "id": "watermark_2_y_mobile",
+      "label": "Watermark 2 — Y position (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 75,
       "visible_if": "{{ section.settings.show_watermark }}"
     },
     {
