@@ -105,6 +105,10 @@
     --experts-review-wm1-y-mob: {{ section.settings.watermark_1_y_mobile }}%;
     --experts-review-wm2-x-mob: {{ section.settings.watermark_2_x_mobile }}%;
     --experts-review-wm2-y-mob: {{ section.settings.watermark_2_y_mobile }}%;
+    --experts-review-watermark-z: {% if section.settings.watermark_layer == 'front' %}3{% else %}0{% endif %};
+  }
+  #shopify-section-{{ section.id }} > .section {
+    position: relative;
   }
   #shopify-section-{{ section.id }} .experts-review__heading {
     color: {{ section.settings.heading_color }};
@@ -304,7 +308,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: var(--experts-review-watermark-z, 3);
     overflow: hidden;
   }
 
@@ -633,6 +637,17 @@
       "id": "watermark_image",
       "label": "Watermark image",
       "info": "Upload a custom image. Leave empty to use the default llama icon.",
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "select",
+      "id": "watermark_layer",
+      "label": "Watermark layer",
+      "options": [
+        { "value": "front", "label": "On top of cards" },
+        { "value": "back", "label": "Behind cards" }
+      ],
+      "default": "front",
       "visible_if": "{{ section.settings.show_watermark }}"
     },
     {
