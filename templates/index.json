@@ -834,34 +834,31 @@
         "expert_1": {
           "type": "expert-card",
           "settings": {
+            "expert_image": "shopify://shop_images/expert-image-1f3f4d047d5a_430x_b8dac100-67a0-44ad-9788-297a8141a1d0.webp",
             "expert_name": "Dr. Maria Chen",
             "expert_title": "Pediatric Nutritionist, RD",
             "expert_organization": "Children's Wellness Institute",
-            "review_text": "As a pediatric nutritionist, I'm continually asked for clean supplement recommendations. Llama Naturals checks every box: whole-food vitamins, no synthetic additives, and allergen-free. These are the gummies I confidently recommend to my patients' families.",
-            "rating": 5,
-            "show_rating": true
+            "review_text": "As a pediatric nutritionist, I'm continually asked for clean supplement recommendations. Llama Naturals checks every box: whole-food vitamins, no synthetic additives, and allergen-free. These are the gummies I confidently recommend to my patients' families."
           }
         },
         "expert_2": {
           "type": "expert-card",
           "settings": {
+            "expert_image": "shopify://shop_images/expert-image-803cf730-fc67-4b4c-9d51-356149faee12-45dba73d8109_430x_b412cd06-b8fe-426f-a711-b19a136b2fc4.webp",
             "expert_name": "Dr. James Okafor",
             "expert_title": "Family Physician, MD",
             "expert_organization": "Integrative Family Health",
-            "review_text": "I've reviewed dozens of children's supplement brands in my practice. What sets Llama Naturals apart is the USDA Organic certification combined with third-party lab testing. Parents can trust exactly what they're giving their kids.",
-            "rating": 5,
-            "show_rating": true
+            "review_text": "I've reviewed dozens of children's supplement brands in my practice. What sets Llama Naturals apart is the USDA Organic certification combined with third-party lab testing. Parents can trust exactly what they're giving their kids."
           }
         },
         "expert_3": {
           "type": "expert-card",
           "settings": {
+            "expert_image": "shopify://shop_images/expert-image-2dd5f2dc-851c-402e-8d62-61e0f90bb17d-255c8dd178e3_430x_0561156a-53e6-42c9-945d-36d61a34143e.webp",
             "expert_name": "Sarah Brennan",
             "expert_title": "Registered Dietitian, MS",
             "expert_organization": "Pediatric Nutrition Partners",
-            "review_text": "The bioavailability of whole-food-sourced vitamins versus synthetic alternatives is not even close. Llama Naturals made the right choice sourcing nutrients from real fruits and vegetables. My clients see the difference in their children's energy and wellbeing.",
-            "rating": 5,
-            "show_rating": true
+            "review_text": "The bioavailability of whole-food-sourced vitamins versus synthetic alternatives is not even close. Llama Naturals made the right choice sourcing nutrients from real fruits and vegetables. My clients see the difference in their children's energy and wellbeing."
           }
         }
       },
@@ -874,12 +871,43 @@
         "heading": "Approved By The Experts",
         "heading_alignment": "center",
         "subheading": "Recommending what’s best for you and your family",
-        "star_color": "#ffb800",
+        "heading_size": 36,
+        "subheading_size": 16,
+        "review_text_size": 14,
+        "expert_name_size": 14,
+        "section_bg_color": "#9b1b6e",
+        "heading_color": "#ffffff",
+        "subheading_color": "#ffffff",
+        "card_bg_color": "#ffffff",
+        "card_border_color": "#e5e5e5",
+        "review_text_color": "#333333",
+        "expert_name_color": "#680040",
+        "expert_title_color": "#680040",
+        "expert_org_color": "#680040",
+        "card_border_radius": 14,
+        "info_position": "top",
         "columns": 3,
         "gap": 24,
+        "photo_size": 100,
+        "photo_border_color": "#ffffff",
+        "photo_border_width": 0,
+        "show_watermark": true,
+        "watermark_image": "shopify://shop_images/vector-5d28e86a-697d-4379-8d65-91cb249af82a-04d806cf5e3f_430x_093d01dc-0102-4d4d-8055-4eb58199f078.webp",
+        "watermark_layer": "front",
+        "watermark_color": "#333333",
+        "watermark_opacity": 23,
+        "watermark_size": 160,
+        "watermark_1_x": 33,
+        "watermark_1_y": 50,
+        "watermark_2_x": 67,
+        "watermark_2_y": 50,
+        "watermark_1_x_mobile": 50,
+        "watermark_1_y_mobile": 25,
+        "watermark_2_x_mobile": 50,
+        "watermark_2_y_mobile": 75,
         "show_arrows": true,
-        "icons_style": "arrow",
-        "icons_shape": "none",
+        "icons_style": "chevron",
+        "icons_shape": "circle",
         "section_width": "page-width",
         "color_scheme": "scheme-58084d4c-a86e-4d0a-855e-a0966e5043f7",
         "padding-block-start": 60,
