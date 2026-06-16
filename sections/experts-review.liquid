@@ -1,0 +1,489 @@
+{%- liquid
+  assign slide_count = section.blocks.size
+  assign show_arrows_val = section.settings.show_arrows
+-%}
+
+{%- capture slides -%}
+  {%- for block in section.blocks -%}
+    {%- capture card_content -%}
+      <div class="experts-review__card" {{ block.shopify_attributes }}>
+        {%- if block.settings.expert_image != blank -%}
+          <div class="experts-review__image-wrapper">
+            {{
+              block.settings.expert_image
+              | image_url: width: 160
+              | image_tag:
+                class: 'experts-review__image',
+                loading: 'lazy',
+                alt: block.settings.expert_name,
+                width: 80,
+                height: 80
+            }}
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.show_rating -%}
+          <div class="experts-review__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+            {%- for i in (1..5) -%}
+              <svg
+                class="experts-review__star{% if i <= block.settings.rating %} experts-review__star--filled{% endif %}"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path d="M31.547 12a.848.848 0 00-.677-.577l-9.427-1.376-4.224-8.532a.847.847 0 00-1.516 0l-4.218 8.534-9.427 1.355a.847.847 0 00-.467 1.467l6.823 6.664-1.612 9.375a.847.847 0 001.23.893l8.428-4.434 8.432 4.432a.847.847 0 001.229-.894l-1.615-9.373 6.822-6.665a.845.845 0 00.214-.869z" />
+              </svg>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <p class="experts-review__text">{{ block.settings.review_text | escape }}</p>
+
+        <div class="experts-review__expert-info">
+          {%- if block.settings.expert_name != blank -%}
+            <span class="experts-review__expert-name">{{ block.settings.expert_name | escape }}</span>
+          {%- endif -%}
+          {%- if block.settings.expert_title != blank -%}
+            <span class="experts-review__expert-title">{{ block.settings.expert_title | escape }}</span>
+          {%- endif -%}
+          {%- if block.settings.expert_organization != blank -%}
+            <span class="experts-review__expert-organization">{{ block.settings.expert_organization | escape }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endcapture -%}
+    {%- render 'slideshow-slide',
+      index: forloop.index0,
+      children: card_content,
+      class: 'experts-review__slide'
+    -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- capture controls -%}
+  {%- render 'slideshow-controls',
+    style: 'dots',
+    item_count: slide_count,
+    show_arrows: show_arrows_val,
+    icon_style: section.settings.icons_style,
+    shape: section.settings.icons_shape
+  -%}
+{%- endcapture -%}
+
+{%- capture slideshow_style -%}
+  --experts-review-columns: {{ section.settings.columns }};
+  --experts-review-star-color: {{ section.settings.star_color }};
+  {%- render 'gap-style', value: section.settings.gap, name: 'experts-review-gap' -%}
+{%- endcapture -%}
+
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style"
+  style="{%- render 'spacing-style', settings: section.settings -%}"
+>
+  {%- if section.settings.heading != blank -%}
+    <h2
+      class="experts-review__heading"
+      style="text-align: {{ section.settings.heading_alignment }};"
+    >
+      {{ section.settings.heading | escape }}
+    </h2>
+  {%- endif -%}
+
+  {%- if section.settings.subheading != blank -%}
+    <p
+      class="experts-review__subheading"
+      style="text-align: {{ section.settings.heading_alignment }};"
+    >
+      {{ section.settings.subheading | escape }}
+    </p>
+  {%- endif -%}
+
+  {%- render 'slideshow',
+    class: 'experts-review__slideshow',
+    style: slideshow_style,
+    slides: slides,
+    slide_count: slide_count,
+    show_arrows: show_arrows_val,
+    auto_hide_controls: true,
+    infinite: false,
+    controls: controls
+  -%}
+</div>
+
+{% stylesheet %}
+  .experts-review__heading {
+    margin: 0 0 var(--margin-3xl);
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-style: var(--font-heading--style);
+    font-size: var(--font-h3--size);
+    line-height: var(--font-h3--line-height);
+    letter-spacing: var(--font-h3--letter-spacing);
+    text-transform: var(--font-h3--case);
+    color: var(--color-foreground-heading);
+  }
+
+  .experts-review__subheading {
+    margin: calc(-1 * var(--margin-3xl) + var(--margin-lg)) 0 var(--margin-3xl);
+    font-family: var(--font-body--family);
+    font-size: var(--font-paragraph--size);
+    line-height: var(--font-paragraph--line-height);
+    color: rgb(var(--color-foreground-rgb) / 0.7);
+  }
+
+  .experts-review__slideshow slideshow-slides {
+    --slideshow-gap: var(--experts-review-gap, 24px);
+  }
+
+  .experts-review__slideshow slideshow-container {
+    background-color: transparent;
+  }
+
+  .experts-review__slide {
+    flex: 0 0 auto;
+    width: 85%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .experts-review__slide {
+      width: calc(
+        (100% - (var(--experts-review-gap, 24px) * (var(--experts-review-columns, 3) - 1))) /
+          var(--experts-review-columns, 3)
+      );
+    }
+
+    .experts-review__slideshow slideshow-controls {
+      display: none;
+    }
+
+    .experts-review__slideshow slideshow-arrows {
+      display: none;
+    }
+  }
+
+  .experts-review__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg);
+    padding: var(--padding-4xl);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--style-border-radius-lg);
+    height: 100%;
+  }
+
+  .experts-review__image-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .experts-review__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .experts-review__stars {
+    display: flex;
+    gap: var(--gap-3xs);
+    align-items: center;
+  }
+
+  .experts-review__star {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: rgb(var(--color-foreground-rgb) / var(--opacity-20));
+  }
+
+  .experts-review__star--filled {
+    fill: var(--experts-review-star-color, #FFB800);
+  }
+
+  .experts-review__text {
+    font-family: var(--font-body--family);
+    font-size: var(--font-paragraph--size);
+    line-height: var(--font-paragraph--line-height);
+    letter-spacing: var(--font-paragraph--letter-spacing);
+    color: var(--color-foreground);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .experts-review__text::before {
+    content: '\201C';
+  }
+
+  .experts-review__text::after {
+    content: '\201D';
+  }
+
+  .experts-review__expert-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-2xs);
+    padding-block-start: var(--padding-xs);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .experts-review__expert-name {
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--line-height--body-normal);
+    color: var(--color-foreground-heading);
+  }
+
+  .experts-review__expert-title {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+    line-height: var(--line-height--body-normal);
+    color: rgb(var(--color-foreground-rgb) / 0.65);
+  }
+
+  .experts-review__expert-organization {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+    line-height: var(--line-height--body-normal);
+    color: rgb(var(--color-foreground-rgb) / 0.55);
+  }
+
+  .experts-review__slideshow slideshow-controls:has(.slideshow-controls__dots) {
+    mix-blend-mode: normal;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Experts Review",
+  "class": "experts-review",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Experts Agree: Llama Naturals Is Different"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#FFB800"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "icons_style",
+      "label": "Icon style",
+      "options": [
+        { "value": "arrow", "label": "Arrow" },
+        { "value": "chevron", "label": "Chevron" }
+      ],
+      "default": "arrow",
+      "visible_if": "{{ section.settings.show_arrows }}"
+    },
+    {
+      "type": "select",
+      "id": "icons_shape",
+      "label": "Icon shape",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "circle", "label": "Circle" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.show_arrows }}"
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        { "value": "page-width", "label": "Page" },
+        { "value": "full-width", "label": "Full" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "expert-card",
+      "name": "Expert card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "expert_image",
+          "label": "Expert photo"
+        },
+        {
+          "type": "text",
+          "id": "expert_name",
+          "label": "Expert name",
+          "default": "Dr. Jane Smith"
+        },
+        {
+          "type": "text",
+          "id": "expert_title",
+          "label": "Title / credential",
+          "default": "Pediatric Nutritionist"
+        },
+        {
+          "type": "text",
+          "id": "expert_organization",
+          "label": "Organization"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review text",
+          "default": "As a pediatric nutritionist, I'm impressed by the clean ingredient list and whole-food sourcing. These are the vitamins I recommend to parents looking for truly organic, allergen-free options for their children."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rating",
+          "label": "Show star rating",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Experts Review",
+      "blocks": [
+        {
+          "type": "expert-card",
+          "settings": {
+            "expert_name": "Dr. Maria Chen",
+            "expert_title": "Pediatric Nutritionist, RD",
+            "expert_organization": "Children's Wellness Institute",
+            "review_text": "As a pediatric nutritionist, I'm continually asked for clean supplement recommendations. Llama Naturals checks every box: whole-food vitamins, no synthetic additives, and allergen-free. These are the gummies I confidently recommend to my patients' families.",
+            "rating": 5,
+            "show_rating": true
+          }
+        },
+        {
+          "type": "expert-card",
+          "settings": {
+            "expert_name": "Dr. James Okafor",
+            "expert_title": "Family Physician, MD",
+            "expert_organization": "Integrative Family Health",
+            "review_text": "I've reviewed dozens of children's supplement brands in my practice. What sets Llama Naturals apart is the USDA Organic certification combined with third-party lab testing. Parents can trust exactly what they're giving their kids.",
+            "rating": 5,
+            "show_rating": true
+          }
+        },
+        {
+          "type": "expert-card",
+          "settings": {
+            "expert_name": "Sarah Brennan",
+            "expert_title": "Registered Dietitian, MS",
+            "expert_organization": "Pediatric Nutrition Partners",
+            "review_text": "The bioavailability of whole-food-sourced vitamins versus synthetic alternatives is not even close. Llama Naturals made the right choice sourcing nutrients from real fruits and vegetables. My clients see the difference in their children's energy and wellbeing.",
+            "rating": 5,
+            "show_rating": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

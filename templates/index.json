@@ -828,6 +828,63 @@
         "padding-block-end": 60
       }
     },
+    "experts_review_section": {
+      "type": "experts-review",
+      "blocks": {
+        "expert_1": {
+          "type": "expert-card",
+          "settings": {
+            "expert_name": "Dr. Maria Chen",
+            "expert_title": "Pediatric Nutritionist, RD",
+            "expert_organization": "Children's Wellness Institute",
+            "review_text": "As a pediatric nutritionist, I'm continually asked for clean supplement recommendations. Llama Naturals checks every box: whole-food vitamins, no synthetic additives, and allergen-free. These are the gummies I confidently recommend to my patients' families.",
+            "rating": 5,
+            "show_rating": true
+          }
+        },
+        "expert_2": {
+          "type": "expert-card",
+          "settings": {
+            "expert_name": "Dr. James Okafor",
+            "expert_title": "Family Physician, MD",
+            "expert_organization": "Integrative Family Health",
+            "review_text": "I've reviewed dozens of children's supplement brands in my practice. What sets Llama Naturals apart is the USDA Organic certification combined with third-party lab testing. Parents can trust exactly what they're giving their kids.",
+            "rating": 5,
+            "show_rating": true
+          }
+        },
+        "expert_3": {
+          "type": "expert-card",
+          "settings": {
+            "expert_name": "Sarah Brennan",
+            "expert_title": "Registered Dietitian, MS",
+            "expert_organization": "Pediatric Nutrition Partners",
+            "review_text": "The bioavailability of whole-food-sourced vitamins versus synthetic alternatives is not even close. Llama Naturals made the right choice sourcing nutrients from real fruits and vegetables. My clients see the difference in their children's energy and wellbeing.",
+            "rating": 5,
+            "show_rating": true
+          }
+        }
+      },
+      "block_order": [
+        "expert_1",
+        "expert_2",
+        "expert_3"
+      ],
+      "settings": {
+        "heading": "Experts Agree: Llama Naturals Is Different",
+        "heading_alignment": "center",
+        "star_color": "#FFB800",
+        "columns": 3,
+        "gap": 24,
+        "show_arrows": true,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -1115,6 +1172,7 @@
     "our_story_section",
     "social_proof_section",
     "comparison_table_section",
+    "experts_review_section",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
