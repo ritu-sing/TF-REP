@@ -65,10 +65,27 @@
     background-color: {{ section.settings.section_bg_color }};
     --experts-review-photo-size: {{ section.settings.photo_size }}px;
     --experts-review-expert-name-color: {{ section.settings.expert_name_color }};
+    --experts-review-subheading-color: {{ section.settings.subheading_color }};
+    --experts-review-card-bg: {{ section.settings.card_bg_color }};
+    --experts-review-card-border-color: {{ section.settings.card_border_color }};
+    --experts-review-card-border-radius: {{ section.settings.card_border_radius }}px;
+    --experts-review-review-text-color: {{ section.settings.review_text_color }};
+    --experts-review-expert-title-color: {{ section.settings.expert_title_color }};
+    --experts-review-expert-org-color: {{ section.settings.expert_org_color }};
+    --experts-review-photo-border-color: {{ section.settings.photo_border_color }};
+    --experts-review-photo-border-width: {{ section.settings.photo_border_width }}px;
+    --experts-review-watermark-color: {{ section.settings.watermark_color }};
+    --experts-review-watermark-size: {{ section.settings.watermark_size }}px;
+    --experts-review-heading-size: {{ section.settings.heading_size }}px;
+    --experts-review-subheading-size: {{ section.settings.subheading_size }}px;
+    --experts-review-review-text-size: {{ section.settings.review_text_size }}px;
+    --experts-review-expert-name-size: {{ section.settings.expert_name_size }}px;
   }
-  #shopify-section-{{ section.id }} .experts-review__heading,
-  #shopify-section-{{ section.id }} .experts-review__subheading {
+  #shopify-section-{{ section.id }} .experts-review__heading {
     color: {{ section.settings.heading_color }};
+  }
+  #shopify-section-{{ section.id }} .experts-review__subheading {
+    color: {{ section.settings.subheading_color }};
   }
   {%- if section.settings.show_watermark -%}
   #shopify-section-{{ section.id }} .experts-review__watermark {
@@ -84,12 +101,12 @@
   {%- if section.settings.show_watermark -%}
     <div class="experts-review__watermarks" aria-hidden="true">
       <span class="experts-review__watermark experts-review__watermark--1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="160" height="160" fill="currentColor" role="presentation" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor" role="presentation" aria-hidden="true">
           <path d="M50 5 C47 5 44 7 43 10 C42 13 43 17 46 19 L45 30 C43 34 41 38 40 43 L38 55 C36 60 34 65 32 72 L30 85 L36 85 L39 68 C41 63 42 60 43 56 L45 72 L48 87 L53 87 L50 72 L49 56 C51 53 55 53 57 56 L56 72 L53 87 L58 87 L61 72 L63 56 C64 60 65 63 67 68 L70 85 L76 85 L74 72 C72 65 70 60 68 55 L66 43 C65 38 63 34 61 30 L60 19 C63 17 64 13 63 10 C62 7 59 5 56 5 C54 4 52 4 50 5 Z"/>
         </svg>
       </span>
       <span class="experts-review__watermark experts-review__watermark--2">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="160" height="160" fill="currentColor" role="presentation" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor" role="presentation" aria-hidden="true">
           <path d="M50 5 C47 5 44 7 43 10 C42 13 43 17 46 19 L45 30 C43 34 41 38 40 43 L38 55 C36 60 34 65 32 72 L30 85 L36 85 L39 68 C41 63 42 60 43 56 L45 72 L48 87 L53 87 L50 72 L49 56 C51 53 55 53 57 56 L56 72 L53 87 L58 87 L61 72 L63 56 C64 60 65 63 67 68 L70 85 L76 85 L74 72 C72 65 70 60 68 55 L66 43 C65 38 63 34 61 30 L60 19 C63 17 64 13 63 10 C62 7 59 5 56 5 C54 4 52 4 50 5 Z"/>
         </svg>
       </span>
@@ -132,7 +149,7 @@
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
     font-style: var(--font-heading--style);
-    font-size: var(--font-h3--size);
+    font-size: var(--experts-review-heading-size, var(--font-h3--size));
     line-height: var(--font-h3--line-height);
     letter-spacing: var(--font-h3--letter-spacing);
     text-transform: var(--font-h3--case);
@@ -142,9 +159,9 @@
   .experts-review__subheading {
     margin: calc(-1 * var(--margin-3xl) + var(--margin-lg)) 0 var(--margin-3xl);
     font-family: var(--font-body--family);
-    font-size: var(--font-paragraph--size);
+    font-size: var(--experts-review-subheading-size, var(--font-paragraph--size));
     line-height: var(--font-paragraph--line-height);
-    color: rgb(var(--color-foreground-rgb) / 0.7);
+    color: var(--experts-review-subheading-color, rgb(var(--color-foreground-rgb) / 0.7));
   }
 
   .experts-review__slideshow slideshow-slides {
@@ -166,9 +183,9 @@
     flex-direction: column;
     gap: var(--gap-lg);
     padding: var(--padding-4xl);
-    background-color: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: var(--style-border-radius-lg);
+    background-color: var(--experts-review-card-bg, var(--color-background));
+    border: 1px solid var(--experts-review-card-border-color, var(--color-border));
+    border-radius: var(--experts-review-card-border-radius, var(--style-border-radius-lg));
     height: 100%;
     position: relative;
     overflow: visible;
@@ -180,7 +197,7 @@
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-    border: 3px solid #ffffff;
+    border: var(--experts-review-photo-border-width, 3px) solid var(--experts-review-photo-border-color, #ffffff);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
     align-self: center;
   }
@@ -194,10 +211,10 @@
 
   .experts-review__text {
     font-family: var(--font-body--family);
-    font-size: var(--font-paragraph--size);
+    font-size: var(--experts-review-review-text-size, var(--font-paragraph--size));
     line-height: var(--font-paragraph--line-height);
     letter-spacing: var(--font-paragraph--letter-spacing);
-    color: var(--color-foreground);
+    color: var(--experts-review-review-text-color, var(--color-foreground));
     margin: 0;
     flex-grow: 1;
   }
@@ -215,13 +232,13 @@
     flex-direction: column;
     gap: var(--gap-2xs);
     padding-block-start: var(--padding-xs);
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--experts-review-card-border-color, var(--color-border));
   }
 
   .experts-review__expert-name {
     font-family: var(--font-subheading--family);
     font-weight: 700;
-    font-size: var(--font-size--sm);
+    font-size: var(--experts-review-expert-name-size, var(--font-size--sm));
     line-height: var(--line-height--body-normal);
     color: var(--experts-review-expert-name-color, #9B1B6E);
   }
@@ -230,7 +247,7 @@
     font-family: var(--font-body--family);
     font-size: var(--font-size--xs);
     line-height: var(--line-height--body-normal);
-    color: rgb(var(--color-foreground-rgb) / 0.65);
+    color: var(--experts-review-expert-title-color, rgb(var(--color-foreground-rgb) / 0.65));
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
@@ -239,7 +256,7 @@
     font-family: var(--font-body--family);
     font-size: var(--font-size--xs);
     line-height: var(--line-height--body-normal);
-    color: rgb(var(--color-foreground-rgb) / 0.55);
+    color: var(--experts-review-expert-org-color, rgb(var(--color-foreground-rgb) / 0.55));
   }
 
   .experts-review__slideshow slideshow-controls:has(.slideshow-controls__dots) {
@@ -258,12 +275,17 @@
   .experts-review__watermark {
     position: absolute;
     top: 50%;
-    color: white;
-    width: 160px;
-    height: 160px;
+    color: var(--experts-review-watermark-color, white);
+    width: var(--experts-review-watermark-size, 160px);
+    height: var(--experts-review-watermark-size, 160px);
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .experts-review__watermark svg {
+    width: 100%;
+    height: 100%;
   }
 
   .experts-review__watermark--1 {
@@ -344,7 +366,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Experts Agree: Llama Naturals Is Different"
+      "default": "Approved By The Experts"
     },
     {
       "type": "select",
@@ -360,7 +382,52 @@
     {
       "type": "text",
       "id": "subheading",
-      "label": "Subheading"
+      "label": "Subheading",
+      "default": "Recommending what's best for you and your family"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Subheading size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "review_text_size",
+      "label": "Review text size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "expert_name_size",
+      "label": "Expert name size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
     },
     {
       "type": "header",
@@ -380,9 +447,59 @@
     },
     {
       "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "review_text_color",
+      "label": "Review text",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
       "id": "expert_name_color",
-      "label": "Expert name color",
+      "label": "Expert name",
       "default": "#9B1B6E"
+    },
+    {
+      "type": "color",
+      "id": "expert_title_color",
+      "label": "Expert title / credential",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "expert_org_color",
+      "label": "Organization",
+      "default": "#999999"
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
     },
     {
       "type": "header",
@@ -422,6 +539,22 @@
       "default": 96
     },
     {
+      "type": "color",
+      "id": "photo_border_color",
+      "label": "Photo border color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "photo_border_width",
+      "label": "Photo border width",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
       "type": "header",
       "content": "Watermark"
     },
@@ -432,6 +565,13 @@
       "default": true
     },
     {
+      "type": "color",
+      "id": "watermark_color",
+      "label": "Watermark color",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
       "type": "range",
       "id": "watermark_opacity",
       "label": "Watermark opacity",
@@ -439,6 +579,17 @@
       "max": 30,
       "step": 1,
       "default": 10,
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "range",
+      "id": "watermark_size",
+      "label": "Watermark size",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 160,
       "visible_if": "{{ section.settings.show_watermark }}"
     },
     {
