@@ -6,7 +6,7 @@
 {%- capture slides -%}
   {%- for block in section.blocks -%}
     {%- capture card_content -%}
-      <div class="experts-review__card" {{ block.shopify_attributes }}>
+      <div class="experts-review__card experts-review__card--info-{{ section.settings.info_position }}" {{ block.shopify_attributes }}>
         {%- if block.settings.expert_image != blank -%}
           <div class="experts-review__image-wrapper">
             {{
@@ -22,19 +22,35 @@
           </div>
         {%- endif -%}
 
+        {%- if section.settings.info_position == 'top' -%}
+          <div class="experts-review__expert-info">
+            {%- if block.settings.expert_name != blank -%}
+              <span class="experts-review__expert-name">{{ block.settings.expert_name | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.expert_title != blank -%}
+              <span class="experts-review__expert-title">{{ block.settings.expert_title | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.expert_organization != blank -%}
+              <span class="experts-review__expert-organization">{{ block.settings.expert_organization | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
         <p class="experts-review__text">{{ block.settings.review_text | escape }}</p>
 
-        <div class="experts-review__expert-info">
-          {%- if block.settings.expert_name != blank -%}
-            <span class="experts-review__expert-name">{{ block.settings.expert_name | escape }}</span>
-          {%- endif -%}
-          {%- if block.settings.expert_title != blank -%}
-            <span class="experts-review__expert-title">{{ block.settings.expert_title | escape }}</span>
-          {%- endif -%}
-          {%- if block.settings.expert_organization != blank -%}
-            <span class="experts-review__expert-organization">{{ block.settings.expert_organization | escape }}</span>
-          {%- endif -%}
-        </div>
+        {%- if section.settings.info_position == 'bottom' -%}
+          <div class="experts-review__expert-info">
+            {%- if block.settings.expert_name != blank -%}
+              <span class="experts-review__expert-name">{{ block.settings.expert_name | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.expert_title != blank -%}
+              <span class="experts-review__expert-title">{{ block.settings.expert_title | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.expert_organization != blank -%}
+              <span class="experts-review__expert-organization">{{ block.settings.expert_organization | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       </div>
     {%- endcapture -%}
     {%- render 'slideshow-slide',
@@ -90,6 +106,7 @@
   {%- if section.settings.show_watermark -%}
   #shopify-section-{{ section.id }} .experts-review__watermark {
     opacity: {{ section.settings.watermark_opacity | divided_by: 100.0 }};
+    top: {{ section.settings.watermark_vertical }};
   }
   {%- endif -%}
 </style>
@@ -231,8 +248,17 @@
     display: flex;
     flex-direction: column;
     gap: var(--gap-2xs);
+  }
+
+  .experts-review__card--info-bottom .experts-review__expert-info {
     padding-block-start: var(--padding-xs);
     border-top: 1px solid var(--experts-review-card-border-color, var(--color-border));
+  }
+
+  .experts-review__card--info-top .experts-review__expert-info {
+    padding-block-end: var(--padding-xs);
+    border-bottom: 1px solid var(--experts-review-card-border-color, var(--color-border));
+    text-align: center;
   }
 
   .experts-review__expert-name {
@@ -506,6 +532,16 @@
       "content": "Layout"
     },
     {
+      "type": "select",
+      "id": "info_position",
+      "label": "Expert info position",
+      "options": [
+        { "value": "top", "label": "Top (above review text)" },
+        { "value": "bottom", "label": "Bottom (below review text)" }
+      ],
+      "default": "top"
+    },
+    {
       "type": "range",
       "id": "columns",
       "label": "Columns",
@@ -590,6 +626,18 @@
       "step": 10,
       "unit": "px",
       "default": 160,
+      "visible_if": "{{ section.settings.show_watermark }}"
+    },
+    {
+      "type": "select",
+      "id": "watermark_vertical",
+      "label": "Watermark vertical position",
+      "options": [
+        { "value": "25%", "label": "Top" },
+        { "value": "50%", "label": "Center" },
+        { "value": "75%", "label": "Bottom" }
+      ],
+      "default": "50%",
       "visible_if": "{{ section.settings.show_watermark }}"
     },
     {
