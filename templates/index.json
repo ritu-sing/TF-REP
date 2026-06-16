@@ -815,7 +815,7 @@
         "show_cta": true,
         "cta_text": "SHOP NOW",
         "cta_url": "",
-        "section_bg_color": "#FFFEF5",
+        "section_bg_color": "#fffef5",
         "llama_col_bg": "#ffc56e",
         "llama_col_fg": "#680040",
         "check_icon_color": "#680040",
@@ -871,16 +871,17 @@
         "expert_3"
       ],
       "settings": {
-        "heading": "Experts Agree: Llama Naturals Is Different",
+        "heading": "Approved By The Experts",
         "heading_alignment": "center",
-        "star_color": "#FFB800",
+        "subheading": "Recommending what’s best for you and your family",
+        "star_color": "#ffb800",
         "columns": 3,
         "gap": 24,
         "show_arrows": true,
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-58084d4c-a86e-4d0a-855e-a0966e5043f7",
         "padding-block-start": 60,
         "padding-block-end": 60
       }
