@@ -704,6 +704,7 @@
         "show_cta": true,
         "cta_text": "SHOP NOW",
         "cta_url": "",
+        "section_bg_color": "#fdf5e4",
         "llama_col_bg": "#edba9d",
         "llama_col_fg": "#3d1534",
         "check_icon_color": "#3d1534",

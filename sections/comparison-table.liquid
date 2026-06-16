@@ -4,6 +4,7 @@
     --ct-llama-fg: {{ section.settings.llama_col_fg }};
     --ct-check-bg: {{ section.settings.check_icon_color }};
     --ct-cross-bg: {{ section.settings.cross_icon_color }};
+    background-color: {{ section.settings.section_bg_color }};
   }
 
   #shopify-section-{{ section.id }} .comparison-table__cta {
@@ -153,6 +154,7 @@
     width: 38%;
     background-color: var(--ct-llama-bg);
     color: var(--ct-llama-fg);
+    border-inline: 1px solid rgba(0, 0, 0, 0.12);
   }
 
   .comparison-table__th--competitor {
@@ -198,6 +200,7 @@
     background-color: var(--ct-llama-bg);
     color: var(--ct-llama-fg);
     font-weight: 600;
+    border-inline: 1px solid rgba(0, 0, 0, 0.12);
   }
 
   .comparison-table__icon {
@@ -323,6 +326,12 @@
     {
       "type": "header",
       "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section background color",
+      "default": "#fdf5e4"
     },
     {
       "type": "color",
