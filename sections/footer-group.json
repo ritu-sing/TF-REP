@@ -11,172 +11,26 @@
   "type": "footer",
   "name": "Footer",
   "sections": {
-    "footer_m9NzUG": {
-      "type": "footer",
-      "blocks": {
-        "logo_group": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-start",
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "flex-start",
-            "gap": 20,
-            "width": "fill",
-            "inherit_color_scheme": true,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "logo_block": {
-              "type": "logo",
-              "settings": {
-                "unit": "pixel",
-                "pixel_height": 48,
-                "custom_mobile_size": true,
-                "unit_mobile": "pixel",
-                "pixel_height_mobile": 40,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "tagline_text": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Premium alpaca-sourced wellness supplements for natural living.</p>",
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "logo_block",
-            "tagline_text"
-          ]
-        },
-        "menu_shop": {
-          "type": "menu",
-          "settings": {
-            "heading": "Shop",
-            "menu": "footer-shop-menu",
-            "show_as_accordion": true,
-            "menu_spacing": 10,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "menu_learn": {
-          "type": "menu",
-          "settings": {
-            "heading": "Learn",
-            "menu": "footer-learn-menu",
-            "show_as_accordion": true,
-            "menu_spacing": 10,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "newsletter_group": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "flex-start",
-            "gap": 16,
-            "width": "fill",
-            "inherit_color_scheme": true,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "newsletter_heading": {
-              "type": "text",
-              "settings": {
-                "text": "<h4>Join our email list</h4>",
-                "type_preset": "h4",
-                "alignment": "left",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "newsletter_subtext": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Get exclusive deals and early access to new products.</p>",
-                "type_preset": "paragraph",
-                "alignment": "left",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "newsletter_email": {
-              "type": "email-signup",
-              "settings": {
-                "width": "fill",
-                "border_style": "all",
-                "border_width": 1,
-                "border_radius": 100,
-                "display_type": "arrow",
-                "integrated_button": true,
-                "label": "Sign up",
-                "inherit_color_scheme": true,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "newsletter_heading",
-            "newsletter_subtext",
-            "newsletter_email"
-          ]
-        }
-      },
-      "block_order": [
-        "logo_group",
-        "menu_shop",
-        "menu_learn",
-        "newsletter_group"
-      ],
-      "name": "t:names.footer",
+    "ln_footer_main": {
+      "type": "ln-footer",
       "settings": {
         "section_width": "page-width",
-        "gap": 40,
-        "column_layout": "logo-first",
-        "color_scheme": "scheme-8",
+        "color_scheme": "scheme-9",
+        "menu_1_heading": "Shop",
+        "menu_1": "footer-shop-menu",
+        "menu_2_heading": "About",
+        "menu_2": "footer-about-menu",
+        "menu_3_heading": "Support",
+        "menu_3": "footer-support-menu",
+        "newsletter_heading": "You made it to the bottom. Snaps for you.",
+        "newsletter_subtext": "Get first dibs on promotions, early access to new products, and stay up to date with all things Llamas!",
+        "email_button_label": "SUBMIT",
+        "instagram_url": "https://www.instagram.com/llamanaturals/",
+        "tiktok_url": "https://www.tiktok.com/@llamanaturals",
+        "facebook_url": "https://www.facebook.com/llamanaturals/",
+        "linkedin_url": "https://www.linkedin.com/company/llama-naturals/",
+        "amazon_url": "https://www.amazon.com/stores/LlamaNaturals/page/",
+        "show_country_selector": true,
         "padding-block-start": 60,
         "padding-block-end": 60
       }
@@ -184,15 +38,6 @@
     "footer_utilities_jLGE8U": {
       "type": "footer-utilities",
       "blocks": {
-        "footer_copyright_jweRK8": {
-          "type": "footer-copyright",
-          "settings": {
-            "show_powered_by": true,
-            "font_size": "0.75rem",
-            "case": "none"
-          },
-          "blocks": {}
-        },
         "footer_policy_list_VCdnpa": {
           "type": "footer-policy-list",
           "settings": {
@@ -201,44 +46,33 @@
           },
           "blocks": {}
         },
-        "social_links_Ew63Kq": {
-          "type": "social-links",
+        "footer_copyright_jweRK8": {
+          "type": "footer-copyright",
           "settings": {
-            "facebook_url": "https://www.facebook.com/",
-            "instagram_url": "https://www.instagram.com/",
-            "youtube_url": "https://www.youtube.com/",
-            "tiktok_url": "https://www.tiktok.com/",
-            "twitter_url": "https://x.com/",
-            "threads_url": "",
-            "linkedin_url": "",
-            "bluesky_url": "",
-            "snapchat_url": "",
-            "pinterest_url": "",
-            "tumblr_url": "",
-            "vimeo_url": "",
-            "custom_url": ""
+            "show_powered_by": false,
+            "font_size": "0.75rem",
+            "case": "none"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "footer_copyright_jweRK8",
         "footer_policy_list_VCdnpa",
-        "social_links_Ew63Kq"
+        "footer_copyright_jweRK8"
       ],
       "name": "t:names.utilities",
       "settings": {
         "section_width": "page-width",
         "gap": 24,
         "divider_thickness": 1,
-        "color_scheme": "scheme-8",
+        "color_scheme": "scheme-9",
         "padding-block-start": 20,
         "padding-block-end": 24
       }
     }
   },
   "order": [
-    "footer_m9NzUG",
+    "ln_footer_main",
     "footer_utilities_jLGE8U"
   ]
 }
