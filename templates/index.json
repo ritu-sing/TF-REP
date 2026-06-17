@@ -984,6 +984,36 @@
         "padding-block-end": 16
       }
     },
+    "founder_story_section": {
+      "type": "founder-story",
+      "settings": {
+        "image": "shopify://shop_images/cold-candy-v3-founders_430x_5cd6e0d4-8332-4e6a-bbed-dd1cfa72abab.webp",
+        "eyebrow": "",
+        "heading": "<p>Created by parents who were tired of candy vitamins</p>",
+        "quote": "",
+        "body": "<p>Frustrated by sugary, artificial vitamins, dads Kevin & Brad created a truly healthy option for their kids and yours.</p>",
+        "founder_name": "",
+        "founder_title": "",
+        "button_text": "Read our story",
+        "button_link": "",
+        "button_style": "filled",
+        "button_bg_color": "#680040",
+        "button_text_color": "#ffffff",
+        "button_border_radius": 84,
+        "button_full_width": false,
+        "button_max_width": 208,
+        "show_signature": false,
+        "image_position": "left",
+        "section_width": "page-width",
+        "section_bg_color": "#9ed7ef",
+        "heading_color": "#680040",
+        "body_color": "#680040",
+        "eyebrow_color": "",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "faqs_section": {
       "type": "faqs",
       "blocks": {
@@ -1036,42 +1066,20 @@
         "faq_5"
       ],
       "settings": {
-        "heading": "Frequently Asked Questions",
+        "heading": "Still Wondering?",
+        "subtext": "",
         "heading_alignment": "center",
-        "row_spacing": 14,
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 60,
-        "padding-block-end": 60
-      }
-    },
-    "founder_story_section": {
-      "type": "founder-story",
-      "settings": {
-        "image": "shopify://shop_images/cold-candy-v3-founders_430x_5cd6e0d4-8332-4e6a-bbed-dd1cfa72abab.webp",
-        "eyebrow": "",
-        "heading": "<p>Created by parents who were tired of candy vitamins</p>",
-        "quote": "",
-        "body": "<p>Frustrated by sugary, artificial vitamins, dads Kevin & Brad created a truly healthy option for their kids and yours.</p>",
-        "founder_name": "",
-        "founder_title": "",
-        "button_text": "Read our story",
-        "button_link": "",
-        "button_style": "filled",
-        "button_bg_color": "#680040",
-        "button_text_color": "#ffffff",
-        "button_border_radius": 84,
-        "button_full_width": false,
-        "button_max_width": 208,
-        "show_signature": false,
-        "image_position": "left",
-        "section_width": "page-width",
-        "section_bg_color": "#9ED7EF",
+        "icon_style": "plus",
         "heading_color": "#680040",
-        "body_color": "#680040",
-        "eyebrow_color": "",
+        "subtext_color": "",
+        "question_color": "",
+        "answer_color": "",
+        "divider_color": "",
+        "icon_color": "",
+        "section_width": "page-width",
         "color_scheme": "scheme-1",
-        "padding-block-start": 60,
+        "row_spacing": 20,
+        "padding-block-start": 32,
         "padding-block-end": 60
       }
     },
