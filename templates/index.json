@@ -1038,6 +1038,7 @@
       "settings": {
         "heading": "Frequently Asked Questions",
         "heading_alignment": "center",
+        "row_spacing": 14,
         "section_width": "page-width",
         "color_scheme": "scheme-1",
         "padding-block-start": 60,

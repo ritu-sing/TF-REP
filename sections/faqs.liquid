@@ -14,7 +14,7 @@
 }
 
 .faqs__header {
-  margin-block-end: 40px;
+  margin-block-end: 24px;
   text-align: var(--faqs-heading-alignment, left);
 }
 
@@ -134,7 +134,7 @@
   }
 
   .faqs__header {
-    margin-block-end: 48px;
+    margin-block-end: 28px;
   }
 
   .faqs__heading {
@@ -168,7 +168,7 @@
   {%- if section.settings.icon_color != blank and section.settings.icon_color != 'rgba(0,0,0,0)' -%}
   --faqs-icon-color: {{ section.settings.icon_color }};
   {%- endif -%}
-  --faqs-row-spacing: {{ section.settings.row_spacing }}px;
+  --faqs-row-spacing: {{ section.settings.row_spacing | default: 14 }}px;
 }
 </style>
 
