@@ -1,0 +1,407 @@
+{% stylesheet %}
+.faqs {
+  width: 100%;
+}
+
+.faqs__container {
+  max-width: var(--page-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.faqs--full-width .faqs__container {
+  max-width: none;
+}
+
+.faqs__header {
+  margin-block-end: 40px;
+  text-align: var(--faqs-heading-alignment, left);
+}
+
+.faqs__heading {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.2;
+  color: var(--faqs-heading-color, var(--color-foreground-heading));
+  margin: 0 0 12px;
+}
+
+.faqs__subtext {
+  font-family: var(--font-body--family);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--faqs-subtext-color, rgb(var(--color-foreground-rgb) / 0.75));
+  margin: 0;
+}
+
+.faqs__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.faqs__accordion {
+  display: block;
+}
+
+.faqs__item {
+  border-bottom: 1px solid var(--faqs-divider-color, rgb(var(--color-foreground-rgb) / 0.15));
+  list-style: none;
+}
+
+.faqs__list .faqs__accordion:first-child .faqs__item {
+  border-top: 1px solid var(--faqs-divider-color, rgb(var(--color-foreground-rgb) / 0.15));
+}
+
+.faqs__summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-block: 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faqs__summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqs__question {
+  font-family: var(--font-body--family);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--faqs-question-color, rgb(var(--color-foreground-rgb)));
+  flex: 1;
+}
+
+.faqs__icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--faqs-icon-color, rgb(var(--color-foreground-rgb)));
+  transition: transform 0.3s ease;
+  font-size: 1.25rem;
+  line-height: 1;
+  font-style: normal;
+}
+
+.faqs__icon--plus::before {
+  content: '+';
+}
+
+.faqs__item[open] .faqs__icon--plus::before {
+  content: '\2212';
+}
+
+.faqs__icon--caret {
+  transition: transform 0.3s ease;
+}
+
+.faqs__icon--caret svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.faqs__item[open] .faqs__icon--caret {
+  transform: rotate(180deg);
+}
+
+.faqs__answer {
+  font-family: var(--font-body--family);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--faqs-answer-color, rgb(var(--color-foreground-rgb) / 0.8));
+  padding-block-end: 20px;
+}
+
+.faqs__answer p {
+  margin: 0 0 8px;
+}
+
+.faqs__answer p:last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .faqs__container {
+    padding-inline: 40px;
+  }
+
+  .faqs__header {
+    margin-block-end: 48px;
+  }
+
+  .faqs__heading {
+    margin-bottom: 16px;
+  }
+
+  .faqs__summary {
+    padding-block: 24px;
+  }
+
+  .faqs__question {
+    font-size: 1.0625rem;
+  }
+}
+{% endstylesheet %}
+
+<style>
+#shopify-section-{{ section.id }} {
+  --faqs-heading-alignment: {{ section.settings.heading_alignment }};
+  {%- if section.settings.heading_color != blank and section.settings.heading_color != 'rgba(0,0,0,0)' -%}
+  --faqs-heading-color: {{ section.settings.heading_color }};
+  {%- endif -%}
+  {%- if section.settings.subtext_color != blank and section.settings.subtext_color != 'rgba(0,0,0,0)' -%}
+  --faqs-subtext-color: {{ section.settings.subtext_color }};
+  {%- endif -%}
+  {%- if section.settings.question_color != blank and section.settings.question_color != 'rgba(0,0,0,0)' -%}
+  --faqs-question-color: {{ section.settings.question_color }};
+  {%- endif -%}
+  {%- if section.settings.answer_color != blank and section.settings.answer_color != 'rgba(0,0,0,0)' -%}
+  --faqs-answer-color: {{ section.settings.answer_color }};
+  {%- endif -%}
+  {%- if section.settings.divider_color != blank and section.settings.divider_color != 'rgba(0,0,0,0)' -%}
+  --faqs-divider-color: {{ section.settings.divider_color }};
+  {%- endif -%}
+  {%- if section.settings.icon_color != blank and section.settings.icon_color != 'rgba(0,0,0,0)' -%}
+  --faqs-icon-color: {{ section.settings.icon_color }};
+  {%- endif -%}
+}
+</style>
+
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style faqs faqs--{{ section.settings.section_width }}"
+  style="{%- render 'spacing-style', settings: section.settings -%}"
+>
+  <div class="faqs__container">
+
+    {%- if section.settings.heading != blank or section.settings.subtext != blank -%}
+      <div class="faqs__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="faqs__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtext != blank -%}
+          <p class="faqs__subtext">{{ section.settings.subtext | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="faqs__list">
+        {%- for block in section.blocks -%}
+          {%- capture faq_html -%}
+            <details class="faqs__item details" {{ block.shopify_attributes }}>
+              <summary class="faqs__summary">
+                <span class="faqs__question">{{ block.settings.question | escape }}</span>
+                {%- if section.settings.icon_style == 'caret' -%}
+                  <span class="faqs__icon faqs__icon--caret" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 9 12 15 6"></polyline>
+                    </svg>
+                  </span>
+                {%- else -%}
+                  <span class="faqs__icon faqs__icon--plus" aria-hidden="true"></span>
+                {%- endif -%}
+              </summary>
+              <div class="details-content faqs__answer">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {%- endcapture -%}
+          {%- render 'accordion-custom-component',
+            children: faq_html,
+            class: 'faqs__accordion',
+            open_by_default_on_desktop: block.settings.open_by_default,
+            open_by_default_on_mobile: block.settings.open_by_default,
+            close_with_escape: true
+          -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "select",
+      "id": "icon_style",
+      "label": "Icon style",
+      "options": [
+        { "value": "plus", "label": "Plus / Minus" },
+        { "value": "caret", "label": "Caret arrow" }
+      ],
+      "default": "plus"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext color"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question color"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer color"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider color"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq-item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your question?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Your answer goes here.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs",
+      "blocks": [
+        {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are your gummies USDA Organic?",
+            "answer": "<p>Yes! All of our gummies are USDA Certified Organic. We source real fruits and vegetables to deliver nutrition without synthetic additives or pesticide residues.</p>"
+          }
+        },
+        {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are they safe for picky eaters?",
+            "answer": "<p>Absolutely. Our gummies taste like real fruit because they are made from real fruit. In our studies, 77% of kids love the taste immediately — even the pickiest eaters.</p>"
+          }
+        },
+        {
+          "type": "faq-item",
+          "settings": {
+            "question": "What is your money-back guarantee?",
+            "answer": "<p>We stand behind every bottle with a 100-day money-back guarantee. If you or your child are not completely satisfied, contact us for a full refund — no returns required.</p>"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

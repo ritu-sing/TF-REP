@@ -984,6 +984,66 @@
         "padding-block-end": 16
       }
     },
+    "faqs_section": {
+      "type": "faqs",
+      "blocks": {
+        "faq_1": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are your gummies USDA Organic?",
+            "answer": "<p>Yes! All of our gummies are USDA Certified Organic. We source real fruits and vegetables to deliver nutrition without synthetic additives or pesticide residues.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_2": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are they safe for picky eaters?",
+            "answer": "<p>Absolutely. Our gummies taste like real fruit because they are made from real fruit. In our studies, 77% of kids love the taste immediately — even the pickiest eaters.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_3": {
+          "type": "faq-item",
+          "settings": {
+            "question": "What is your money-back guarantee?",
+            "answer": "<p>We stand behind every bottle with a 100-day money-back guarantee. If you or your child are not completely satisfied, contact us for a full refund — no returns required.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_4": {
+          "type": "faq-item",
+          "settings": {
+            "question": "How often should my child take the gummies?",
+            "answer": "<p>We recommend one serving per day with or without food. Each serving delivers the essential vitamins and nutrients your child needs for daily wellness support.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_5": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Do you offer a subscription option?",
+            "answer": "<p>Yes! Subscribe and save to receive your favorite Llama Naturals gummies on a schedule that works for you. Subscribers enjoy an ongoing discount and can skip or cancel anytime with no hassle.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "heading_alignment": "center",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "founder_story_section": {
       "type": "founder-story",
       "settings": {
@@ -1304,6 +1364,7 @@
     "experts_review_section",
     "press_mentions_section",
     "founder_story_section",
+    "faqs_section",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
