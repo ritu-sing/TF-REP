@@ -736,70 +736,6 @@
         "padding-block-end": 60
       }
     },
-    "press_mentions_section": {
-      "type": "press-mentions",
-      "blocks": {
-        "press_1": {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "Parents."
-          }
-        },
-        "press_2": {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "EREWHON"
-          }
-        },
-        "press_3": {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "health"
-          }
-        },
-        "press_4": {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "healthline"
-          }
-        },
-        "press_5": {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "Forbes"
-          }
-        },
-        "press_6": {
-          "type": "press-item",
-          "settings": {
-            "publication_name": "Good Housekeeping"
-          }
-        }
-      },
-      "block_order": [
-        "press_1",
-        "press_2",
-        "press_3",
-        "press_4",
-        "press_5",
-        "press_6"
-      ],
-      "settings": {
-        "section_bg_color": "#A31C69",
-        "name_color": "#ffffff",
-        "border_color": "#8b1a6b",
-        "border_width": 1,
-        "name_size": 20,
-        "logo_max_height": 36,
-        "logo_opacity": 100,
-        "speed": 20,
-        "movement_direction": "normal",
-        "gap": 60,
-        "color_scheme": "scheme-8",
-        "padding-block-start": 16,
-        "padding-block-end": 16
-      }
-    },
     "comparison_table_section": {
       "type": "comparison-table",
       "blocks": {
@@ -978,17 +914,101 @@
         "padding-block-end": 60
       }
     },
+    "press_mentions_section": {
+      "type": "press-mentions",
+      "blocks": {
+        "press_1": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "Parents.",
+            "link": ""
+          }
+        },
+        "press_2": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "EREWHON",
+            "link": ""
+          }
+        },
+        "press_3": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "health",
+            "link": ""
+          }
+        },
+        "press_4": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "healthline",
+            "link": ""
+          }
+        },
+        "press_5": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "Forbes",
+            "link": ""
+          }
+        },
+        "press_6": {
+          "type": "press-item",
+          "settings": {
+            "publication_name": "Good Housekeeping",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "press_1",
+        "press_2",
+        "press_3",
+        "press_4",
+        "press_5",
+        "press_6"
+      ],
+      "settings": {
+        "section_bg_color": "#a31c69",
+        "name_color": "#ffffff",
+        "border_color": "#8b1a6b",
+        "border_width": 1,
+        "name_size": 20,
+        "logo_max_height": 36,
+        "logo_opacity": 100,
+        "speed": 20,
+        "movement_direction": "normal",
+        "gap": 60,
+        "color_scheme": "scheme-8",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
+    },
     "founder_story_section": {
       "type": "founder-story",
       "settings": {
-        "eyebrow": "MEET THE FOUNDERS",
-        "heading": "<p>Built by Parents, for Parents.</p>",
-        "quote": "We started Llama Naturals because we couldn't find a vitamin we felt great giving our own kids. So we made one.",
-        "founder_name": "The Llama Naturals Founders",
-        "founder_title": "Parents & Co-Founders",
+        "image": "shopify://shop_images/cold-candy-v3-founders_430x_5cd6e0d4-8332-4e6a-bbed-dd1cfa72abab.webp",
+        "eyebrow": "",
+        "heading": "<p>Created by parents who were tired of candy vitamins</p>",
+        "quote": "",
+        "body": "<p>Frustrated by sugary, artificial vitamins, dads Kevin & Brad created a truly healthy option for their kids and yours.</p>",
+        "founder_name": "",
+        "founder_title": "",
+        "button_text": "Read our story",
+        "button_link": "",
+        "button_style": "filled",
+        "button_bg_color": "#680040",
+        "button_text_color": "#ffffff",
+        "button_border_radius": 84,
+        "button_full_width": false,
+        "button_max_width": 208,
+        "show_signature": false,
         "image_position": "left",
-        "section_width": "full-width",
-        "show_divider": false,
+        "section_width": "page-width",
+        "section_bg_color": "#9ED7EF",
+        "heading_color": "#680040",
+        "body_color": "#680040",
+        "eyebrow_color": "",
         "color_scheme": "scheme-1",
         "padding-block-start": 60,
         "padding-block-end": 60
