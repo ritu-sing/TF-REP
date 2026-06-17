@@ -58,7 +58,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding-block: 20px;
+  padding-block: var(--faqs-row-spacing, 14px);
   cursor: pointer;
   list-style: none;
 }
@@ -141,10 +141,6 @@
     margin-bottom: 16px;
   }
 
-  .faqs__summary {
-    padding-block: 24px;
-  }
-
   .faqs__question {
     font-size: 1.0625rem;
   }
@@ -172,6 +168,7 @@
   {%- if section.settings.icon_color != blank and section.settings.icon_color != 'rgba(0,0,0,0)' -%}
   --faqs-icon-color: {{ section.settings.icon_color }};
   {%- endif -%}
+  --faqs-row-spacing: {{ section.settings.row_spacing }}px;
 }
 </style>
 
@@ -324,6 +321,16 @@
     {
       "type": "header",
       "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "row_spacing",
+      "label": "Row spacing",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 14
     },
     {
       "type": "range",
