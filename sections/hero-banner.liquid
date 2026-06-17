@@ -2,6 +2,25 @@
   assign image_position = section.settings.desktop_image_position | default: 'right'
 %}
 
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-heading-font: var(--font-{{ section.settings.heading_font }}--family);
+    {%- unless section.settings.heading_size == 'auto' %}
+    --section-heading-size: {{ section.settings.heading_size }};
+    {%- endunless %}
+    {%- if section.settings.heading_weight != blank %}
+    --section-heading-weight: {{ section.settings.heading_weight }};
+    {%- endif %}
+    --section-body-font: var(--font-{{ section.settings.body_font }}--family);
+    {%- unless section.settings.body_size == 'auto' %}
+    --section-body-size: {{ section.settings.body_size }};
+    {%- endunless %}
+    {%- if section.settings.body_weight != blank %}
+    --section-body-weight: {{ section.settings.body_weight }};
+    {%- endif %}
+  }
+</style>
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="section section--full-width hero-banner color-{{ section.settings.color_scheme }} spacing-style"
@@ -144,9 +163,9 @@
   }
 
   .hero-banner__subtitle {
-    font-family: var(--font-body--family, sans-serif);
-    font-weight: 600;
-    font-size: 12px;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
+    font-weight: var(--section-body-weight, 600);
+    font-size: var(--section-body-size, 12px);
     line-height: 16px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -155,9 +174,9 @@
   }
 
   .hero-banner__heading {
-    font-family: var(--font-heading--family, sans-serif);
-    font-weight: 700;
-    font-size: 28px;
+    font-family: var(--section-heading-font, var(--font-heading--family, sans-serif));
+    font-weight: var(--section-heading-weight, 700);
+    font-size: var(--section-heading-size, 28px);
     line-height: 34px;
     text-transform: none;
     color: var(--color-foreground-heading);
@@ -165,9 +184,9 @@
   }
 
   .hero-banner__description {
-    font-family: var(--font-body--family, sans-serif);
-    font-weight: 400;
-    font-size: 14px;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
+    font-weight: var(--section-body-weight, 400);
+    font-size: var(--section-body-size, 14px);
     line-height: 22px;
     color: var(--color-foreground);
     margin: 0;
@@ -248,18 +267,18 @@
     }
 
     .hero-banner__heading {
-      font-size: 26px;
+      font-size: var(--section-heading-size, 26px);
       line-height: 32px;
     }
 
     .hero-banner__subtitle {
-      font-size: 11px;
+      font-size: var(--section-body-size, 11px);
       line-height: 14px;
       letter-spacing: 1.5px;
     }
 
     .hero-banner__description {
-      font-size: 14px;
+      font-size: var(--section-body-size, 14px);
       line-height: 20px;
     }
 
@@ -302,17 +321,17 @@
     }
 
     .hero-banner__heading {
-      font-size: 36px;
+      font-size: var(--section-heading-size, 36px);
       line-height: 44px;
     }
 
     .hero-banner__description {
-      font-size: 16px;
+      font-size: var(--section-body-size, 16px);
       line-height: 24px;
     }
 
     .hero-banner__subtitle {
-      font-size: 12px;
+      font-size: var(--section-body-size, 12px);
       line-height: 16px;
       letter-spacing: 2px;
     }
@@ -413,6 +432,104 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "auto", "label": "Default" },
+        { "value": "10px", "label": "10px" },
+        { "value": "12px", "label": "12px" },
+        { "value": "14px", "label": "14px" },
+        { "value": "16px", "label": "16px" },
+        { "value": "18px", "label": "18px" },
+        { "value": "20px", "label": "20px" },
+        { "value": "24px", "label": "24px" },
+        { "value": "32px", "label": "32px" },
+        { "value": "40px", "label": "40px" },
+        { "value": "48px", "label": "48px" },
+        { "value": "56px", "label": "56px" },
+        { "value": "72px", "label": "72px" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "body_size",
+      "label": "Body size",
+      "options": [
+        { "value": "auto", "label": "Default" },
+        { "value": "10px", "label": "10px" },
+        { "value": "12px", "label": "12px" },
+        { "value": "14px", "label": "14px" },
+        { "value": "16px", "label": "16px" },
+        { "value": "18px", "label": "18px" },
+        { "value": "20px", "label": "20px" },
+        { "value": "24px", "label": "24px" },
+        { "value": "32px", "label": "32px" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "Body weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
     },
     {
       "type": "header",

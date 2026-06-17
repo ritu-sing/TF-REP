@@ -106,6 +106,14 @@
     --experts-review-wm2-x-mob: {{ section.settings.watermark_2_x_mobile }}%;
     --experts-review-wm2-y-mob: {{ section.settings.watermark_2_y_mobile }}%;
     --experts-review-watermark-z: {% if section.settings.watermark_layer == 'front' %}3{% else %}0{% endif %};
+    --section-heading-font: var(--font-{{ section.settings.heading_font }}--family);
+    --section-body-font: var(--font-{{ section.settings.body_font }}--family);
+    {%- if section.settings.heading_weight != blank %}
+    --section-heading-weight: {{ section.settings.heading_weight }};
+    {%- endif %}
+    {%- if section.settings.body_weight != blank %}
+    --section-body-weight: {{ section.settings.body_weight }};
+    {%- endif %}
   }
   #shopify-section-{{ section.id }} > .section {
     position: relative;
@@ -242,7 +250,7 @@
   }
 
   .experts-review__text {
-    font-family: var(--font-body--family);
+    font-family: var(--section-body-font, var(--font-body--family));
     font-size: var(--experts-review-review-text-size, var(--font-paragraph--size));
     line-height: var(--font-paragraph--line-height);
     letter-spacing: var(--font-paragraph--letter-spacing);
@@ -277,15 +285,15 @@
   }
 
   .experts-review__expert-name {
-    font-family: var(--font-subheading--family);
-    font-weight: 700;
+    font-family: var(--section-body-font, var(--font-subheading--family));
+    font-weight: var(--section-body-weight, 700);
     font-size: var(--experts-review-expert-name-size, var(--font-size--sm));
     line-height: var(--line-height--body-normal);
     color: var(--experts-review-expert-name-color, #9B1B6E);
   }
 
   .experts-review__expert-title {
-    font-family: var(--font-body--family);
+    font-family: var(--section-body-font, var(--font-body--family));
     font-size: var(--font-size--xs);
     line-height: var(--line-height--body-normal);
     color: var(--experts-review-expert-title-color, rgb(var(--color-foreground-rgb) / 0.65));
@@ -486,6 +494,62 @@
       "step": 1,
       "unit": "px",
       "default": 14
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body / card text font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "Body weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
     },
     {
       "type": "header",

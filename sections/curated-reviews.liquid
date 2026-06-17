@@ -69,6 +69,25 @@
   {%- render 'gap-style', value: section.settings.gap, name: 'curated-reviews-gap' -%}
 {%- endcapture -%}
 
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-heading-font: var(--font-{{ section.settings.heading_font }}--family);
+    {%- unless section.settings.heading_size == 'auto' %}
+    --section-heading-size: {{ section.settings.heading_size }};
+    {%- endunless %}
+    {%- if section.settings.heading_weight != blank %}
+    --section-heading-weight: {{ section.settings.heading_weight }};
+    {%- endif %}
+    --section-body-font: var(--font-{{ section.settings.body_font }}--family);
+    {%- unless section.settings.body_size == 'auto' %}
+    --section-body-size: {{ section.settings.body_size }};
+    {%- endunless %}
+    {%- if section.settings.body_weight != blank %}
+    --section-body-weight: {{ section.settings.body_weight }};
+    {%- endif %}
+  }
+</style>
+
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style"
   style="{%- render 'spacing-style', settings: section.settings -%}"
@@ -97,10 +116,10 @@
 {% stylesheet %}
   .curated-reviews__heading {
     margin: 0 0 var(--margin-5xl);
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
+    font-family: var(--section-heading-font, var(--font-heading--family));
+    font-weight: var(--section-heading-weight, var(--font-heading--weight));
     font-style: var(--font-heading--style);
-    font-size: var(--font-h3--size);
+    font-size: var(--section-heading-size, var(--font-h3--size));
     line-height: var(--font-h3--line-height);
     letter-spacing: var(--font-h3--letter-spacing);
     text-transform: var(--font-h3--case);
@@ -165,8 +184,8 @@
   }
 
   .curated-reviews__text {
-    font-family: var(--font-body--family);
-    font-size: var(--font-paragraph--size);
+    font-family: var(--section-body-font, var(--font-body--family));
+    font-size: var(--section-body-size, var(--font-paragraph--size));
     line-height: var(--font-paragraph--line-height);
     letter-spacing: var(--font-paragraph--letter-spacing);
     color: var(--color-foreground);
@@ -192,7 +211,7 @@
   }
 
   .curated-reviews__name {
-    font-family: var(--font-subheading--family);
+    font-family: var(--section-body-font, var(--font-subheading--family));
     font-weight: var(--font-subheading--weight);
     font-size: var(--font-size--sm);
     line-height: var(--line-height--body-normal);
@@ -326,6 +345,104 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "auto", "label": "Default" },
+        { "value": "10px", "label": "10px" },
+        { "value": "12px", "label": "12px" },
+        { "value": "14px", "label": "14px" },
+        { "value": "16px", "label": "16px" },
+        { "value": "18px", "label": "18px" },
+        { "value": "20px", "label": "20px" },
+        { "value": "24px", "label": "24px" },
+        { "value": "32px", "label": "32px" },
+        { "value": "40px", "label": "40px" },
+        { "value": "48px", "label": "48px" },
+        { "value": "56px", "label": "56px" },
+        { "value": "72px", "label": "72px" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "body_size",
+      "label": "Body size",
+      "options": [
+        { "value": "auto", "label": "Default" },
+        { "value": "10px", "label": "10px" },
+        { "value": "12px", "label": "12px" },
+        { "value": "14px", "label": "14px" },
+        { "value": "16px", "label": "16px" },
+        { "value": "18px", "label": "18px" },
+        { "value": "20px", "label": "20px" },
+        { "value": "24px", "label": "24px" },
+        { "value": "32px", "label": "32px" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "Body weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
     },
     {
       "type": "header",

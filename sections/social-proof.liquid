@@ -3,6 +3,20 @@
 <style>
   #shopify-section-{{ section.id }} {
     --social-proof-columns: {{ section.settings.video_columns }};
+    --section-heading-font: var(--font-{{ section.settings.heading_font }}--family);
+    {%- unless section.settings.heading_size == 'auto' %}
+    --section-heading-size: {{ section.settings.heading_size }};
+    {%- endunless %}
+    {%- if section.settings.heading_weight != blank %}
+    --section-heading-weight: {{ section.settings.heading_weight }};
+    {%- endif %}
+    --section-body-font: var(--font-{{ section.settings.body_font }}--family);
+    {%- unless section.settings.body_size == 'auto' %}
+    --section-body-size: {{ section.settings.body_size }};
+    {%- endunless %}
+    {%- if section.settings.body_weight != blank %}
+    --section-body-weight: {{ section.settings.body_weight }};
+    {%- endif %}
   }
 </style>
 
@@ -135,10 +149,10 @@
   /* ── Heading ── */
   .social-proof__heading {
     margin: 0 0 var(--margin-5xl);
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
+    font-family: var(--section-heading-font, var(--font-heading--family));
+    font-weight: var(--section-heading-weight, var(--font-heading--weight));
     font-style: var(--font-heading--style);
-    font-size: var(--font-h2--size);
+    font-size: var(--section-heading-size, var(--font-h2--size));
     line-height: var(--font-h2--line-height);
     letter-spacing: var(--font-h2--letter-spacing);
     text-transform: var(--font-h2--case);
@@ -174,16 +188,16 @@
   }
 
   .social-proof__stat-number {
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: var(--font-h2--size);
+    font-family: var(--section-heading-font, var(--font-heading--family));
+    font-weight: var(--section-heading-weight, var(--font-heading--weight));
+    font-size: var(--section-heading-size, var(--font-h2--size));
     line-height: 1;
     color: var(--color-primary);
   }
 
   .social-proof__stat-label {
-    font-family: var(--font-body--family);
-    font-size: var(--font-size--sm);
+    font-family: var(--section-body-font, var(--font-body--family));
+    font-size: var(--section-body-size, var(--font-size--sm));
     line-height: var(--line-height--body-normal);
     color: var(--color-foreground);
   }
@@ -363,6 +377,104 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-7"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "auto", "label": "Default" },
+        { "value": "10px", "label": "10px" },
+        { "value": "12px", "label": "12px" },
+        { "value": "14px", "label": "14px" },
+        { "value": "16px", "label": "16px" },
+        { "value": "18px", "label": "18px" },
+        { "value": "20px", "label": "20px" },
+        { "value": "24px", "label": "24px" },
+        { "value": "32px", "label": "32px" },
+        { "value": "40px", "label": "40px" },
+        { "value": "48px", "label": "48px" },
+        { "value": "56px", "label": "56px" },
+        { "value": "72px", "label": "72px" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "body_size",
+      "label": "Body size",
+      "options": [
+        { "value": "auto", "label": "Default" },
+        { "value": "10px", "label": "10px" },
+        { "value": "12px", "label": "12px" },
+        { "value": "14px", "label": "14px" },
+        { "value": "16px", "label": "16px" },
+        { "value": "18px", "label": "18px" },
+        { "value": "20px", "label": "20px" },
+        { "value": "24px", "label": "24px" },
+        { "value": "32px", "label": "32px" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "Body weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
     },
     {
       "type": "header",

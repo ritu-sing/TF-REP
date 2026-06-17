@@ -10,6 +10,8 @@
     --ln-newsletter-heading-weight: var(--font-{{ section.settings.newsletter_heading_font }}--weight);
     --ln-newsletter-heading-size: {{ section.settings.newsletter_heading_size }}px;
     --ln-newsletter-subtext-size: {{ section.settings.newsletter_subtext_size }}px;
+    --ln-nav-link-font: var(--font-{{ section.settings.nav_link_font }}--family);
+    --ln-newsletter-subtext-font: var(--font-{{ section.settings.newsletter_subtext_font }}--family);
   }
 </style>
 
@@ -277,6 +279,7 @@
   .ln-footer__nav-item a {
     color: var(--color-foreground);
     text-decoration: none;
+    font-family: var(--ln-nav-link-font, var(--font-body--family));
     font-size: var(--ln-nav-link-size);
     line-height: 1.4;
     opacity: 0.85;
@@ -309,6 +312,7 @@
   }
 
   .ln-footer__newsletter-subtext {
+    font-family: var(--ln-newsletter-subtext-font, var(--font-body--family));
     font-size: var(--ln-newsletter-subtext-size);
     margin: 0;
     line-height: 1.5;
@@ -774,6 +778,18 @@
     },
     {
       "type": "select",
+      "id": "nav_link_font",
+      "label": "Nav link font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
       "id": "newsletter_heading_font",
       "label": "Newsletter heading font",
       "options": [
@@ -803,6 +819,18 @@
       "step": 1,
       "unit": "px",
       "default": 14
+    },
+    {
+      "type": "select",
+      "id": "newsletter_subtext_font",
+      "label": "Newsletter subtext font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
     },
     {
       "type": "header",

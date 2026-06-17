@@ -1,6 +1,21 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-heading-font: var(--font-{{ section.settings.heading_font }}--family);
+    {%- unless section.settings.heading_size == 'auto' %}
+    --section-heading-size: {{ section.settings.heading_size }};
+    {%- endunless %}
+    {%- if section.settings.heading_weight != blank %}
+    --section-heading-weight: {{ section.settings.heading_weight }};
+    {%- endif %}
+    --section-body-font: var(--font-{{ section.settings.body_font }}--family);
+    {%- unless section.settings.body_size == 'auto' %}
+    --section-body-size: {{ section.settings.body_size }};
+    {%- endunless %}
+    {%- if section.settings.body_weight != blank %}
+    --section-body-weight: {{ section.settings.body_weight }};
+    {%- endif %}
+  }
+</style>
 
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style hero-offer"
@@ -513,7 +528,7 @@
   }
 
   .hero-offer__review-count {
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
     font-weight: 500;
     font-size: 12px;
     line-height: 18px;
@@ -522,9 +537,9 @@
   }
 
   .hero-offer__heading {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
+    font-family: var(--section-heading-font, var(--font-heading--family, sans-serif));
+    font-weight: var(--section-heading-weight, 700);
+    font-size: var(--section-heading-size, 24px);
     line-height: 32px;
     color: #680040;
     margin: 0;
@@ -538,7 +553,7 @@
   }
 
   .hero-offer__price-current {
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
     font-weight: 500;
     font-size: 18px;
     line-height: 24px;
@@ -546,7 +561,7 @@
   }
 
   .hero-offer__price-original {
-    font-family: sans-serif;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
     font-weight: 400;
     font-size: 18px;
     line-height: 24px;
@@ -580,7 +595,7 @@
   }
 
   .hero-offer__benefit-text {
-    font-family: sans-serif;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
@@ -642,9 +657,9 @@
   }
 
   .hero-offer__product-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
+    font-family: var(--section-heading-font, var(--font-heading--family, sans-serif));
+    font-weight: var(--section-heading-weight, 700);
+    font-size: var(--section-body-size, 14px);
     line-height: 20px;
     color: #680040;
     text-transform: uppercase;
@@ -666,14 +681,14 @@
     padding: 2px 6px;
     background-color: rgba(104, 0, 64, 0.12);
     color: #4B413A;
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
     font-weight: 500;
     font-size: 12px;
     line-height: 18px;
   }
 
   .hero-offer__product-description {
-    font-family: sans-serif;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
@@ -713,7 +728,7 @@
   }
 
   .hero-offer__badge-text {
-    font-family: sans-serif;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
     font-weight: 400;
     font-size: 11px;
     line-height: 16px;
@@ -756,9 +771,9 @@
   }
 
   .hero-offer__cta-label {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
+    font-family: var(--section-heading-font, var(--font-heading--family, sans-serif));
+    font-weight: var(--section-heading-weight, 700);
+    font-size: var(--section-body-size, 14px);
     line-height: 14px;
     color: #ffffff;
     text-transform: uppercase;
@@ -772,7 +787,7 @@
   }
 
   .hero-offer__cta-price-original {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--section-heading-font, var(--font-heading--family, sans-serif));
     font-weight: 400;
     font-size: 12px;
     line-height: 20px;
@@ -782,7 +797,7 @@
   }
 
   .hero-offer__cta-price-current {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--section-heading-font, var(--font-heading--family, sans-serif));
     font-weight: 700;
     font-size: 14px;
     line-height: 14px;
@@ -816,7 +831,7 @@
   }
 
   .hero-offer__shipping-text {
-    font-family: sans-serif;
+    font-family: var(--section-body-font, var(--font-body--family, sans-serif));
     font-weight: 400;
     font-size: 12px;
     line-height: 18px;
@@ -1018,6 +1033,104 @@
       "id": "guarantee_text",
       "label": "Guarantee text",
       "default": "100 Days Money Back Guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "auto", "label": "Default" },
+        { "value": "10px", "label": "10px" },
+        { "value": "12px", "label": "12px" },
+        { "value": "14px", "label": "14px" },
+        { "value": "16px", "label": "16px" },
+        { "value": "18px", "label": "18px" },
+        { "value": "20px", "label": "20px" },
+        { "value": "24px", "label": "24px" },
+        { "value": "32px", "label": "32px" },
+        { "value": "40px", "label": "40px" },
+        { "value": "48px", "label": "48px" },
+        { "value": "56px", "label": "56px" },
+        { "value": "72px", "label": "72px" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "body_size",
+      "label": "Body size",
+      "options": [
+        { "value": "auto", "label": "Default" },
+        { "value": "10px", "label": "10px" },
+        { "value": "12px", "label": "12px" },
+        { "value": "14px", "label": "14px" },
+        { "value": "16px", "label": "16px" },
+        { "value": "18px", "label": "18px" },
+        { "value": "20px", "label": "20px" },
+        { "value": "24px", "label": "24px" },
+        { "value": "32px", "label": "32px" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "Body weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": ""
     },
     {
       "type": "header",
