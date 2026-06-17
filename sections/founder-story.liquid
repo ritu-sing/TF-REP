@@ -36,7 +36,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgb(var(--color-foreground-rgb) / 0.6);
+  color: var(--founder-story-eyebrow-color, rgb(var(--color-foreground-rgb) / 0.6));
   margin: 0;
 }
 
@@ -45,7 +45,7 @@
   font-weight: var(--font-heading--weight);
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   line-height: 1.2;
-  color: var(--color-foreground-heading);
+  color: var(--founder-story-heading-color, var(--color-foreground-heading));
 }
 
 .founder-story__heading h1,
@@ -68,7 +68,7 @@
   font-style: italic;
   font-size: 1.125rem;
   line-height: 1.6;
-  color: rgb(var(--color-foreground-rgb) / 0.85);
+  color: var(--founder-story-body-color, rgb(var(--color-foreground-rgb) / 0.85));
   margin: 0;
   padding: 0;
   border: none;
@@ -78,7 +78,7 @@
   font-family: var(--font-body--family);
   font-size: 1rem;
   line-height: 1.6;
-  color: rgb(var(--color-foreground-rgb) / 0.8);
+  color: var(--founder-story-body-color, rgb(var(--color-foreground-rgb) / 0.8));
 }
 
 .founder-story__body p {
@@ -99,6 +99,7 @@
   font-weight: var(--font-heading--weight);
   font-size: 0.9375rem;
   line-height: 1.4;
+  color: var(--founder-story-body-color, inherit);
   margin: 0;
 }
 
@@ -106,7 +107,7 @@
   font-family: var(--font-body--family);
   font-size: 0.875rem;
   line-height: 1.4;
-  color: rgb(var(--color-foreground-rgb) / 0.65);
+  color: var(--founder-story-body-color, rgb(var(--color-foreground-rgb) / 0.65));
   margin: 0;
 }
 
@@ -125,6 +126,7 @@
   display: inline-block;
   align-self: var(--founder-story-btn-align, flex-start);
   width: var(--founder-story-btn-width, auto);
+  max-width: var(--founder-story-btn-max-width, none);
   padding: 14px 32px;
   border: 2px solid var(--founder-story-btn-border, rgb(var(--color-foreground-rgb) / 0.8));
   border-radius: var(--founder-story-btn-radius, 0px);
@@ -157,37 +159,32 @@
     aspect-ratio: unset;
   }
 
-  .founder-story__media--with-divider {
-    border-right: 1px solid var(--founder-story-divider-color, rgba(0,0,0,0.15));
-  }
-
-  .founder-story--image-right .founder-story__media--with-divider {
-    border-right: none;
-    border-left: 1px solid var(--founder-story-divider-color, rgba(0,0,0,0.15));
-  }
-
   .founder-story__content {
     padding: 64px 56px;
   }
 }
 {% endstylesheet %}
 
-{%- assign cs_id = section.settings.color_scheme -%}
-{%- assign cs = settings.color_schemes[cs_id] -%}
-{%- assign fg_rgb = cs.settings.foreground.rgb -%}
-{%- assign fg_heading_rgba = cs.settings.foreground_heading.rgba -%}
-{%- assign fg_heading_rgb = cs.settings.foreground_heading.rgb -%}
-
 <style>
 #shopify-section-{{ section.id }} {
-  --founder-story-divider-color: {{ section.settings.divider_color }};
   --founder-story-btn-radius: {{ section.settings.button_border_radius }}px;
+  {%- if section.settings.heading_color != blank and section.settings.heading_color != 'rgba(0,0,0,0)' -%}
+  --founder-story-heading-color: {{ section.settings.heading_color }};
+  {%- endif -%}
+  {%- if section.settings.body_color != blank and section.settings.body_color != 'rgba(0,0,0,0)' -%}
+  --founder-story-body-color: {{ section.settings.body_color }};
+  {%- endif -%}
+  {%- if section.settings.eyebrow_color != blank and section.settings.eyebrow_color != 'rgba(0,0,0,0)' -%}
+  --founder-story-eyebrow-color: {{ section.settings.eyebrow_color }};
+  {%- endif -%}
   {%- if section.settings.button_full_width -%}
   --founder-story-btn-align: stretch;
   --founder-story-btn-width: 100%;
+  --founder-story-btn-max-width: none;
   {%- else -%}
   --founder-story-btn-align: flex-start;
   --founder-story-btn-width: auto;
+  --founder-story-btn-max-width: {{ section.settings.button_max_width }}px;
   {%- endif -%}
   {%- if section.settings.button_style == 'filled' -%}
   --founder-story-btn-bg: {{ section.settings.button_bg_color }};
@@ -205,14 +202,7 @@
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style founder-story founder-story--image-{{ section.settings.image_position }}"
   style="{%- render 'spacing-style', settings: section.settings -%}{%- if section.settings.section_bg_color != blank and section.settings.section_bg_color != 'rgba(0,0,0,0)' %} background-color: {{ section.settings.section_bg_color }};{%- endif -%}"
 >
-  <div
-    class="founder-story__media{% if section.settings.show_divider %} founder-story__media--with-divider{% endif %}"
-    style="
-      {%- if section.settings.left_panel_bg != blank and section.settings.left_panel_bg != 'rgba(0,0,0,0)' -%}
-        background-color: {{ section.settings.left_panel_bg }};
-      {%- endif -%}
-    "
-  >
+  <div class="founder-story__media">
     {%- if section.settings.image != blank -%}
       {%- render 'image', image: section.settings.image, class: 'founder-story__image' -%}
     {%- else -%}
@@ -220,20 +210,7 @@
     {%- endif -%}
   </div>
 
-  <div
-    class="founder-story__content"
-    style="
-      {%- if section.settings.right_panel_bg != blank and section.settings.right_panel_bg != 'rgba(0,0,0,0)' -%}
-        background-color: {{ section.settings.right_panel_bg }};
-      {%- endif -%}
-      {%- if fg_rgb != blank -%}
-        --color-foreground-rgb: {{ fg_rgb }};
-        --color-foreground: rgb({{ fg_rgb }});
-        --color-foreground-heading: rgb({{ fg_heading_rgba }});
-        --color-foreground-heading-rgb: {{ fg_heading_rgb }};
-      {%- endif -%}
-    "
-  >
+  <div class="founder-story__content">
     {%- if section.settings.eyebrow != blank -%}
       <p class="founder-story__eyebrow">{{ section.settings.eyebrow }}</p>
     {%- endif -%}
@@ -388,7 +365,17 @@
       "type": "checkbox",
       "id": "button_full_width",
       "label": "Full-width button",
-      "default": true
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Button max width",
+      "min": 120,
+      "max": 600,
+      "step": 8,
+      "unit": "px",
+      "default": 400
     },
     {
       "type": "header",
@@ -443,42 +430,28 @@
     },
     {
       "type": "header",
-      "content": "Panel backgrounds"
-    },
-    {
-      "type": "color",
-      "id": "left_panel_bg",
-      "label": "Left panel background"
-    },
-    {
-      "type": "color",
-      "id": "right_panel_bg",
-      "label": "Right panel background"
-    },
-    {
-      "type": "header",
-      "content": "Panel divider"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_divider",
-      "label": "Show divider between panels",
-      "default": false
-    },
-    {
-      "type": "color",
-      "id": "divider_color",
-      "label": "Divider color",
-      "default": "#3D1534"
-    },
-    {
-      "type": "header",
       "content": "Colors"
     },
     {
       "type": "color",
       "id": "section_bg_color",
       "label": "Section background color"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#680040"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body / quote text color"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow text color"
     },
     {
       "type": "color_scheme",
