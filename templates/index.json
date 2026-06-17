@@ -978,6 +978,22 @@
         "padding-block-end": 60
       }
     },
+    "founder_story_section": {
+      "type": "founder-story",
+      "settings": {
+        "eyebrow": "MEET THE FOUNDERS",
+        "heading": "<p>Built by Parents, for Parents.</p>",
+        "quote": "We started Llama Naturals because we couldn't find a vitamin we felt great giving our own kids. So we made one.",
+        "founder_name": "The Llama Naturals Founders",
+        "founder_title": "Parents & Co-Founders",
+        "image_position": "left",
+        "section_width": "full-width",
+        "show_divider": false,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -1267,6 +1283,7 @@
     "comparison_table_section",
     "experts_review_section",
     "press_mentions_section",
+    "founder_story_section",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]

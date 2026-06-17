@@ -1,0 +1,457 @@
+{% stylesheet %}
+.founder-story {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'media'
+    'content';
+}
+
+.founder-story__media {
+  grid-area: media;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  position: relative;
+}
+
+.founder-story__media img,
+.founder-story__media .founder-story__placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.founder-story__content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding: 40px 24px;
+}
+
+.founder-story__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+  margin: 0;
+}
+
+.founder-story__heading {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.2;
+  color: var(--color-foreground-heading);
+}
+
+.founder-story__heading h1,
+.founder-story__heading h2,
+.founder-story__heading h3,
+.founder-story__heading h4,
+.founder-story__heading h5,
+.founder-story__heading h6,
+.founder-story__heading p {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.founder-story__quote {
+  font-family: var(--font-body--family);
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground-rgb) / 0.85);
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.founder-story__body {
+  font-family: var(--font-body--family);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground-rgb) / 0.8);
+}
+
+.founder-story__body p {
+  margin: 0;
+}
+
+.founder-story__attribution {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.founder-story__founder-name {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.founder-story__founder-title {
+  font-family: var(--font-body--family);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: rgb(var(--color-foreground-rgb) / 0.65);
+  margin: 0;
+}
+
+.founder-story__separator {
+  color: rgb(var(--color-foreground-rgb) / 0.4);
+  font-size: 0.875rem;
+}
+
+.founder-story__signature {
+  max-height: 48px;
+  width: auto;
+  display: block;
+}
+
+.founder-story__button {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 14px 32px;
+  border: 1.5px solid rgb(var(--color-foreground-rgb) / 0.8);
+  text-decoration: none;
+  font-family: var(--font-body--family);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground-rgb));
+  background-color: transparent;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.founder-story__button:hover {
+  background-color: rgb(var(--color-foreground-rgb));
+  color: var(--color-background);
+}
+
+@media screen and (min-width: 750px) {
+  .founder-story {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'media content';
+  }
+
+  .founder-story--image-right {
+    grid-template-areas: 'content media';
+  }
+
+  .founder-story__media {
+    aspect-ratio: unset;
+  }
+
+  .founder-story__media--with-divider {
+    border-right: 1px solid var(--founder-story-divider-color, rgba(0,0,0,0.15));
+  }
+
+  .founder-story--image-right .founder-story__media--with-divider {
+    border-right: none;
+    border-left: 1px solid var(--founder-story-divider-color, rgba(0,0,0,0.15));
+  }
+
+  .founder-story__content {
+    padding: 64px 56px;
+  }
+}
+{% endstylesheet %}
+
+{%- assign cs_id = section.settings.color_scheme -%}
+{%- assign cs = settings.color_schemes[cs_id] -%}
+{%- assign fg_rgb = cs.settings.foreground.rgb -%}
+{%- assign fg_heading_rgba = cs.settings.foreground_heading.rgba -%}
+{%- assign fg_heading_rgb = cs.settings.foreground_heading.rgb -%}
+
+<style>
+#shopify-section-{{ section.id }} {
+  --founder-story-divider-color: {{ section.settings.divider_color }};
+}
+</style>
+
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style founder-story founder-story--image-{{ section.settings.image_position }}"
+  style="{%- render 'spacing-style', settings: section.settings -%}"
+>
+  <div
+    class="founder-story__media{% if section.settings.show_divider %} founder-story__media--with-divider{% endif %}"
+    style="
+      {%- if section.settings.left_panel_bg != blank and section.settings.left_panel_bg != 'rgba(0,0,0,0)' -%}
+        background-color: {{ section.settings.left_panel_bg }};
+      {%- endif -%}
+    "
+  >
+    {%- if section.settings.image != blank -%}
+      {%- render 'image', image: section.settings.image, class: 'founder-story__image' -%}
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'founder-story__placeholder' }}
+    {%- endif -%}
+  </div>
+
+  <div
+    class="founder-story__content"
+    style="
+      {%- if section.settings.right_panel_bg != blank and section.settings.right_panel_bg != 'rgba(0,0,0,0)' -%}
+        background-color: {{ section.settings.right_panel_bg }};
+      {%- endif -%}
+      {%- if fg_rgb != blank -%}
+        --color-foreground-rgb: {{ fg_rgb }};
+        --color-foreground: rgb({{ fg_rgb }});
+        --color-foreground-heading: rgb({{ fg_heading_rgba }});
+        --color-foreground-heading-rgb: {{ fg_heading_rgb }};
+      {%- endif -%}
+    "
+  >
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="founder-story__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <div class="founder-story__heading">{{ section.settings.heading }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.quote != blank -%}
+      <blockquote class="founder-story__quote">{{ section.settings.quote }}</blockquote>
+    {%- endif -%}
+
+    {%- if section.settings.body != blank -%}
+      <div class="founder-story__body">{{ section.settings.body }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.founder_name != blank or section.settings.founder_title != blank -%}
+      <div class="founder-story__attribution">
+        {%- if section.settings.founder_name != blank -%}
+          <p class="founder-story__founder-name">{{ section.settings.founder_name }}</p>
+        {%- endif -%}
+        {%- if section.settings.founder_name != blank and section.settings.founder_title != blank -%}
+          <span class="founder-story__separator" aria-hidden="true">&mdash;</span>
+        {%- endif -%}
+        {%- if section.settings.founder_title != blank -%}
+          <p class="founder-story__founder-title">{{ section.settings.founder_title }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_signature and section.settings.signature_image != blank -%}
+      <img
+        class="founder-story__signature"
+        src="{{ section.settings.signature_image | image_url: width: 400 }}"
+        alt="Founder signature"
+        loading="lazy"
+        width="200"
+        height="48"
+      >
+    {%- endif -%}
+
+    {%- if section.settings.button_text != blank -%}
+      <a
+        class="founder-story__button"
+        {%- if section.settings.button_link != blank -%}
+          href="{{ section.settings.button_link }}"
+        {%- else -%}
+          href="#"
+        {%- endif -%}
+      >
+        {{- section.settings.button_text -}}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Founder story",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Founder image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "MEET THE FOUNDERS"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Built by Parents, for Parents.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "We started Llama Naturals because we couldn't find a vitamin we felt great giving our own kids. So we made one."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text"
+    },
+    {
+      "type": "text",
+      "id": "founder_name",
+      "label": "Founder name",
+      "default": "The Llama Naturals Founders"
+    },
+    {
+      "type": "text",
+      "id": "founder_title",
+      "label": "Founder title",
+      "default": "Parents & Co-Founders"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Signature"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_signature",
+      "label": "Show signature image",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "signature_image",
+      "label": "Signature image"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "full-width",
+          "label": "Full width"
+        },
+        {
+          "value": "page-width",
+          "label": "Page width"
+        }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "header",
+      "content": "Panel backgrounds"
+    },
+    {
+      "type": "color",
+      "id": "left_panel_bg",
+      "label": "Left panel background"
+    },
+    {
+      "type": "color",
+      "id": "right_panel_bg",
+      "label": "Right panel background"
+    },
+    {
+      "type": "header",
+      "content": "Panel divider"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider between panels",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider color",
+      "default": "#3D1534"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Founder story"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
