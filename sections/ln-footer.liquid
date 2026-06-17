@@ -1,8 +1,7 @@
 <style>
   #shopify-section-{{ section.id }} {
-    --ln-footer-nav-heading-color: var(--color-foreground);
-    --ln-footer-link-color: var(--color-foreground);
-    --ln-footer-newsletter-heading-color: var(--color-foreground);
+    --ln-submit-bg: {{ section.settings.email_button_bg.red }}, {{ section.settings.email_button_bg.green }}, {{ section.settings.email_button_bg.blue }};
+    --ln-submit-color: {{ section.settings.email_button_color.red }}, {{ section.settings.email_button_color.green }}, {{ section.settings.email_button_color.blue }};
   }
 </style>
 
@@ -16,7 +15,7 @@
     style="{% render 'spacing-style', settings: section.settings %}"
   >
 
-    <!-- MAIN 2-COLUMN ROW -->
+    <!-- MAIN 2-COLUMN ROW: left = 3 nav cols, right = newsletter + mascot -->
     <div class="ln-footer__main">
 
       <!-- LEFT: 3 nav columns -->
@@ -74,10 +73,10 @@
             </div>
           {% endif %}
 
-        </div><!-- /.ln-footer__nav-grid -->
-      </div><!-- /.ln-footer__left -->
+        </div>
+      </div>
 
-      <!-- RIGHT: Newsletter + mascot -->
+      <!-- RIGHT: Newsletter + social + mascot -->
       <div class="ln-footer__right">
 
         <div class="ln-footer__newsletter">
@@ -113,46 +112,51 @@
             {%- endif -%}
           {%- endform -%}
 
-          <!-- Social icons -->
+          <!-- Social icons row -->
           <div class="ln-footer__social">
             {% if section.settings.instagram_url != blank %}
               <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="ln-footer__social-link">
-                <svg class="ln-footer__social-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M13.23 3.492c-.84-.037-1.096-.046-3.23-.046-2.144 0-2.39.01-3.238.055-.776.027-1.195.164-1.487.273a2.43 2.43 0 0 0-.912.593 2.486 2.486 0 0 0-.602.922c-.11.282-.238.702-.274 1.486-.046.84-.046 1.095-.046 3.23 0 2.134.01 2.39.046 3.229.004.51.097 1.016.274 1.495.145.365.319.639.602.913.282.282.538.456.92.602.474.176.974.268 1.479.273.848.046 1.103.046 3.238.046 2.134 0 2.39-.01 3.23-.046.784-.036 1.203-.164 1.486-.273.374-.146.648-.329.921-.602.283-.283.447-.548.602-.922.177-.476.27-.979.274-1.486.037-.84.046-1.095.046-3.23 0-2.134-.01-2.39-.055-3.229-.027-.784-.164-1.204-.274-1.495a2.43 2.43 0 0 0-.593-.913 2.604 2.604 0 0 0-.92-.602c-.284-.11-.703-.237-1.488-.273ZM6.697 2.05c.857-.036 1.131-.045 3.302-.045 1.1-.014 2.202.001 3.302.045.664.014 1.321.14 1.943.374a3.968 3.968 0 0 1 1.414.922c.41.397.728.88.93 1.414.23.622.354 1.279.365 1.942C18 7.56 18 7.824 18 10.005c0 2.17-.01 2.444-.046 3.292-.036.858-.173 1.442-.374 1.943-.2.53-.474.976-.92 1.423a3.896 3.896 0 0 1-1.415.922c-.51.191-1.095.337-1.943.374-.857.036-1.122.045-3.302.045-2.171 0-2.445-.009-3.302-.055-.849-.027-1.432-.164-1.943-.364a4.152 4.152 0 0 1-1.414-.922 4.128 4.128 0 0 1-.93-1.423c-.183-.51-.329-1.085-.365-1.943C2.009 12.45 2 12.167 2 10.004c0-2.161 0-2.435.055-3.302.027-.848.164-1.432.365-1.942a4.44 4.44 0 0 1 .92-1.414 4.18 4.18 0 0 1 1.415-.93c.51-.183 1.094-.33 1.943-.366Zm.427 4.806a4.105 4.105 0 1 1 5.805 5.805 4.105 4.105 0 0 1-5.805-5.805Zm1.882 5.371a2.668 2.668 0 1 0 2.042-4.93 2.668 2.668 0 0 0-2.042 4.93Zm5.922-5.942a.958.958 0 1 1-1.355-1.355.958.958 0 0 1 1.355 1.355Z" clip-rule="evenodd" fill="currentColor"/>
+                <svg class="ln-footer__social-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">
+                  <path fill-rule="evenodd" d="M13.23 3.492c-.84-.037-1.096-.046-3.23-.046-2.144 0-2.39.01-3.238.055-.776.027-1.195.164-1.487.273a2.43 2.43 0 0 0-.912.593 2.486 2.486 0 0 0-.602.922c-.11.282-.238.702-.274 1.486-.046.84-.046 1.095-.046 3.23 0 2.134.01 2.39.046 3.229.004.51.097 1.016.274 1.495.145.365.319.639.602.913.282.282.538.456.92.602.474.176.974.268 1.479.273.848.046 1.103.046 3.238.046 2.134 0 2.39-.01 3.23-.046.784-.036 1.203-.164 1.486-.273.374-.146.648-.329.921-.602.283-.283.447-.548.602-.922.177-.476.27-.979.274-1.486.037-.84.046-1.095.046-3.23 0-2.134-.01-2.39-.055-3.229-.027-.784-.164-1.204-.274-1.495a2.43 2.43 0 0 0-.593-.913 2.604 2.604 0 0 0-.92-.602c-.284-.11-.703-.237-1.488-.273ZM6.697 2.05c.857-.036 1.131-.045 3.302-.045 1.1-.014 2.202.001 3.302.045.664.014 1.321.14 1.943.374a3.968 3.968 0 0 1 1.414.922c.41.397.728.88.93 1.414.23.622.354 1.279.365 1.942C18 7.56 18 7.824 18 10.005c0 2.17-.01 2.444-.046 3.292-.036.858-.173 1.442-.374 1.943-.2.53-.474.976-.92 1.423a3.896 3.896 0 0 1-1.415.922c-.51.191-1.095.337-1.943.374-.857.036-1.122.045-3.302.045-2.171 0-2.445-.009-3.302-.055-.849-.027-1.432-.164-1.943-.364a4.152 4.152 0 0 1-1.414-.922 4.128 4.128 0 0 1-.93-1.423c-.183-.51-.329-1.085-.365-1.943C2.009 12.45 2 12.167 2 10.004c0-2.161 0-2.435.055-3.302.027-.848.164-1.432.365-1.942a4.44 4.44 0 0 1 .92-1.414 4.18 4.18 0 0 1 1.415-.93c.51-.183 1.094-.33 1.943-.366Zm.427 4.806a4.105 4.105 0 1 1 5.805 5.805 4.105 4.105 0 0 1-5.805-5.805Zm1.882 5.371a2.668 2.668 0 1 0 2.042-4.93 2.668 2.668 0 0 0-2.042 4.93Zm5.922-5.942a.958.958 0 1 1-1.355-1.355.958.958 0 0 1 1.355 1.355Z" clip-rule="evenodd"/>
                 </svg>
               </a>
             {% endif %}
             {% if section.settings.tiktok_url != blank %}
               <a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="ln-footer__social-link">
-                <svg class="ln-footer__social-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M10.511 1.705h2.74s-.157 3.51 3.795 3.768v2.711s-2.114.129-3.796-1.158l.028 5.606A5.073 5.073 0 1 1 8.213 7.56h.708v2.785a2.298 2.298 0 1 0 1.618 2.205L10.51 1.705Z" fill="currentColor"/>
+                <svg class="ln-footer__social-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">
+                  <path d="M10.511 1.705h2.74s-.157 3.51 3.795 3.768v2.711s-2.114.129-3.796-1.158l.028 5.606A5.073 5.073 0 1 1 8.213 7.56h.708v2.785a2.298 2.298 0 1 0 1.618 2.205L10.51 1.705Z"/>
                 </svg>
               </a>
             {% endif %}
             {% if section.settings.facebook_url != blank %}
               <a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="ln-footer__social-link">
-                <svg class="ln-footer__social-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M18 10.049C18 5.603 14.419 2 10 2c-4.419 0-8 3.603-8 8.049C2 14.067 4.925 17.396 8.75 18v-5.624H6.719v-2.328h2.03V8.275c0-2.017 1.195-3.132 3.023-3.132.874 0 1.79.158 1.79.158v1.98h-1.009c-.994 0-1.303.621-1.303 1.258v1.51h2.219l-.355 2.326H11.25V18c3.825-.604 6.75-3.933 6.75-7.951Z" fill="currentColor"/>
+                <svg class="ln-footer__social-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">
+                  <path d="M18 10.049C18 5.603 14.419 2 10 2c-4.419 0-8 3.603-8 8.049C2 14.067 4.925 17.396 8.75 18v-5.624H6.719v-2.328h2.03V8.275c0-2.017 1.195-3.132 3.023-3.132.874 0 1.79.158 1.79.158v1.98h-1.009c-.994 0-1.303.621-1.303 1.258v1.51h2.219l-.355 2.326H11.25V18c3.825-.604 6.75-3.933 6.75-7.951Z"/>
                 </svg>
               </a>
             {% endif %}
             {% if section.settings.linkedin_url != blank %}
               <a href="{{ section.settings.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="ln-footer__social-link">
-                <svg class="ln-footer__social-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8411 2H3.2061C2.5539 2 2 2.51581 2 3.15124V16.848C2 17.4842 2.36343 18 3.01562 18H16.6507C17.3036 18 18 17.4842 18 16.848V3.15124C18 2.51581 17.4941 2 16.8411 2ZM8.09524 8.09524H10.2491V9.19314H10.2728C10.6011 8.60114 11.571 8 12.7703 8C15.072 8 15.7143 9.2221 15.7143 11.4857V15.7143H13.4286V11.9025C13.4286 10.8891 13.024 10 12.0777 10C10.9288 10 10.381 10.7779 10.381 12.0549V15.7143H8.09524V8.09524ZM4.28571 15.7143H6.57143V8.09524H4.28571V15.7143ZM6.85714 5.42857C6.85714 6.2179 6.2179 6.85714 5.42857 6.85714C4.63924 6.85714 4 6.2179 4 5.42857C4 4.63924 4.63924 4 5.42857 4C6.2179 4 6.85714 4.63924 6.85714 5.42857Z" fill="currentColor"/>
+                <svg class="ln-footer__social-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8411 2H3.2061C2.5539 2 2 2.51581 2 3.15124V16.848C2 17.4842 2.36343 18 3.01562 18H16.6507C17.3036 18 18 17.4842 18 16.848V3.15124C18 2.51581 17.4941 2 16.8411 2ZM8.09524 8.09524H10.2491V9.19314H10.2728C10.6011 8.60114 11.571 8 12.7703 8C15.072 8 15.7143 9.2221 15.7143 11.4857V15.7143H13.4286V11.9025C13.4286 10.8891 13.024 10 12.0777 10C10.9288 10 10.381 10.7779 10.381 12.0549V15.7143H8.09524V8.09524ZM4.28571 15.7143H6.57143V8.09524H4.28571V15.7143ZM6.85714 5.42857C6.85714 6.2179 6.2179 6.85714 5.42857 6.85714C4.63924 6.85714 4 6.2179 4 5.42857C4 4.63924 4.63924 4 5.42857 4C6.2179 4 6.85714 4.63924 6.85714 5.42857Z"/>
                 </svg>
               </a>
             {% endif %}
             {% if section.settings.amazon_url != blank %}
               <a href="{{ section.settings.amazon_url }}" target="_blank" rel="noopener noreferrer" aria-label="Amazon" class="ln-footer__social-link">
-                <svg class="ln-footer__social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.09.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726a17.617 17.617 0 0 1-4.445.556 19.6 19.6 0 0 1-5.897-.87 20.553 20.553 0 0 1-5.165-2.447c-.315-.21-.398-.42-.21-.51zm6.97-7.573c0-1.58.35-2.8 1.053-3.656.7-.856 1.69-1.285 2.967-1.285.96 0 1.72.224 2.28.672.558.448.838 1.018.838 1.71v.26c0 .17-.1.254-.3.254h-1.67c-.2 0-.3-.087-.3-.26v-.173c0-.34-.127-.618-.38-.835-.253-.218-.595-.327-1.026-.327-.58 0-1.02.205-1.322.614-.3.41-.452 1.035-.452 1.873v.878c0 .86.156 1.5.467 1.92.31.42.77.63 1.38.63.43 0 .76-.12 1-.35.24-.23.358-.556.358-.98v-.457h-1.5c-.207 0-.31-.09-.31-.27v-1.28c0-.18.103-.27.31-.27h3.46c.2 0 .3.09.3.27v3.5c0 .17-.1.255-.3.255h-1.3c-.185 0-.285-.077-.3-.23l-.07-.676c-.24.363-.562.645-.967.846-.405.2-.855.3-1.35.3-1.23 0-2.19-.45-2.87-1.35-.68-.9-1.02-2.14-1.02-3.72v-.26z" fill="currentColor"/>
-                </svg>
+                {% if section.settings.amazon_icon != blank %}
+                  {%- render 'image', image: section.settings.amazon_icon, alt_text_fallback: 'Amazon', height: 28 -%}
+                {% else %}
+                  <svg class="ln-footer__social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">
+                    <path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.09.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726a17.617 17.617 0 0 1-4.445.556 19.6 19.6 0 0 1-5.897-.87 20.553 20.553 0 0 1-5.165-2.447c-.315-.21-.398-.42-.21-.51zm6.97-7.573c0-1.58.35-2.8 1.053-3.656.7-.856 1.69-1.285 2.967-1.285.96 0 1.72.224 2.28.672.558.448.838 1.018.838 1.71v.26c0 .17-.1.254-.3.254h-1.67c-.2 0-.3-.087-.3-.26v-.173c0-.34-.127-.618-.38-.835-.253-.218-.595-.327-1.026-.327-.58 0-1.02.205-1.322.614-.3.41-.452 1.035-.452 1.873v.878c0 .86.156 1.5.467 1.92.31.42.77.63 1.38.63.43 0 .76-.12 1-.35.24-.23.358-.556.358-.98v-.457h-1.5c-.207 0-.31-.09-.31-.27v-1.28c0-.18.103-.27.31-.27h3.46c.2 0 .3.09.3.27v3.5c0 .17-.1.255-.3.255h-1.3c-.185 0-.285-.077-.3-.23l-.07-.676c-.24.363-.562.645-.967.846-.405.2-.855.3-1.35.3-1.23 0-2.19-.45-2.87-1.35-.68-.9-1.02-2.14-1.02-3.72v-.26z"/>
+                  </svg>
+                {% endif %}
               </a>
             {% endif %}
-          </div><!-- /.ln-footer__social -->
-        </div><!-- /.ln-footer__newsletter -->
+          </div>
+        </div>
 
+        <!-- Mascot image (bottom of right col) -->
         {% if section.settings.mascot_image != blank %}
           <div class="ln-footer__mascot">
             {%- render 'image',
@@ -163,7 +167,7 @@
           </div>
         {% endif %}
 
-      </div><!-- /.ln-footer__right -->
+      </div>
     </div><!-- /.ln-footer__main -->
 
     <!-- BADGES & COUNTRY ROW -->
@@ -178,34 +182,40 @@
           -%}
         </div>
       {% endif %}
-      <div class="ln-footer__badges">
-        {% if section.settings.badge_image_1 != blank %}
-          <div class="ln-footer__badge">
-            {%- render 'image', image: section.settings.badge_image_1, alt_text_fallback: section.settings.badge_alt_1 -%}
-          </div>
-        {% endif %}
-        {% if section.settings.badge_image_2 != blank %}
-          <div class="ln-footer__badge">
-            {%- render 'image', image: section.settings.badge_image_2, alt_text_fallback: section.settings.badge_alt_2 -%}
-          </div>
-        {% endif %}
-        {% if section.settings.badge_image_3 != blank %}
-          <div class="ln-footer__badge">
-            {%- render 'image', image: section.settings.badge_image_3, alt_text_fallback: section.settings.badge_alt_3 -%}
-          </div>
-        {% endif %}
-        {% if section.settings.badge_image_4 != blank %}
-          <div class="ln-footer__badge">
-            {%- render 'image', image: section.settings.badge_image_4, alt_text_fallback: section.settings.badge_alt_4 -%}
-          </div>
-        {% endif %}
-        {% if section.settings.badge_image_5 != blank %}
-          <div class="ln-footer__badge">
-            {%- render 'image', image: section.settings.badge_image_5, alt_text_fallback: section.settings.badge_alt_5 -%}
-          </div>
-        {% endif %}
-      </div>
-    </div><!-- /.ln-footer__bottom-row -->
+      {% assign has_badges = false %}
+      {% if section.settings.badge_image_1 != blank or section.settings.badge_image_2 != blank or section.settings.badge_image_3 != blank or section.settings.badge_image_4 != blank or section.settings.badge_image_5 != blank %}
+        {% assign has_badges = true %}
+      {% endif %}
+      {% if has_badges %}
+        <div class="ln-footer__badges">
+          {% if section.settings.badge_image_1 != blank %}
+            <div class="ln-footer__badge">
+              {%- render 'image', image: section.settings.badge_image_1, alt_text_fallback: section.settings.badge_alt_1, height: 48 -%}
+            </div>
+          {% endif %}
+          {% if section.settings.badge_image_2 != blank %}
+            <div class="ln-footer__badge">
+              {%- render 'image', image: section.settings.badge_image_2, alt_text_fallback: section.settings.badge_alt_2, height: 48 -%}
+            </div>
+          {% endif %}
+          {% if section.settings.badge_image_3 != blank %}
+            <div class="ln-footer__badge">
+              {%- render 'image', image: section.settings.badge_image_3, alt_text_fallback: section.settings.badge_alt_3, height: 48 -%}
+            </div>
+          {% endif %}
+          {% if section.settings.badge_image_4 != blank %}
+            <div class="ln-footer__badge">
+              {%- render 'image', image: section.settings.badge_image_4, alt_text_fallback: section.settings.badge_alt_4, height: 48 -%}
+            </div>
+          {% endif %}
+          {% if section.settings.badge_image_5 != blank %}
+            <div class="ln-footer__badge">
+              {%- render 'image', image: section.settings.badge_image_5, alt_text_fallback: section.settings.badge_alt_5, height: 48 -%}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
 
     <!-- DISCLAIMER -->
     {% if section.settings.disclaimer_text != blank %}
@@ -214,51 +224,37 @@
       </div>
     {% endif %}
 
-  </div><!-- /.ln-footer -->
+  </div>
 </div>
 
 {% stylesheet %}
+  /* ─── Base container ─── */
   .ln-footer {
     display: flex;
     flex-direction: column;
     gap: 40px;
   }
 
-  /* ——— MAIN 2-COL LAYOUT ——— */
+  /* ─── Main 2-col layout ─── */
   .ln-footer__main {
     display: grid;
     grid-template-columns: 1fr;
     gap: 40px;
-
-    @media screen and (min-width: 990px) {
-      grid-template-columns: 3fr 2fr;
-      gap: 48px;
-      align-items: start;
-    }
+    align-items: start;
   }
 
-  /* ——— LEFT: nav grid ——— */
+  /* ─── Left: nav grid ─── */
   .ln-footer__nav-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-
-    @media screen and (max-width: 749px) {
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
-
-    @media screen and (min-width: 750px) and (max-width: 989px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 
   .ln-footer__nav-heading {
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
     font-size: 1rem;
-    color: var(--ln-footer-nav-heading-color);
-    margin: 0 0 16px 0;
+    margin: 0 0 14px 0;
     letter-spacing: 0.01em;
   }
 
@@ -271,54 +267,47 @@
   }
 
   .ln-footer__nav-item a {
-    color: var(--ln-footer-link-color);
+    color: var(--color-foreground);
     text-decoration: none;
     font-size: 0.9375rem;
     line-height: 1.4;
     opacity: 0.85;
-
-    &:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
   }
 
-  /* ——— RIGHT: newsletter + mascot ——— */
+  .ln-footer__nav-item a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  /* ─── Right: newsletter ─── */
   .ln-footer__right {
     display: flex;
     flex-direction: column;
     gap: 0;
-    position: relative;
-
-    @media screen and (min-width: 990px) {
-      min-height: 280px;
-    }
   }
 
   .ln-footer__newsletter {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    flex-shrink: 0;
   }
 
   .ln-footer__newsletter-heading {
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    color: var(--ln-footer-newsletter-heading-color);
-    margin: 0;
+    font-size: 1.625rem;
     line-height: 1.2;
+    margin: 0;
   }
 
   .ln-footer__newsletter-subtext {
     font-size: 0.875rem;
     margin: 0;
-    opacity: 0.8;
     line-height: 1.5;
+    opacity: 0.8;
   }
 
-  /* Email form */
+  /* ─── Email form ─── */
   .ln-footer__email-form {
     display: flex;
     flex-direction: column;
@@ -327,49 +316,53 @@
 
   .ln-footer__email-row {
     display: flex;
-    gap: 0;
     align-items: stretch;
+    gap: 12px;
   }
 
   .ln-footer__email-input {
     flex: 1;
     min-width: 0;
-    padding: 14px 20px;
+    padding: 14px 18px;
     font-size: 0.9375rem;
-    border: 1.5px solid rgba(var(--color-foreground-rgb) / 0.3);
-    border-right: none;
-    border-radius: 6px 0 0 6px;
-    background-color: var(--color-input-background);
-    color: var(--color-input-text);
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border: 1.5px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
     outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
 
-    &:focus {
-      border-color: var(--color-foreground);
-    }
+  .ln-footer__email-input:focus {
+    border-color: rgba(0, 0, 0, 0.4);
+  }
 
-    &::placeholder {
-      color: rgb(var(--color-input-text-rgb) / 0.5);
-    }
+  .ln-footer__email-input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
   }
 
   .ln-footer__email-btn {
     flex-shrink: 0;
-    padding: 14px 24px;
-    background-color: var(--button-background-color);
-    color: var(--button-color);
+    padding: 14px 28px;
+    background-color: rgb(var(--ln-submit-bg));
+    color: rgb(var(--ln-submit-color));
     border: none;
-    border-radius: 0 6px 6px 0;
+    border-radius: 8px;
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
     font-size: 0.875rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     cursor: pointer;
     white-space: nowrap;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
 
-    &:hover {
-      opacity: 0.85;
-    }
+  .ln-footer__email-btn:hover {
+    opacity: 0.85;
   }
 
   .ln-footer__form-msg {
@@ -378,14 +371,14 @@
   }
 
   .ln-footer__form-msg--error {
-    color: var(--color-error, #c00);
+    color: #c00;
   }
 
-  /* Social icons */
+  /* ─── Social icons ─── */
   .ln-footer__social {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 22px;
     flex-wrap: wrap;
   }
 
@@ -394,29 +387,30 @@
     align-items: center;
     justify-content: center;
     color: var(--color-foreground);
-    transition: opacity 0.2s;
+    line-height: 1;
+    transition: opacity 0.2s ease;
+  }
 
-    &:hover {
-      opacity: 0.7;
-    }
+  .ln-footer__social-link:hover {
+    opacity: 0.7;
   }
 
   .ln-footer__social-icon {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
+    display: block;
   }
 
-  /* Mascot */
-  .ln-footer__mascot {
-    margin-top: auto;
-    align-self: flex-end;
-    width: 100%;
-    max-width: 380px;
+  .ln-footer__social-link img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    display: block;
+  }
 
-    @media screen and (max-width: 989px) {
-      max-width: 280px;
-      margin: 24px auto 0;
-    }
+  /* ─── Mascot ─── */
+  .ln-footer__mascot {
+    margin-top: 24px;
   }
 
   .ln-footer__mascot-img {
@@ -425,18 +419,12 @@
     display: block;
   }
 
-  /* ——— BOTTOM ROW: country + badges ——— */
+  /* ─── Badges row ─── */
   .ln-footer__bottom-row {
     display: flex;
     align-items: center;
     gap: 24px;
     flex-wrap: wrap;
-
-    @media screen and (max-width: 749px) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
-    }
   }
 
   .ln-footer__localization {
@@ -446,37 +434,82 @@
   .ln-footer__badges {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     flex-wrap: wrap;
   }
 
   .ln-footer__badge {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
   }
 
-  /* ——— DISCLAIMER ——— */
+  .ln-footer__badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* ─── Disclaimer ─── */
   .ln-footer__disclaimer {
-    border: 1px solid rgba(var(--color-foreground-rgb) / 0.25);
+    border: 1px solid rgba(var(--color-foreground-rgb) / 0.22);
     border-radius: 8px;
     padding: 16px 20px;
     font-size: 0.75rem;
-    line-height: 1.6;
-    opacity: 0.75;
+    line-height: 1.65;
+    opacity: 0.72;
+  }
 
-    @media screen and (min-width: 990px) {
-      max-width: 60%;
+  .ln-footer__disclaimer p {
+    margin: 0;
+  }
+
+  /* ─── Responsive ─── */
+  @media screen and (min-width: 750px) {
+    .ln-footer__main {
+      grid-template-columns: 3fr 2fr;
+      gap: 48px;
     }
 
-    p {
-      margin: 0;
+    .ln-footer__nav-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .ln-footer__mascot {
+      max-width: 380px;
+      margin-left: auto;
+    }
+
+    .ln-footer__disclaimer {
+      max-width: 65%;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ln-footer {
+      gap: 32px;
+    }
+
+    .ln-footer__email-row {
+      flex-direction: column;
+    }
+
+    .ln-footer__email-btn {
+      width: 100%;
+      padding: 16px;
+    }
+
+    .ln-footer__mascot {
+      max-width: 240px;
+      margin: 16px auto 0;
+    }
+
+    .ln-footer__bottom-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
     }
   }
 {% endstylesheet %}
@@ -507,7 +540,7 @@
     },
     {
       "type": "header",
-      "content": "Navigation"
+      "content": "Navigation columns"
     },
     {
       "type": "text",
@@ -568,6 +601,18 @@
       "default": "SUBMIT"
     },
     {
+      "type": "color",
+      "id": "email_button_bg",
+      "label": "Button background color",
+      "default": "#680040"
+    },
+    {
+      "type": "color",
+      "id": "email_button_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
       "type": "header",
       "content": "Social links"
     },
@@ -595,6 +640,11 @@
       "type": "url",
       "id": "amazon_url",
       "label": "Amazon URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "amazon_icon",
+      "label": "Amazon icon image (optional override)"
     },
     {
       "type": "header",

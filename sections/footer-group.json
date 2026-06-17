@@ -25,6 +25,8 @@
         "newsletter_heading": "You made it to the bottom. Snaps for you.",
         "newsletter_subtext": "Get first dibs on promotions, early access to new products, and stay up to date with all things Llamas!",
         "email_button_label": "SUBMIT",
+        "email_button_bg": "#680040",
+        "email_button_color": "#ffffff",
         "instagram_url": "https://www.instagram.com/llamanaturals/",
         "tiktok_url": "https://www.tiktok.com/@llamanaturals",
         "facebook_url": "https://www.facebook.com/llamanaturals/",
