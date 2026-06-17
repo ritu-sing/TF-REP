@@ -123,22 +123,24 @@
 
 .founder-story__button {
   display: inline-block;
-  align-self: flex-start;
+  align-self: var(--founder-story-btn-align, flex-start);
+  width: var(--founder-story-btn-width, auto);
   padding: 14px 32px;
-  border: 1.5px solid rgb(var(--color-foreground-rgb) / 0.8);
+  border: 2px solid var(--founder-story-btn-border, rgb(var(--color-foreground-rgb) / 0.8));
+  border-radius: var(--founder-story-btn-radius, 0px);
   text-decoration: none;
   font-family: var(--font-body--family);
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: rgb(var(--color-foreground-rgb));
-  background-color: transparent;
-  transition: background-color 0.2s, color 0.2s;
+  color: var(--founder-story-btn-text, rgb(var(--color-foreground-rgb)));
+  background-color: var(--founder-story-btn-bg, transparent);
+  transition: opacity 0.2s;
+  text-align: center;
 }
 
 .founder-story__button:hover {
-  background-color: rgb(var(--color-foreground-rgb));
-  color: var(--color-background);
+  opacity: 0.85;
 }
 
 @media screen and (min-width: 750px) {
@@ -179,12 +181,29 @@
 <style>
 #shopify-section-{{ section.id }} {
   --founder-story-divider-color: {{ section.settings.divider_color }};
+  --founder-story-btn-radius: {{ section.settings.button_border_radius }}px;
+  {%- if section.settings.button_full_width -%}
+  --founder-story-btn-align: stretch;
+  --founder-story-btn-width: 100%;
+  {%- else -%}
+  --founder-story-btn-align: flex-start;
+  --founder-story-btn-width: auto;
+  {%- endif -%}
+  {%- if section.settings.button_style == 'filled' -%}
+  --founder-story-btn-bg: {{ section.settings.button_bg_color }};
+  --founder-story-btn-text: {{ section.settings.button_text_color }};
+  --founder-story-btn-border: {{ section.settings.button_bg_color }};
+  {%- else -%}
+  --founder-story-btn-bg: transparent;
+  --founder-story-btn-text: {{ section.settings.button_bg_color }};
+  --founder-story-btn-border: {{ section.settings.button_bg_color }};
+  {%- endif -%}
 }
 </style>
 
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style founder-story founder-story--image-{{ section.settings.image_position }}"
-  style="{%- render 'spacing-style', settings: section.settings -%}"
+  style="{%- render 'spacing-style', settings: section.settings -%}{%- if section.settings.section_bg_color != blank and section.settings.section_bg_color != 'rgba(0,0,0,0)' %} background-color: {{ section.settings.section_bg_color }};{%- endif -%}"
 >
   <div
     class="founder-story__media{% if section.settings.show_divider %} founder-story__media--with-divider{% endif %}"
@@ -331,6 +350,48 @@
     },
     {
       "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "filled", "label": "Filled" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "filled"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background / border color",
+      "default": "#680040"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button corner radius",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "button_full_width",
+      "label": "Full-width button",
+      "default": true
+    },
+    {
+      "type": "header",
       "content": "Signature"
     },
     {
@@ -413,6 +474,11 @@
     {
       "type": "header",
       "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section background color"
     },
     {
       "type": "color_scheme",
