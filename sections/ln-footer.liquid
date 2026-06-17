@@ -2,6 +2,14 @@
   #shopify-section-{{ section.id }} {
     --ln-submit-bg: {{ section.settings.email_button_bg.red }}, {{ section.settings.email_button_bg.green }}, {{ section.settings.email_button_bg.blue }};
     --ln-submit-color: {{ section.settings.email_button_color.red }}, {{ section.settings.email_button_color.green }}, {{ section.settings.email_button_color.blue }};
+    --ln-nav-heading-font: var(--font-{{ section.settings.nav_heading_font }}--family);
+    --ln-nav-heading-weight: var(--font-{{ section.settings.nav_heading_font }}--weight);
+    --ln-nav-heading-size: {{ section.settings.nav_heading_size }}px;
+    --ln-nav-link-size: {{ section.settings.nav_link_size }}px;
+    --ln-newsletter-heading-font: var(--font-{{ section.settings.newsletter_heading_font }}--family);
+    --ln-newsletter-heading-weight: var(--font-{{ section.settings.newsletter_heading_font }}--weight);
+    --ln-newsletter-heading-size: {{ section.settings.newsletter_heading_size }}px;
+    --ln-newsletter-subtext-size: {{ section.settings.newsletter_subtext_size }}px;
   }
 </style>
 
@@ -251,9 +259,9 @@
   }
 
   .ln-footer__nav-heading {
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: 1rem;
+    font-family: var(--ln-nav-heading-font);
+    font-weight: var(--ln-nav-heading-weight);
+    font-size: var(--ln-nav-heading-size);
     margin: 0 0 14px 0;
     letter-spacing: 0.01em;
   }
@@ -269,7 +277,7 @@
   .ln-footer__nav-item a {
     color: var(--color-foreground);
     text-decoration: none;
-    font-size: 0.9375rem;
+    font-size: var(--ln-nav-link-size);
     line-height: 1.4;
     opacity: 0.85;
   }
@@ -293,15 +301,15 @@
   }
 
   .ln-footer__newsletter-heading {
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: 1.625rem;
+    font-family: var(--ln-newsletter-heading-font);
+    font-weight: var(--ln-newsletter-heading-weight);
+    font-size: var(--ln-newsletter-heading-size);
     line-height: 1.2;
     margin: 0;
   }
 
   .ln-footer__newsletter-subtext {
-    font-size: 0.875rem;
+    font-size: var(--ln-newsletter-subtext-size);
     margin: 0;
     line-height: 1.5;
     opacity: 0.8;
@@ -727,6 +735,74 @@
       "type": "richtext",
       "id": "disclaimer_text",
       "label": "Disclaimer text"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "nav_heading_font",
+      "label": "Nav heading font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "range",
+      "id": "nav_heading_size",
+      "label": "Nav heading size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "nav_link_size",
+      "label": "Nav link size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "newsletter_heading_font",
+      "label": "Newsletter heading font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "range",
+      "id": "newsletter_heading_size",
+      "label": "Newsletter heading size",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "newsletter_subtext_size",
+      "label": "Newsletter subtext size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
     },
     {
       "type": "header",
