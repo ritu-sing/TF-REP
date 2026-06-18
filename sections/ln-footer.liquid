@@ -12,6 +12,7 @@
     --ln-newsletter-subtext-size: {{ section.settings.newsletter_subtext_size }}px;
     --ln-nav-link-font: var(--font-{{ section.settings.nav_link_font }}--family);
     --ln-newsletter-subtext-font: var(--font-{{ section.settings.newsletter_subtext_font }}--family);
+    --ln-logo-max-width: {{ section.settings.footer_logo_max_width }}px;
   }
 </style>
 
@@ -25,6 +26,19 @@
     style="{% render 'spacing-style', settings: section.settings %}"
   >
 
+    <!-- BRAND LOGO -->
+    {% if section.settings.footer_logo != blank %}
+      <div class="ln-footer__brand">
+        <a href="{{ section.settings.footer_logo_link | default: routes.root_url }}" class="ln-footer__logo-link" aria-label="{{ section.settings.footer_logo_alt }}">
+          {%- render 'image',
+            image: section.settings.footer_logo,
+            class: 'ln-footer__logo-img',
+            alt_text_fallback: section.settings.footer_logo_alt
+          -%}
+        </a>
+      </div>
+    {% endif %}
+
     <!-- MAIN 2-COLUMN ROW: left = 3 nav cols, right = newsletter + mascot -->
     <div class="ln-footer__main">
 
@@ -35,16 +49,37 @@
           <!-- Menu 1 -->
           {% if section.settings.menu_1_heading != blank or section.settings.menu_1 != blank %}
             <div class="ln-footer__nav-col">
-              {% if section.settings.menu_1_heading != blank %}
-                <p class="ln-footer__nav-heading">{{ section.settings.menu_1_heading }}</p>
-              {% endif %}
-              {% assign nav_1 = linklists[section.settings.menu_1] %}
-              {% if nav_1 != blank %}
-                <ul class="ln-footer__nav-list list-unstyled">
-                  {% for link in nav_1.links %}
-                    <li class="ln-footer__nav-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
-                  {% endfor %}
-                </ul>
+              {% if section.settings.show_mobile_nav_accordion %}
+                <details class="ln-footer__nav-accordion">
+                  <summary class="ln-footer__nav-accordion-summary">
+                    {% if section.settings.menu_1_heading != blank %}
+                      <span class="ln-footer__nav-heading">{{ section.settings.menu_1_heading }}</span>
+                    {% endif %}
+                    <span class="ln-footer__nav-accordion-icon" aria-hidden="true"></span>
+                  </summary>
+                  <div class="ln-footer__nav-list-wrapper">
+                    {% assign nav_1 = linklists[section.settings.menu_1] %}
+                    {% if nav_1 != blank %}
+                      <ul class="ln-footer__nav-list list-unstyled">
+                        {% for link in nav_1.links %}
+                          <li class="ln-footer__nav-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                </details>
+              {% else %}
+                {% if section.settings.menu_1_heading != blank %}
+                  <p class="ln-footer__nav-heading">{{ section.settings.menu_1_heading }}</p>
+                {% endif %}
+                {% assign nav_1 = linklists[section.settings.menu_1] %}
+                {% if nav_1 != blank %}
+                  <ul class="ln-footer__nav-list list-unstyled">
+                    {% for link in nav_1.links %}
+                      <li class="ln-footer__nav-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
               {% endif %}
             </div>
           {% endif %}
@@ -52,16 +87,37 @@
           <!-- Menu 2 -->
           {% if section.settings.menu_2_heading != blank or section.settings.menu_2 != blank %}
             <div class="ln-footer__nav-col">
-              {% if section.settings.menu_2_heading != blank %}
-                <p class="ln-footer__nav-heading">{{ section.settings.menu_2_heading }}</p>
-              {% endif %}
-              {% assign nav_2 = linklists[section.settings.menu_2] %}
-              {% if nav_2 != blank %}
-                <ul class="ln-footer__nav-list list-unstyled">
-                  {% for link in nav_2.links %}
-                    <li class="ln-footer__nav-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
-                  {% endfor %}
-                </ul>
+              {% if section.settings.show_mobile_nav_accordion %}
+                <details class="ln-footer__nav-accordion">
+                  <summary class="ln-footer__nav-accordion-summary">
+                    {% if section.settings.menu_2_heading != blank %}
+                      <span class="ln-footer__nav-heading">{{ section.settings.menu_2_heading }}</span>
+                    {% endif %}
+                    <span class="ln-footer__nav-accordion-icon" aria-hidden="true"></span>
+                  </summary>
+                  <div class="ln-footer__nav-list-wrapper">
+                    {% assign nav_2 = linklists[section.settings.menu_2] %}
+                    {% if nav_2 != blank %}
+                      <ul class="ln-footer__nav-list list-unstyled">
+                        {% for link in nav_2.links %}
+                          <li class="ln-footer__nav-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                </details>
+              {% else %}
+                {% if section.settings.menu_2_heading != blank %}
+                  <p class="ln-footer__nav-heading">{{ section.settings.menu_2_heading }}</p>
+                {% endif %}
+                {% assign nav_2 = linklists[section.settings.menu_2] %}
+                {% if nav_2 != blank %}
+                  <ul class="ln-footer__nav-list list-unstyled">
+                    {% for link in nav_2.links %}
+                      <li class="ln-footer__nav-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
               {% endif %}
             </div>
           {% endif %}
@@ -69,16 +125,37 @@
           <!-- Menu 3 -->
           {% if section.settings.menu_3_heading != blank or section.settings.menu_3 != blank %}
             <div class="ln-footer__nav-col">
-              {% if section.settings.menu_3_heading != blank %}
-                <p class="ln-footer__nav-heading">{{ section.settings.menu_3_heading }}</p>
-              {% endif %}
-              {% assign nav_3 = linklists[section.settings.menu_3] %}
-              {% if nav_3 != blank %}
-                <ul class="ln-footer__nav-list list-unstyled">
-                  {% for link in nav_3.links %}
-                    <li class="ln-footer__nav-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
-                  {% endfor %}
-                </ul>
+              {% if section.settings.show_mobile_nav_accordion %}
+                <details class="ln-footer__nav-accordion">
+                  <summary class="ln-footer__nav-accordion-summary">
+                    {% if section.settings.menu_3_heading != blank %}
+                      <span class="ln-footer__nav-heading">{{ section.settings.menu_3_heading }}</span>
+                    {% endif %}
+                    <span class="ln-footer__nav-accordion-icon" aria-hidden="true"></span>
+                  </summary>
+                  <div class="ln-footer__nav-list-wrapper">
+                    {% assign nav_3 = linklists[section.settings.menu_3] %}
+                    {% if nav_3 != blank %}
+                      <ul class="ln-footer__nav-list list-unstyled">
+                        {% for link in nav_3.links %}
+                          <li class="ln-footer__nav-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                </details>
+              {% else %}
+                {% if section.settings.menu_3_heading != blank %}
+                  <p class="ln-footer__nav-heading">{{ section.settings.menu_3_heading }}</p>
+                {% endif %}
+                {% assign nav_3 = linklists[section.settings.menu_3] %}
+                {% if nav_3 != blank %}
+                  <ul class="ln-footer__nav-list list-unstyled">
+                    {% for link in nav_3.links %}
+                      <li class="ln-footer__nav-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
               {% endif %}
             </div>
           {% endif %}
@@ -245,6 +322,23 @@
     gap: 40px;
   }
 
+  /* ─── Brand logo ─── */
+  .ln-footer__brand {
+    display: block;
+  }
+
+  .ln-footer__logo-link {
+    display: inline-flex;
+    line-height: 1;
+  }
+
+  .ln-footer__logo-img {
+    max-width: var(--ln-logo-max-width, 160px);
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
   /* ─── Main 2-col layout ─── */
   .ln-footer__main {
     display: grid;
@@ -288,6 +382,50 @@
   .ln-footer__nav-item a:hover {
     opacity: 1;
     text-decoration: underline;
+  }
+
+  /* ─── Mobile nav accordion ─── */
+  .ln-footer__nav-accordion {
+    border: none;
+    padding: 0;
+  }
+
+  .ln-footer__nav-accordion-summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(var(--color-foreground-rgb) / 0.15);
+  }
+
+  .ln-footer__nav-accordion-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .ln-footer__nav-accordion-summary .ln-footer__nav-heading {
+    margin: 0;
+  }
+
+  .ln-footer__nav-accordion-icon {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    margin-inline-start: 8px;
+  }
+
+  .ln-footer__nav-accordion-icon::before {
+    content: '+';
+  }
+
+  details.ln-footer__nav-accordion[open] .ln-footer__nav-accordion-icon::before {
+    content: '\2212';
+  }
+
+  .ln-footer__nav-list-wrapper {
+    padding-top: 12px;
+    padding-bottom: 4px;
   }
 
   /* ─── Right: newsletter ─── */
@@ -497,11 +635,37 @@
     .ln-footer__disclaimer {
       max-width: 65%;
     }
+
+    /* Accordion: always show nav lists on desktop */
+    details.ln-footer__nav-accordion > .ln-footer__nav-list-wrapper {
+      display: block !important;
+    }
+
+    .ln-footer__nav-accordion-icon {
+      display: none;
+    }
+
+    .ln-footer__nav-accordion-summary {
+      pointer-events: none;
+      cursor: default;
+      border-bottom: none;
+      padding: 0;
+      margin-bottom: 14px;
+    }
   }
 
   @media screen and (max-width: 749px) {
     .ln-footer {
       gap: 32px;
+    }
+
+    .ln-footer__main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ln-footer__right {
+      order: -1;
     }
 
     .ln-footer__email-row {
@@ -552,7 +716,43 @@
     },
     {
       "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "range",
+      "id": "footer_logo_max_width",
+      "label": "Logo max width",
+      "min": 60,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "url",
+      "id": "footer_logo_link",
+      "label": "Logo link"
+    },
+    {
+      "type": "text",
+      "id": "footer_logo_alt",
+      "label": "Logo alt text",
+      "default": "Llama Naturals"
+    },
+    {
+      "type": "header",
       "content": "Navigation columns"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_nav_accordion",
+      "label": "Collapsible nav on mobile",
+      "default": true
     },
     {
       "type": "text",
