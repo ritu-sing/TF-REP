@@ -33,7 +33,6 @@
         "linkedin_url": "https://www.linkedin.com/company/llama-naturals/",
         "amazon_url": "https://www.amazon.com/stores/LlamaNaturals/page/",
         "show_country_selector": true,
-        "show_mobile_nav_accordion": true,
         "padding-block-start": 60,
         "padding-block-end": 60
       }
