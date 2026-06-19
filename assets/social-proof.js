@@ -2,7 +2,7 @@ import { Component } from '@theme/component';
 
 /**
  * SocialProofSection web component.
- * Handles play/pause toggling for UGC video cards.
+ * Handles play/pause, mute, and carousel navigation for UGC video cards.
  */
 class SocialProofSection extends Component {
   connectedCallback() {
@@ -43,6 +43,49 @@ class SocialProofSection extends Component {
       video.pause();
       card.classList.remove('is-playing');
     }
+  }
+
+  /**
+   * Toggle mute/unmute for the clicked video card.
+   * @param {MouseEvent} event
+   */
+  toggleMute(event) {
+    const btn = /** @type {HTMLElement} */ (event.currentTarget ?? event.target);
+    const card = btn.closest('.social-proof__video-card');
+    if (!card) return;
+
+    const video = /** @type {HTMLVideoElement | null} */ (card.querySelector('video'));
+    if (!video) return;
+
+    video.muted = !video.muted;
+    card.classList.toggle('is-muted', video.muted);
+
+    // Update button icon visibility
+    const muteBtn = card.querySelector('.social-proof__mute-btn');
+    if (muteBtn) {
+      const iconOn = muteBtn.querySelector('.icon-volume-on');
+      const iconOff = muteBtn.querySelector('.icon-volume-off');
+      if (iconOn) iconOn.style.display = video.muted ? 'none' : 'block';
+      if (iconOff) iconOff.style.display = video.muted ? 'block' : 'none';
+    }
+  }
+
+  /**
+   * Scroll the carousel to the previous slide.
+   */
+  scrollPrev() {
+    const carousel = this.querySelector('.social-proof__carousel');
+    if (!carousel) return;
+    carousel.scrollBy({ left: -282, behavior: 'smooth' });
+  }
+
+  /**
+   * Scroll the carousel to the next slide.
+   */
+  scrollNext() {
+    const carousel = this.querySelector('.social-proof__carousel');
+    if (!carousel) return;
+    carousel.scrollBy({ left: 282, behavior: 'smooth' });
   }
 }
 

@@ -1,3 +1,7 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto:wght@500&display=swap">
+
 <social-proof-section>
 
 <style>
@@ -41,18 +45,23 @@
 
     {%- if has_stats -%}
       <div class="social-proof__stats">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'stat' -%}
-            <div class="social-proof__stat" {{ block.shopify_attributes }}>
-              <span class="social-proof__stat-number">{{- block.settings.number -}}</span>
-              <span class="social-proof__stat-label">{{ block.settings.label | escape }}</span>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+        <div class="social-proof__stats-points">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              <div class="social-proof__stat" {{ block.shopify_attributes }}>
+                <span class="social-proof__stat-number">{{- block.settings.number -}}</span>
+                <span class="social-proof__stat-label">{{ block.settings.label | escape }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- if section.settings.disclaimer != blank -%}
+          <p class="social-proof__disclaimer">{{ section.settings.disclaimer | escape }}</p>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
-    {%- comment -%} ── Video grid ── {%- endcomment -%}
+    {%- comment -%} ── Video carousel ── {%- endcomment -%}
     {%- assign has_videos = false -%}
     {%- for block in section.blocks -%}
       {%- if block.type == 'video-card' -%}
@@ -62,75 +71,134 @@
     {%- endfor -%}
 
     {%- if has_videos -%}
-      <div class="social-proof__videos">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'video-card' -%}
-            <div class="social-proof__video-card" {{ block.shopify_attributes }}>
-              <div class="social-proof__video-wrapper">
+      <div class="social-proof__carousel-outer">
 
-                {%- if block.settings.video != blank -%}
-                  {%- assign video_poster = block.settings.video.preview_image | image_url: width: 600 -%}
-                  <video
-                    class="social-proof__video"
-                    muted
-                    playsinline
-                    loop
-                    preload="none"
-                    poster="{{ video_poster }}"
-                  >
-                    {%- for source in block.settings.video.sources -%}
-                      <source src="{{ source.url }}" type="{{ source.mime_type }}">
-                    {%- endfor -%}
-                  </video>
+        <button
+          class="social-proof__nav-btn social-proof__prev-btn"
+          type="button"
+          aria-label="Previous"
+          on:click="/scrollPrev"
+        >
+          <svg viewBox="0 0 6 12" width="6" height="12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5 1L1 6L5 11" stroke="#680040" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
 
-                  <button
-                    class="social-proof__play-btn"
-                    type="button"
-                    aria-label="Play video"
-                    on:click="/togglePlay"
-                  >
-                    <span class="social-proof__play-icon" aria-hidden="true">
-                      <svg class="social-proof__icon-play" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                        <path d="M8 5v14l11-7z" fill="currentColor"/>
+        <div class="social-proof__carousel">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'video-card' -%}
+              <div class="social-proof__video-card" {{ block.shopify_attributes }}>
+
+                <div class="social-proof__video-wrapper">
+
+                  {%- if block.settings.video != blank -%}
+                    {%- assign video_poster = block.settings.video.preview_image | image_url: width: 600 -%}
+                    <video
+                      class="social-proof__video"
+                      muted
+                      playsinline
+                      loop
+                      preload="none"
+                      poster="{{ video_poster }}"
+                    >
+                      {%- for source in block.settings.video.sources -%}
+                        <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                      {%- endfor -%}
+                    </video>
+                  {%- elsif block.settings.poster_image != blank -%}
+                    {%- assign poster_alt = block.settings.caption | default: '' -%}
+                    {{
+                      block.settings.poster_image
+                      | image_url: width: 600
+                      | image_tag:
+                        class: 'social-proof__poster',
+                        loading: 'lazy',
+                        alt: poster_alt
+                    }}
+                  {%- endif -%}
+
+                  {%- if block.settings.video != blank -%}
+                    <div class="social-proof__actions">
+                      <button
+                        class="social-proof__mute-btn"
+                        type="button"
+                        aria-label="Toggle mute"
+                        on:click="/toggleMute"
+                      >
+                        <span class="icon-volume-on" aria-hidden="true">
+                          <svg viewBox="0 0 17 16" width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 5.5H4.5L8 2V14L4.5 10.5H2V5.5Z" stroke="#680040" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+                            <path d="M10.5 5.5C11.5 6.5 11.5 9.5 10.5 10.5" stroke="#680040" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M12.5 3.5C14.5 5.5 14.5 10.5 12.5 12.5" stroke="#680040" stroke-width="1.5" stroke-linecap="round"/>
+                          </svg>
+                        </span>
+                        <span class="icon-volume-off" aria-hidden="true" style="display:none">
+                          <svg viewBox="0 0 17 16" width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 5.5H4.5L8 2V14L4.5 10.5H2V5.5Z" stroke="#680040" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+                            <path d="M11 6L14 10M14 6L11 10" stroke="#680040" stroke-width="1.5" stroke-linecap="round"/>
+                          </svg>
+                        </span>
+                      </button>
+                      <button
+                        class="social-proof__play-btn"
+                        type="button"
+                        aria-label="Play video"
+                        on:click="/togglePlay"
+                      >
+                        <span class="social-proof__play-icon" aria-hidden="true">
+                          <svg class="social-proof__icon-play" viewBox="0 0 16 16" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="4,2 14,8 4,14" fill="#680040"/>
+                          </svg>
+                          <svg class="social-proof__icon-pause" viewBox="0 0 16 16" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="2" width="4" height="12" rx="1" fill="#680040"/>
+                            <rect x="10" y="2" width="4" height="12" rx="1" fill="#680040"/>
+                          </svg>
+                        </span>
+                      </button>
+                    </div>
+                  {%- endif -%}
+
+                </div>
+
+                <div class="social-proof__product-info">
+                  {%- if block.settings.product_link != blank -%}
+                    <a
+                      href="{{ block.settings.product_link }}"
+                      class="social-proof__product-name"
+                    >{{ block.settings.product_name | escape }}</a>
+                  {%- else -%}
+                    <span class="social-proof__product-name">{{ block.settings.product_name | escape }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.product_link != blank -%}
+                    <a
+                      href="{{ block.settings.product_link }}"
+                      class="social-proof__arrow-btn"
+                      aria-label="View product"
+                    >
+                      <svg viewBox="0 0 26 26" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="13" cy="13" r="12.5" stroke="#680040"/>
+                        <path d="M9 13H17M17 13L13 9M17 13L13 17" stroke="#680040" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
-                      <svg class="social-proof__icon-pause" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/>
-                      </svg>
-                    </span>
-                  </button>
-
-                {%- elsif block.settings.poster_image != blank -%}
-                  {%- assign poster_alt = block.settings.caption | default: '' -%}
-                  {{
-                    block.settings.poster_image
-                    | image_url: width: 600
-                    | image_tag:
-                      class: 'social-proof__poster',
-                      loading: 'lazy',
-                      alt: poster_alt
-                  }}
-                {%- endif -%}
-
-                {%- if block.settings.product_link != blank -%}
-                  <a
-                    class="social-proof__arrow-link"
-                    href="{{ block.settings.product_link }}"
-                    aria-label="Shop this product"
-                  >
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true">
-                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    </svg>
-                  </a>
-                {%- endif -%}
+                    </a>
+                  {%- endif -%}
+                </div>
 
               </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
 
-              {%- if block.settings.caption != blank -%}
-                <p class="social-proof__caption">{{ block.settings.caption | escape }}</p>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+        <button
+          class="social-proof__nav-btn social-proof__next-btn"
+          type="button"
+          aria-label="Next"
+          on:click="/scrollNext"
+        >
+          <svg viewBox="0 0 6 12" width="6" height="12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1 1L5 6L1 11" stroke="#680040" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
       </div>
     {%- endif -%}
 
@@ -141,22 +209,31 @@
 </social-proof-section>
 
 {% stylesheet %}
+  /* ── Section background ── */
+  .social-proof {
+    background: #FFFFFF;
+  }
+
   /* ── Section inner ── */
   .social-proof__inner {
+    max-width: var(--page-content-width, 1408px);
+    margin-inline: auto;
+    padding-inline: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
     width: 100%;
   }
 
   /* ── Heading ── */
   .social-proof__heading {
-    margin: 0 0 var(--margin-5xl);
-    font-family: var(--section-heading-font, var(--font-heading--family));
-    font-weight: var(--section-heading-weight, var(--font-heading--weight));
-    font-style: var(--font-heading--style);
-    font-size: var(--section-heading-size, var(--font-h2--size));
-    line-height: var(--font-h2--line-height);
-    letter-spacing: var(--font-h2--letter-spacing);
-    text-transform: var(--font-h2--case);
-    color: var(--color-foreground-heading);
+    margin: 0;
+    font-family: 'Poppins', var(--section-heading-font, var(--font-heading--family)), sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    color: #680040;
     text-align: center;
   }
 
@@ -164,110 +241,141 @@
   .social-proof__stats {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 24px;
-    margin-block-end: 48px;
-    padding-block: 32px;
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+    width: 100%;
   }
 
-  @media screen and (min-width: 750px) {
-    .social-proof__stats {
-      flex-direction: row;
-      justify-content: space-around;
-    }
+  .social-proof__stats-points {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 
   .social-proof__stat {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 4px;
+    min-width: 240px;
+    padding-block: 12px;
+    padding-inline: 32px;
+  }
+
+  .social-proof__stat:not(:last-child) {
+    border-right: 1px solid #680040;
   }
 
   .social-proof__stat-number {
-    font-family: var(--section-heading-font, var(--font-heading--family));
-    font-weight: var(--section-heading-weight, var(--font-heading--weight));
-    font-size: var(--section-heading-size, var(--font-h2--size));
-    line-height: 1;
-    color: var(--color-primary);
+    font-family: 'Poppins', var(--section-heading-font, var(--font-heading--family)), sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    color: #000000;
+    text-align: center;
   }
 
   .social-proof__stat-label {
-    font-family: var(--section-body-font, var(--font-body--family));
-    font-size: var(--section-body-size, var(--font-size--sm));
-    line-height: var(--line-height--body-normal);
-    color: var(--color-foreground);
+    font-family: 'FF Good Pro Narr', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    text-align: center;
   }
 
-  /* ── Video grid ── */
-  .social-proof__videos {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .social-proof__disclaimer {
+    font-family: 'FF Good Pro Narr', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.9;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* ── Carousel outer ── */
+  .social-proof__carousel-outer {
+    position: relative;
+    width: 100%;
+    padding-inline: 28px;
+  }
+
+  /* ── Carousel ── */
+  .social-proof__carousel {
+    display: flex;
     gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-block-end: 4px;
   }
 
-  @media screen and (min-width: 750px) {
-    .social-proof__videos {
-      grid-template-columns: repeat(var(--social-proof-columns, 3), 1fr);
-    }
+  .social-proof__carousel::-webkit-scrollbar {
+    display: none;
   }
 
   /* ── Video card ── */
   .social-proof__video-card {
-    position: relative;
+    flex: 0 0 266px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    border: 1px solid #680040;
+    border-radius: 8px;
+    overflow: hidden;
+    scroll-snap-align: start;
   }
 
+  /* ── Video wrapper ── */
   .social-proof__video-wrapper {
     position: relative;
-    aspect-ratio: 9 / 16;
+    aspect-ratio: 266 / 472;
+    background: #FFFEF5;
     overflow: hidden;
-    border-radius: 12px;
-    background-color: rgb(var(--color-foreground-rgb) / 0.08);
   }
 
-  .social-proof__video,
-  .social-proof__poster {
+  .social-proof__video-wrapper video,
+  .social-proof__video-wrapper .social-proof__poster {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
 
-  /* ── Play/Pause button ── */
-  .social-proof__play-btn {
+  /* ── Actions overlay ── */
+  .social-proof__actions {
     position: absolute;
-    inset: 0;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+  }
+
+  .social-proof__mute-btn,
+  .social-proof__play-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: none;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
-    border: none;
-    cursor: pointer;
     padding: 0;
-    transition: opacity 0.2s ease;
+    flex-shrink: 0;
   }
 
   .social-proof__play-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background-color: rgb(var(--color-foreground-rgb) / 0.6);
-    color: var(--color-background);
-    flex-shrink: 0;
-    transition: background-color 0.2s ease;
-  }
-
-  .social-proof__play-btn:hover .social-proof__play-icon {
-    background-color: rgb(var(--color-foreground-rgb) / 0.8);
   }
 
   .social-proof__icon-play {
@@ -280,16 +388,7 @@
     flex-shrink: 0;
   }
 
-  /* Playing state: hide button; show on hover */
-  .social-proof__video-card.is-playing .social-proof__play-btn {
-    opacity: 0;
-  }
-
-  .social-proof__video-card.is-playing:hover .social-proof__play-btn {
-    opacity: 1;
-  }
-
-  /* Swap icons when playing */
+  /* Playing state */
   .social-proof__video-card.is-playing .social-proof__icon-play {
     display: none;
   }
@@ -298,36 +397,108 @@
     display: block;
   }
 
-  /* ── Arrow link ── */
-  .social-proof__arrow-link {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
+  /* ── Product info footer ── */
+  .social-proof__product-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #FFFFFF;
+    flex-shrink: 0;
+  }
+
+  .social-proof__product-name {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    text-decoration: underline;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  a.social-proof__product-name {
+    text-decoration: underline;
+  }
+
+  .social-proof__arrow-btn {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    width: 26px;
+    height: 26px;
     text-decoration: none;
-    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
-  .social-proof__arrow-link:hover {
-    background-color: var(--color-primary);
-    color: var(--color-background);
+  /* ── Nav buttons ── */
+  .social-proof__nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid #680040;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    padding: 0;
   }
 
-  /* ── Caption ── */
-  .social-proof__caption {
-    margin: 0;
-    font-family: var(--font-body--family);
-    font-size: var(--font-size--sm);
-    line-height: var(--line-height--body-normal);
-    color: var(--color-foreground);
-    text-align: center;
+  .social-proof__prev-btn {
+    left: -4px;
+  }
+
+  .social-proof__next-btn {
+    right: -4px;
+  }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 749px) {
+    .social-proof__inner {
+      padding-inline: 20px;
+      gap: 24px;
+    }
+
+    .social-proof__heading {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    .social-proof__stats-points {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .social-proof__stat {
+      min-width: 100%;
+      padding-block: 12px;
+    }
+
+    .social-proof__stat:not(:last-child) {
+      border-right: none;
+      border-bottom: 1px solid #680040;
+    }
+
+    .social-proof__video-card {
+      flex: 0 0 80vw;
+    }
+
+    .social-proof__prev-btn {
+      left: 0;
+    }
+
+    .social-proof__next-btn {
+      right: 0;
+    }
   }
 {% endstylesheet %}
 
@@ -344,6 +515,12 @@
       "id": "heading",
       "label": "Heading",
       "default": "Real Stories From Real Families"
+    },
+    {
+      "type": "text",
+      "id": "disclaimer",
+      "label": "Disclaimer text",
+      "default": "*Based on a 2025 survey of 313 customers. Not a clinical study."
     },
     {
       "type": "header",
@@ -376,7 +553,7 @@
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
-      "default": "scheme-7"
+      "default": "scheme-1"
     },
     {
       "type": "header",
@@ -536,6 +713,12 @@
           "info": "Shown when no video is uploaded"
         },
         {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product name",
+          "default": "Kids Whole Food Multivitamin Gummies, Strawberry"
+        },
+        {
           "type": "url",
           "id": "product_link",
           "label": "Product link"
@@ -555,22 +738,22 @@
         {
           "type": "stat",
           "settings": {
-            "number": "77%",
-            "label": "Love The Taste Immediately"
+            "number": "98%",
+            "label": "report greater peace of mind"
           }
         },
         {
           "type": "stat",
           "settings": {
-            "number": "95%",
-            "label": "Would Recommend to a Friend"
+            "number": "99%",
+            "label": "reported their child loves it"
           }
         },
         {
           "type": "stat",
           "settings": {
-            "number": "10K+",
-            "label": "5-Star Reviews"
+            "number": "88%",
+            "label": "reported better well-being"
           }
         },
         {

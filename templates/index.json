@@ -679,27 +679,29 @@
         "stat_1": {
           "type": "stat",
           "settings": {
-            "number": "77%",
-            "label": "Love The Taste Immediately"
+            "number": "98%",
+            "label": "report greater peace of mind"
           }
         },
         "stat_2": {
           "type": "stat",
           "settings": {
-            "number": "95%",
-            "label": "Would Recommend to a Friend"
+            "number": "99%",
+            "label": "reported their child loves it"
           }
         },
         "stat_3": {
           "type": "stat",
           "settings": {
-            "number": "10K+",
-            "label": "5-Star Reviews"
+            "number": "88%",
+            "label": "reported better well-being"
           }
         },
         "video_1": {
           "type": "video-card",
           "settings": {
+            "poster_image": "shopify://shop_images/screenshot-2026-03-02-at-12-32-15-pm-1-desktop-14818731.png",
+            "product_name": "Kids Whole Food Multivitamin Gummies, Strawberry",
             "product_link": "",
             "caption": ""
           }
@@ -707,6 +709,8 @@
         "video_2": {
           "type": "video-card",
           "settings": {
+            "poster_image": "shopify://shop_images/screenshot-2026-03-13-at-12-25-06-am-1-desktop-14992698.png",
+            "product_name": "Kids Whole Food Multivitamin Gummies, Strawberry",
             "product_link": "",
             "caption": ""
           }
@@ -714,6 +718,26 @@
         "video_3": {
           "type": "video-card",
           "settings": {
+            "poster_image": "shopify://shop_images/screenshot-2026-03-13-at-12-25-38-am-1-desktop-14992699.png",
+            "product_name": "Kids Whole Food Multivitamin Gummies, Strawberry",
+            "product_link": "",
+            "caption": ""
+          }
+        },
+        "video_4": {
+          "type": "video-card",
+          "settings": {
+            "poster_image": "shopify://shop_images/screenshot-2026-03-13-at-12-27-01-am-1-desktop-14992700.png",
+            "product_name": "Kids Whole Food Multivitamin Gummies, Strawberry",
+            "product_link": "",
+            "caption": ""
+          }
+        },
+        "video_5": {
+          "type": "video-card",
+          "settings": {
+            "poster_image": "shopify://shop_images/screenshot-2026-03-13-at-12-27-34-am-1-desktop-14992701.png",
+            "product_name": "Kids Whole Food Multivitamin Gummies, Strawberry",
             "product_link": "",
             "caption": ""
           }
@@ -725,13 +749,16 @@
         "stat_3",
         "video_1",
         "video_2",
-        "video_3"
+        "video_3",
+        "video_4",
+        "video_5"
       ],
       "settings": {
-        "heading": "Real Stories From Real Families",
+        "heading": "Trusted by Parents Across 300,000+ Families",
+        "disclaimer": "*Based on a 2025 survey of 313 customers. Not a clinical study.",
         "section_width": "page-width",
         "video_columns": 3,
-        "color_scheme": "scheme-7",
+        "color_scheme": "scheme-1",
         "padding-block-start": 60,
         "padding-block-end": 60
       }
