@@ -406,7 +406,7 @@
         "desktop_media_position": "left",
         "equal_columns": true,
         "limit_details_width": false,
-        "gap": 48,
+        "gap": 64,
         "color_scheme": "scheme-1",
         "padding-block-start": 60,
         "padding-block-end": 60

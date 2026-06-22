@@ -519,11 +519,9 @@
     }
   }
 
-  /* Sticky ATC — glassmorphism bar */
+  /* Sticky ATC — glassmorphism bar (blur handled by ::before pseudo-element above) */
   .sticky-add-to-cart__bar {
     background: rgb(var(--color-background-rgb) / 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
   }
 
@@ -599,7 +597,7 @@
       "id": "gap",
       "label": "t:settings.gap",
       "min": 0,
-      "max": 48,
+      "max": 96,
       "step": 4,
       "unit": "px",
       "default": 16
