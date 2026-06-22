@@ -1,0 +1,286 @@
+{%- assign upsell_product = block.settings.upsell_product -%}
+
+{% if upsell_product != blank %}
+  {%- liquid
+    assign padding_start = block.settings['padding-block-start']
+    assign padding_end   = block.settings['padding-block-end']
+    assign border_r      = block.settings.border_radius
+  -%}
+
+  <upsell-block-component
+    class="upsell-block color-{{ block.settings.color_scheme }}"
+    {{ block.shopify_attributes }}
+    data-variant-id="{{ upsell_product.first_available_variant.id }}"
+    style="--upsell-border-radius: {{ border_r }}px; --upsell-spacing-top: {{ padding_start }}px; --upsell-spacing-bottom: {{ padding_end }}px;"
+  >
+    {%- if block.settings.show_badge and block.settings.badge_text != blank -%}
+      <span class="upsell-block__badge">{{ block.settings.badge_text }}</span>
+    {%- endif -%}
+
+    {%- if block.settings.heading != blank -%}
+      <p class="upsell-block__heading">{{ block.settings.heading }}</p>
+    {%- endif -%}
+
+    {%- if block.settings.subtitle != blank -%}
+      <p class="upsell-block__subtitle">{{ block.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="upsell-block__card">
+      {%- if upsell_product.featured_image -%}
+        <div class="upsell-block__thumb">
+          {% render 'image',
+            image: upsell_product.featured_image,
+            height: 72,
+            class: 'upsell-block__thumb-img',
+            alt_text_fallback: upsell_product.title
+          %}
+        </div>
+      {%- endif -%}
+
+      <div class="upsell-block__info">
+        <p class="upsell-block__name">{{ upsell_product.title }}</p>
+        <div class="upsell-block__price">
+          {% render 'price', product_resource: upsell_product %}
+        </div>
+      </div>
+
+      {%- if upsell_product.available -%}
+        <form action="/cart/add" method="post" class="upsell-block__form">
+          <input type="hidden" name="id" value="{{ upsell_product.first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            ref="addBtn"
+            class="upsell-block__btn"
+            on:click="/handleAdd"
+            type="submit"
+          >
+            {{ block.settings.button_text }}
+          </button>
+        </form>
+      {%- else -%}
+        <button class="upsell-block__btn" disabled>Sold Out</button>
+      {%- endif -%}
+    </div>
+
+    <span ref="feedbackText" class="visually-hidden" aria-live="polite"></span>
+  </upsell-block-component>
+
+  <script src="{{ 'upsell-block.js' | asset_url }}" type="module"></script>
+{% endif %}
+
+{% stylesheet %}
+  .upsell-block {
+    display: block;
+    border: 1px solid var(--color-border);
+    border-radius: var(--upsell-border-radius, 12px);
+    padding: 16px;
+    margin-block-start: var(--upsell-spacing-top, 0px);
+    margin-block-end: var(--upsell-spacing-bottom, 0px);
+  }
+
+  .upsell-block__badge {
+    display: inline-block;
+    background: var(--color-primary);
+    color: var(--color-background);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-block-end: 8px;
+  }
+
+  .upsell-block__heading {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-block-end: 4px;
+  }
+
+  .upsell-block__subtitle {
+    font-size: 0.875rem;
+    color: var(--color-foreground-muted, var(--color-foreground));
+    margin-block-end: 12px;
+  }
+
+  .upsell-block__card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .upsell-block__thumb {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .upsell-block__thumb-img {
+    width: 72px !important;
+    height: 72px !important;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .upsell-block__info {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  .upsell-block__name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .upsell-block__price {
+    margin-block-start: 4px;
+  }
+
+  .upsell-block__form {
+    flex-shrink: 0;
+  }
+
+  .upsell-block__btn {
+    padding: 10px 16px;
+    background: var(--color-button);
+    color: var(--color-button-label);
+    border: none;
+    border-radius: var(--buttons-radius, 4px);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .upsell-block__btn[aria-busy='true'] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .upsell-block__btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media screen and (max-width: 749px) {
+    .upsell-block__card {
+      flex-wrap: wrap;
+    }
+
+    .upsell-block__form {
+      width: 100%;
+    }
+
+    .upsell-block__btn {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Upsell",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Complete Your Bundle"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Add a complementary product to your order"
+    },
+    {
+      "type": "product",
+      "id": "upsell_product",
+      "label": "Upsell product"
+    },
+    {
+      "type": "header",
+      "content": "Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "Most Popular"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Add to Order"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 24,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Upsell"
+    }
+  ]
+}
+{% endschema %}
