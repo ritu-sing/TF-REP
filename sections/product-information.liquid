@@ -414,6 +414,123 @@
       gap: 8px;
     }
   }
+
+  /* === Figma PDP buy-box overrides === */
+
+  /* Variant picker — pill buttons enhanced */
+  .product-information .variant-picker [data-variant-style='buttons'] button,
+  .product-information .variant-picker__button {
+    min-width: 88px;
+    height: 44px;
+    border: 1.5px solid rgb(var(--color-foreground-rgb) / 0.25);
+    font-size: 0.875rem;
+  }
+
+  .product-information .variant-picker [data-variant-style='buttons'] button:checked,
+  .product-information .variant-picker [data-variant-style='buttons'] button[aria-pressed='true'],
+  .product-information .variant-picker__button:checked,
+  .product-information .variant-picker__button[aria-pressed='true'] {
+    background: rgb(var(--color-foreground-rgb));
+    color: rgb(var(--color-background-rgb));
+  }
+
+  /* ATC button */
+  .product-information .add-to-cart-button {
+    border-radius: 8px;
+    min-height: 52px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Buy buttons layout */
+  .product-information .buy-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .product-information .quantity {
+    width: fit-content;
+  }
+
+  /* Trust badges — Figma values */
+  .product-information .trust-badges-group {
+    gap: 20px;
+    padding-block: 18px;
+    border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    flex-wrap: wrap;
+  }
+
+  .product-information .trust-badges-group .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Price — sale colour */
+  .product-information .price__sale {
+    color: rgb(var(--color-primary-rgb));
+    font-weight: 600;
+  }
+
+  .product-information .price__compare {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+
+  /* Product title */
+  .product-information .product-information__details h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* Divider */
+  .product-information ._divider {
+    opacity: 0.15;
+  }
+
+  /* Mobile overrides — Figma */
+  @media screen and (max-width: 749px) {
+    .product-information__grid {
+      gap: 0;
+    }
+
+    .product-details {
+      padding-inline: 16px;
+      padding-block-start: 24px;
+    }
+
+    .product-information .trust-badges-group {
+      gap: 12px;
+    }
+
+    .product-information .variant-picker [data-variant-style='buttons'] button,
+    .product-information .variant-picker__button {
+      min-width: 72px;
+      height: 40px;
+      font-size: 0.8125rem;
+    }
+
+    .product-information .add-to-cart-button {
+      min-height: 48px;
+    }
+  }
+
+  /* Sticky ATC — glassmorphism bar */
+  .sticky-add-to-cart__bar {
+    background: rgb(var(--color-background-rgb) / 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+  }
+
+  .sticky-add-to-cart__button {
+    border-radius: 8px;
+    min-height: 44px;
+  }
 {% endstylesheet %}
 
 {% schema %}

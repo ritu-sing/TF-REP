@@ -23,11 +23,11 @@
             "slideshow_controls_style": "counter",
             "slideshow_mobile_controls_style": "dots",
             "thumbnail_position": "bottom",
-            "thumbnail_width": 44,
+            "thumbnail_width": 56,
             "aspect_ratio": "adapt",
             "constrain_to_viewport": true,
             "media_fit": "contain",
-            "media_radius": 8,
+            "media_radius": 0,
             "extend_media": false,
             "zoom": true,
             "video_loop": false,
@@ -49,7 +49,7 @@
             "custom_width_mobile": 100,
             "height": "fit",
             "details_position": "flex-start",
-            "gap": 28,
+            "gap": 24,
             "sticky_details_desktop": true,
             "inherit_color_scheme": true,
             "color_scheme": "scheme-1",
@@ -78,7 +78,7 @@
                 "align_baseline": false,
                 "horizontal_alignment_flex_direction_column": "flex-start",
                 "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
+                "gap": 8,
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -112,8 +112,8 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
-                    "type_preset": "h3",
-                    "font": "var(--font-primary--family)",
+                    "type_preset": "h2",
+                    "font": "var(--font-heading--family)",
                     "font_size": "",
                     "line_height": "normal",
                     "letter_spacing": "normal",
@@ -140,12 +140,12 @@
                     "width": "100%",
                     "alignment": "left",
                     "font": "var(--font-body--family)",
-                    "font_size": "1rem",
+                    "font_size": "1.125rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
                     "color": "var(--color-foreground)",
-                    "padding-block-start": 4,
+                    "padding-block-start": 6,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
                     "padding-inline-end": 0
@@ -230,7 +230,7 @@
               "type": "group",
               "settings": {
                 "content_direction": "row",
-                "gap": 16,
+                "gap": 20,
                 "horizontal_alignment": "flex-start",
                 "vertical_alignment": "center",
                 "width": "fill",
@@ -242,8 +242,8 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 0,
-                "padding-block-start": 12,
-                "padding-block-end": 12,
+                "padding-block-start": 18,
+                "padding-block-end": 18,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -251,15 +251,15 @@
                 "trust_icon_1": {
                   "type": "icon",
                   "settings": {
-                    "icon": "check_box",
-                    "width": 16
+                    "icon": "truck",
+                    "width": 18
                   },
                   "blocks": {}
                 },
                 "trust_text_1": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Money-back guarantee</p>",
+                    "text": "<p>Free shipping on orders $50+</p>",
                     "type_preset": "paragraph",
                     "font": "var(--font-body--family)",
                     "font_size": "0.875rem",
@@ -270,15 +270,15 @@
                 "trust_icon_2": {
                   "type": "icon",
                   "settings": {
-                    "icon": "truck",
-                    "width": 16
+                    "icon": "refresh",
+                    "width": 18
                   },
                   "blocks": {}
                 },
                 "trust_text_2": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Free shipping over $50</p>",
+                    "text": "<p>30-day money-back guarantee</p>",
                     "type_preset": "paragraph",
                     "font": "var(--font-body--family)",
                     "font_size": "0.875rem",
@@ -290,14 +290,14 @@
                   "type": "icon",
                   "settings": {
                     "icon": "leaf",
-                    "width": 16
+                    "width": 18
                   },
                   "blocks": {}
                 },
                 "trust_text_3": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Made with clean ingredients</p>",
+                    "text": "<p>Made with clean, natural ingredients</p>",
                     "type_preset": "paragraph",
                     "font": "var(--font-body--family)",
                     "font_size": "0.875rem",
@@ -335,8 +335,8 @@
                 "max_width": "normal",
                 "alignment": "left",
                 "type_preset": "rte",
-                "font": "var(--font-primary--family)",
-                "font_size": "",
+                "font": "var(--font-body--family)",
+                "font_size": "0.9375rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
@@ -408,8 +408,8 @@
         "limit_details_width": false,
         "gap": 48,
         "color_scheme": "scheme-1",
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-start": 60,
+        "padding-block-end": 60
       }
     },
     "product_recommendations_qggXJq": {
