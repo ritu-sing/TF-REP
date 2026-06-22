@@ -357,6 +357,63 @@
       white-space: nowrap;
     }
   }
+
+  /* Desktop 55/45 column split (overrides default 50/50 half columns) */
+  @media screen and (min-width: 990px) {
+    .product-information__grid.product-information__grid--half.product-information--media-left {
+      grid-template-columns:
+        var(--full-page-grid-margin)
+        calc(var(--full-page-grid-central-column-width) * 0.55)
+        calc(var(--full-page-grid-central-column-width) * 0.45)
+        var(--full-page-grid-margin);
+    }
+
+    .product-information__grid.product-information__grid--half.product-information--media-right {
+      grid-template-columns:
+        var(--full-page-grid-margin)
+        calc(var(--full-page-grid-central-column-width) * 0.45)
+        calc(var(--full-page-grid-central-column-width) * 0.55)
+        var(--full-page-grid-margin);
+    }
+  }
+
+  /* Media gallery rounded corners */
+  .product-information__media {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* Variant picker pill-button shape */
+  .product-information .variant-picker [data-variant-style='buttons'] button {
+    border-radius: 100px;
+  }
+
+  /* Trust badge row layout */
+  .product-information .trust-badges-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    padding-block: 12px;
+    border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+    border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+  }
+
+  /* Mobile overrides */
+  @media screen and (max-width: 749px) {
+    .product-information__media {
+      border-radius: 8px;
+    }
+
+    .product-information .variant-picker [data-variant-style='buttons'] button {
+      font-size: 0.875rem;
+      padding-inline: 16px;
+    }
+
+    .product-information .trust-badges-group {
+      gap: 8px;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -465,6 +522,34 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Buy box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Show trust badges",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_1",
+      "label": "Trust badge 1 text",
+      "default": "Money-back guarantee"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_2",
+      "label": "Trust badge 2 text",
+      "default": "Free shipping over $50"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_3",
+      "label": "Trust badge 3 text",
+      "default": "Made with clean ingredients"
     }
   ],
   "presets": []
