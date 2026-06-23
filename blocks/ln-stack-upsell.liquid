@@ -1,0 +1,705 @@
+{%- assign stack_col = block.settings.stack_collection -%}
+{%- assign max_products = block.settings.max_products | default: 6 -%}
+
+<ln-stack-upsell
+  class="ln-stack"
+  data-tier1="{{ block.settings.tier_1_qty }}"
+  data-tier2="{{ block.settings.tier_2_qty }}"
+  data-tier3="{{ block.settings.tier_3_qty }}"
+  data-tier4="{{ block.settings.tier_4_qty }}"
+  data-congrats="{{ block.settings.congrats_text | escape }}"
+  {{ block.shopify_attributes }}
+  style="padding-block-start: {{ block.settings['padding-block-start'] }}px; padding-block-end: {{ block.settings['padding-block-end'] }}px;"
+>
+  <!-- Header -->
+  <div class="ln-stack__header">
+    {%- if block.settings.heading != blank -%}
+      <p class="ln-stack__heading">{{ block.settings.heading }}</p>
+    {%- endif -%}
+    {%- if block.settings.subtitle != blank -%}
+      <p class="ln-stack__subtitle">{{ block.settings.subtitle }}</p>
+    {%- endif -%}
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="ln-stack__progress" role="group" aria-label="Bundle progress">
+    <div class="ln-stack__bar-track">
+      <!-- Step 1 -->
+      <div class="ln-stack__step" data-step="1">
+        <div class="ln-stack__dot">
+          <span>{{ block.settings.tier_1_qty }}</span>
+        </div>
+        {%- if block.settings.tier_1_sublabel != blank -%}
+          <span class="ln-stack__step-sublabel">{{ block.settings.tier_1_sublabel }}</span>
+        {%- endif -%}
+      </div>
+      <div class="ln-stack__line" data-line="1"></div>
+      <!-- Step 2 -->
+      <div class="ln-stack__step" data-step="2">
+        <div class="ln-stack__dot">
+          <span>{{ block.settings.tier_2_qty }}</span>
+        </div>
+        {%- if block.settings.tier_2_sublabel != blank -%}
+          <span class="ln-stack__step-sublabel">{{ block.settings.tier_2_sublabel }}</span>
+        {%- endif -%}
+      </div>
+      <div class="ln-stack__line" data-line="2"></div>
+      <!-- Step 3 -->
+      <div class="ln-stack__step" data-step="3">
+        <div class="ln-stack__dot">
+          <span>{{ block.settings.tier_3_qty }}</span>
+        </div>
+        {%- if block.settings.tier_3_sublabel != blank -%}
+          <span class="ln-stack__step-sublabel">{{ block.settings.tier_3_sublabel }}</span>
+        {%- endif -%}
+      </div>
+      <div class="ln-stack__line" data-line="3"></div>
+      <!-- Step 4 -->
+      <div class="ln-stack__step" data-step="4">
+        <div class="ln-stack__dot">
+          <span>{{ block.settings.tier_4_qty }}+</span>
+        </div>
+        {%- if block.settings.tier_4_sublabel != blank -%}
+          <span class="ln-stack__step-sublabel">{{ block.settings.tier_4_sublabel }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Congrats banner -->
+    <div class="ln-stack__congrats" data-congrats-banner hidden>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-congrats-text>{{ block.settings.congrats_text }}</span>
+    </div>
+  </div>
+
+  <!-- Product Carousel -->
+  {%- if stack_col != blank -%}
+    {%- assign products_in_col = stack_col.products -%}
+    {%- if products_in_col.size > 0 -%}
+      <div class="ln-stack__carousel-outer">
+        <div class="ln-stack__carousel" data-carousel>
+          {%- for product in products_in_col limit: max_products -%}
+            {%- assign first_variant = product.first_available_variant -%}
+            <div class="ln-stack__card">
+
+              <!-- Product image -->
+              <a href="{{ product.url }}" class="ln-stack__card-img-link" tabindex="-1" aria-hidden="true">
+                <div class="ln-stack__card-img-wrap">
+                  {%- if product.featured_image -%}
+                    {% render 'image',
+                      image: product.featured_image,
+                      height: 180,
+                      class: 'ln-stack__card-img',
+                      alt_text_fallback: product.title
+                    %}
+                  {%- else -%}
+                    <div class="ln-stack__card-img-placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
+                  {%- endif -%}
+                </div>
+              </a>
+
+              <!-- Card body -->
+              <div class="ln-stack__card-body">
+                <!-- Stars -->
+                <div class="ln-stack__card-stars" aria-label="{{ block.settings.default_stars }} out of 5 stars">
+                  <span class="ln-stack__card-stars-icons" aria-hidden="true">
+                    {%- assign star_rating = block.settings.default_stars -%}
+                    {%- for j in (1..5) -%}
+                      {%- if j <= star_rating -%}<span class="ln-stack__star ln-stack__star--filled">★</span>{%- else -%}<span class="ln-stack__star">☆</span>{%- endif -%}
+                    {%- endfor -%}
+                  </span>
+                  {%- if block.settings.default_review_count > 0 -%}
+                    <span class="ln-stack__card-reviews">({{ block.settings.default_review_count }})</span>
+                  {%- endif -%}
+                </div>
+
+                <!-- Name -->
+                <a href="{{ product.url }}" class="ln-stack__card-name">{{ product.title }}</a>
+
+                <!-- Description -->
+                {%- if product.description != blank -%}
+                  <p class="ln-stack__card-desc">{{ product.description | strip_html | truncate: 70 }}</p>
+                {%- endif -%}
+
+                <!-- Price -->
+                <p class="ln-stack__card-price">{% render 'price', product_resource: product %}</p>
+
+                <!-- Swatches -->
+                {%- assign color_opt = nil -%}
+                {%- for opt in product.options_with_values -%}
+                  {%- assign oname = opt.name | downcase -%}
+                  {%- if oname == 'color' or oname == 'colour' or oname == 'flavor' or oname == 'flavour' -%}
+                    {%- assign color_opt = opt -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- if color_opt -%}
+                  <div class="ln-stack__card-swatches" data-product-id="{{ product.id }}">
+                    {%- for val in color_opt.values -%}
+                      {%- assign swatch_slug = val | downcase | replace: ' ', '-' | replace: '/', '-' -%}
+                      <button
+                        class="ln-stack__swatch{% if forloop.first %} is-active{% endif %}"
+                        type="button"
+                        data-opt="{{ color_opt.name }}"
+                        data-val="{{ val }}"
+                        style="background: var(--swatch-{{ swatch_slug }}, #d0d0d0);"
+                        aria-label="{{ val }}"
+                        title="{{ val }}"
+                      ></button>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                <!-- Add to cart actions -->
+                <div class="ln-stack__card-actions">
+                  {%- if first_variant != nil and first_variant.available -%}
+                    <form class="ln-stack__form" action="/cart/add" method="post">
+                      <input type="hidden" name="id" value="{{ first_variant.id }}" data-variant-input>
+                      <div class="ln-stack__qty-wrap">
+                        <button class="ln-stack__qty-btn" type="button" data-dir="-1" aria-label="Decrease">−</button>
+                        <input class="ln-stack__qty-input" type="number" name="quantity" value="1" min="1" aria-label="Quantity">
+                        <button class="ln-stack__qty-btn" type="button" data-dir="1" aria-label="Increase">+</button>
+                      </div>
+                      <button class="ln-stack__add-btn" type="submit">{{ block.settings.add_btn_text }}</button>
+                    </form>
+                  {%- else -%}
+                    <div class="ln-stack__sold-out">{{ 'products.product.sold_out' | t }}</div>
+                  {%- endif -%}
+                </div>
+
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- Nav arrows -->
+        <button class="ln-stack__nav ln-stack__nav--prev" type="button" aria-label="Previous" hidden>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9l5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="ln-stack__nav ln-stack__nav--next" type="button" aria-label="Next" hidden>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</ln-stack-upsell>
+
+<script src="{{ 'ln-stack-upsell.js' | asset_url }}" type="module"></script>
+
+{% stylesheet %}
+  .ln-stack {
+    display: block;
+    border-top: 1.5px solid var(--color-border, #e0e0e0);
+  }
+
+  .ln-stack__header {
+    padding-block-start: 16px;
+    margin-block-end: 12px;
+  }
+
+  .ln-stack__heading {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--color-foreground);
+  }
+
+  .ln-stack__subtitle {
+    font-size: 0.875rem;
+    color: var(--color-foreground);
+    opacity: 0.75;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Progress bar */
+  .ln-stack__progress {
+    margin-block-end: 14px;
+  }
+
+  .ln-stack__bar-track {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .ln-stack__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .ln-stack__dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border, #ccc);
+    background: var(--color-background, #fff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+    transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+  }
+
+  .ln-stack__step.is-reached .ln-stack__dot {
+    border-color: #680040;
+    background: #680040;
+    color: #fff;
+  }
+
+  .ln-stack__step.is-current .ln-stack__dot {
+    border-color: #680040;
+    background: #fff;
+    color: #680040;
+  }
+
+  .ln-stack__step-sublabel {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #680040;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .ln-stack__line {
+    flex: 1;
+    height: 2px;
+    background: var(--color-border, #e0e0e0);
+    margin-top: 14px;
+    transition: background-color 0.2s;
+  }
+
+  .ln-stack__line.is-filled {
+    background: #680040;
+  }
+
+  /* Congrats banner */
+  .ln-stack__congrats {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-block-start: 10px;
+    padding: 8px 12px;
+    background: #eef6ec;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: #2a7c1e;
+    font-weight: 500;
+  }
+
+  /* Carousel */
+  .ln-stack__carousel-outer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ln-stack__carousel {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-block-end: 4px;
+  }
+
+  .ln-stack__carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Card */
+  .ln-stack__card {
+    flex: 0 0 calc(50% - 6px);
+    min-width: 150px;
+    border: 1.5px solid var(--color-border, #e0e0e0);
+    border-radius: 10px;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-background, #fff);
+  }
+
+  @media screen and (min-width: 750px) {
+    .ln-stack__card {
+      flex: 0 0 calc(33.333% - 8px);
+    }
+  }
+
+  .ln-stack__card-img-wrap {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--color-border, #f5f5f5);
+  }
+
+  .ln-stack__card-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+  }
+
+  .ln-stack__card-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+  }
+
+  .ln-stack__card-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .ln-stack__card-stars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .ln-stack__card-stars-icons {
+    display: flex;
+    font-size: 0.75rem;
+    color: #f4a520;
+    letter-spacing: -1px;
+  }
+
+  .ln-stack__star--filled {
+    color: #f4a520;
+  }
+
+  .ln-stack__star {
+    color: #d0d0d0;
+  }
+
+  .ln-stack__card-reviews {
+    font-size: 0.6875rem;
+    color: #888;
+  }
+
+  .ln-stack__card-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+    line-height: 1.3;
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .ln-stack__card-desc {
+    font-size: 0.75rem;
+    color: var(--color-foreground);
+    opacity: 0.65;
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .ln-stack__card-price {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+    margin: 0;
+  }
+
+  /* Swatches */
+  .ln-stack__card-swatches {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .ln-stack__swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-border, #ccc);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.1s, border-color 0.1s;
+  }
+
+  .ln-stack__swatch.is-active {
+    border-color: var(--color-foreground);
+    transform: scale(1.15);
+  }
+
+  /* Actions */
+  .ln-stack__card-actions {
+    margin-block-start: auto;
+    padding-block-start: 8px;
+  }
+
+  .ln-stack__form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ln-stack__qty-wrap {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--color-border, #ccc);
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .ln-stack__qty-btn {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--color-foreground);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ln-stack__qty-input {
+    flex: 1;
+    border: none;
+    text-align: center;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    background: transparent;
+    width: 40px;
+    -moz-appearance: textfield;
+  }
+
+  .ln-stack__qty-input::-webkit-outer-spin-button,
+  .ln-stack__qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .ln-stack__add-btn {
+    width: 100%;
+    padding: 9px 16px;
+    background: #680040;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: opacity 0.15s;
+  }
+
+  .ln-stack__add-btn:hover {
+    opacity: 0.88;
+  }
+
+  .ln-stack__add-btn[aria-busy='true'] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .ln-stack__sold-out {
+    font-size: 0.875rem;
+    color: #999;
+    text-align: center;
+    padding: 8px 0;
+  }
+
+  /* Nav arrows */
+  .ln-stack__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: 1.5px solid var(--color-border, #e0e0e0);
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+
+  .ln-stack__nav--prev { left: -2px; }
+  .ln-stack__nav--next { right: -2px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Stack & Upsell",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Stack Gummies, Unlock Rewards"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Buy 2, Get 1 Free - for life! Buy more, get a Free Llama Toy!"
+    },
+    {
+      "type": "text",
+      "id": "congrats_text",
+      "label": "Congratulations message",
+      "default": "Congratulations! You've unlocked a reward!"
+    },
+    {
+      "type": "header",
+      "content": "Progress Milestones"
+    },
+    {
+      "type": "range",
+      "id": "tier_1_qty",
+      "label": "Tier 1 quantity",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "tier_1_sublabel",
+      "label": "Tier 1 label (below step)"
+    },
+    {
+      "type": "range",
+      "id": "tier_2_qty",
+      "label": "Tier 2 quantity",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "tier_2_sublabel",
+      "label": "Tier 2 label (below step)",
+      "default": "FREE BOTTLE"
+    },
+    {
+      "type": "range",
+      "id": "tier_3_qty",
+      "label": "Tier 3 quantity",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "tier_3_sublabel",
+      "label": "Tier 3 label (below step)"
+    },
+    {
+      "type": "range",
+      "id": "tier_4_qty",
+      "label": "Tier 4+ quantity",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "tier_4_sublabel",
+      "label": "Tier 4 label (below step)",
+      "default": "MYSTERY GIFT"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "stack_collection",
+      "label": "Products collection"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products to show",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "add_btn_text",
+      "label": "Add button text",
+      "default": "ADD"
+    },
+    {
+      "type": "range",
+      "id": "default_stars",
+      "label": "Default star rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "number",
+      "id": "default_review_count",
+      "label": "Default review count",
+      "default": 5676
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 8
+    }
+  ]
+}
+{% endschema %}

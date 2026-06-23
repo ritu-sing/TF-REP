@@ -1,0 +1,95 @@
+{%- if block.settings.show -%}
+<div
+  class="ln-hsa-note"
+  {{ block.shopify_attributes }}
+  style="padding-block-start: {{ block.settings['padding-block-start'] }}px; padding-block-end: {{ block.settings['padding-block-end'] }}px;"
+>
+  <svg class="ln-hsa-note__icon" width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+    <path d="M7.5 1.5C4.186 1.5 1.5 4.186 1.5 7.5S4.186 13.5 7.5 13.5 13.5 10.814 13.5 7.5 10.814 1.5 7.5 1.5z" stroke="currentColor" stroke-width="1.2"/>
+    <path d="M5.5 7.5h4M7.5 5.5v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+  </svg>
+  <span class="ln-hsa-note__text">{{ block.settings.text }}</span>
+  {%- if block.settings.show_info_icon -%}
+    <button class="ln-hsa-note__info" type="button" aria-label="Learn more about HSA/FSA">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="currentColor" stroke-width="1.1"/><path d="M6.5 5.8v3.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="6.5" cy="4.2" r="0.55" fill="currentColor"/></svg>
+    </button>
+  {%- endif -%}
+</div>
+{%- endif -%}
+
+{% stylesheet %}
+  .ln-hsa-note {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.875rem;
+    color: var(--color-foreground);
+  }
+
+  .ln-hsa-note__icon {
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .ln-hsa-note__text {
+    flex: 1;
+    opacity: 0.85;
+  }
+
+  .ln-hsa-note__info {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #999;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "HSA/FSA Note",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show",
+      "label": "Show HSA/FSA note",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Note text",
+      "default": "Pay with HSA/FSA – Use your pre-tax dollars"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_info_icon",
+      "label": "Show info icon",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

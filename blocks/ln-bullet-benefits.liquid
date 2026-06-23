@@ -1,0 +1,112 @@
+{%- assign spacing_top = block.settings['padding-block-start'] -%}
+{%- assign spacing_bottom = block.settings['padding-block-end'] -%}
+
+<ul
+  class="ln-bullet-benefits"
+  {{ block.shopify_attributes }}
+  style="padding-block-start: {{ spacing_top }}px; padding-block-end: {{ spacing_bottom }}px;"
+>
+  {%- for i in (1..4) -%}
+    {%- assign benefit_key = 'benefit_' | append: i -%}
+    {%- assign benefit_text = block.settings[benefit_key] -%}
+    {%- if benefit_text != blank -%}
+      <li class="ln-bullet-benefits__item">
+        <span class="ln-bullet-benefits__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="10" fill="{{ block.settings.icon_color }}"/>
+            <path d="M6.5 10.5L9 13L13.5 7.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="ln-bullet-benefits__text">{{ benefit_text }}</span>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>
+
+{% stylesheet %}
+  .ln-bullet-benefits {
+    list-style: none;
+    margin: 0;
+    padding-inline: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .ln-bullet-benefits__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    color: var(--color-foreground);
+  }
+
+  .ln-bullet-benefits__icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+    line-height: 1;
+  }
+
+  .ln-bullet-benefits__text {
+    flex: 1;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Bullet Benefits",
+  "settings": [
+    {
+      "type": "text",
+      "id": "benefit_1",
+      "label": "Benefit 1",
+      "default": "13 Essential vitamins & iodine for brain, immunity & mood."
+    },
+    {
+      "type": "text",
+      "id": "benefit_2",
+      "label": "Benefit 2",
+      "default": "Made from real fruit, no sugar cane or synthetics"
+    },
+    {
+      "type": "text",
+      "id": "benefit_3",
+      "label": "Benefit 3",
+      "default": "Clinician backed, health-care worker approved"
+    },
+    {
+      "type": "text",
+      "id": "benefit_4",
+      "label": "Benefit 4",
+      "default": "Made for picky eaters - 77% love the taste immediately"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Checkmark color",
+      "default": "#4a7c4e"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

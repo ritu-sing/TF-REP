@@ -1,0 +1,134 @@
+<div
+  class="ln-trust-line"
+  {{ block.shopify_attributes }}
+  style="padding-block-start: {{ block.settings['padding-block-start'] }}px; padding-block-end: {{ block.settings['padding-block-end'] }}px;"
+>
+  {%- if block.settings.item_1_text != blank -%}
+    <span class="ln-trust-line__item">
+      {%- if block.settings.item_1_icon == 'truck' -%}
+        <svg class="ln-trust-line__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 11h11V3H1v8zm0 0v2h1.5M12 5.5h2.5L16 8.5V13h-4V5.5zm-8.5 7.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm9 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {%- elsif block.settings.item_1_icon == 'shield' -%}
+        <svg class="ln-trust-line__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L3 4.5v5c0 3.3 2.5 6 6 7 3.5-1 6-3.7 6-7v-5L9 2z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 9l2 2 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {%- endif -%}
+      <span>{{ block.settings.item_1_text }}</span>
+    </span>
+  {%- endif -%}
+
+  {%- if block.settings.item_1_text != blank and block.settings.item_2_text != blank -%}
+    <span class="ln-trust-line__divider" aria-hidden="true">|</span>
+  {%- endif -%}
+
+  {%- if block.settings.item_2_text != blank -%}
+    <span class="ln-trust-line__item">
+      {%- if block.settings.item_2_icon == 'truck' -%}
+        <svg class="ln-trust-line__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 11h11V3H1v8zm0 0v2h1.5M12 5.5h2.5L16 8.5V13h-4V5.5zm-8.5 7.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm9 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {%- elsif block.settings.item_2_icon == 'shield' -%}
+        <svg class="ln-trust-line__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L3 4.5v5c0 3.3 2.5 6 6 7 3.5-1 6-3.7 6-7v-5L9 2z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 9l2 2 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {%- endif -%}
+      <span>{{ block.settings.item_2_text }}</span>
+    </span>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .ln-trust-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .ln-trust-line__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8125rem;
+    color: var(--color-foreground);
+    font-weight: 500;
+  }
+
+  .ln-trust-line__icon {
+    flex-shrink: 0;
+    opacity: 0.75;
+  }
+
+  .ln-trust-line__divider {
+    opacity: 0.3;
+    font-size: 0.875rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trust Line",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Item 1"
+    },
+    {
+      "type": "select",
+      "id": "item_1_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "truck", "label": "Truck (shipping)" },
+        { "value": "shield", "label": "Shield (guarantee)" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "truck"
+    },
+    {
+      "type": "text",
+      "id": "item_1_text",
+      "label": "Text",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "header",
+      "content": "Item 2"
+    },
+    {
+      "type": "select",
+      "id": "item_2_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "truck", "label": "Truck (shipping)" },
+        { "value": "shield", "label": "Shield (guarantee)" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "shield"
+    },
+    {
+      "type": "text",
+      "id": "item_2_text",
+      "label": "Text",
+      "default": "100 Days Money Back Guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 8
+    }
+  ]
+}
+{% endschema %}

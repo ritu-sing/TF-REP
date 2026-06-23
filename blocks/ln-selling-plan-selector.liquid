@@ -1,0 +1,302 @@
+{%- assign save_pct = block.settings.save_percent -%}
+
+<ln-selling-plan
+  class="ln-sp"
+  data-section-id="{{ section.id }}"
+  data-save-percent="{{ save_pct }}"
+  data-form-id="BuyButtons-ProductForm-{{ section.id }}"
+  {{ block.shopify_attributes }}
+  style="padding-block-start: {{ block.settings['padding-block-start'] }}px; padding-block-end: {{ block.settings['padding-block-end'] }}px;"
+>
+  {%- if block.settings.heading != blank -%}
+    <p class="ln-sp__heading">{{ block.settings.heading }}</p>
+  {%- endif -%}
+
+  <div class="ln-sp__options">
+
+    <!-- Subscribe & Save -->
+    <div class="ln-sp__option ln-sp__option--subscribe is-active" data-option="subscribe">
+      <label class="ln-sp__row" for="ln-sp-sub-{{ block.id }}">
+        <input
+          class="ln-sp__radio"
+          type="radio"
+          id="ln-sp-sub-{{ block.id }}"
+          name="ln-sp-{{ block.id }}"
+          value="subscribe"
+          checked
+        >
+        <span class="ln-sp__row-content">
+          <span class="ln-sp__row-title">
+            {{- block.settings.subscribe_label -}}&thinsp;<strong>{{- save_pct -}}%</strong>
+          </span>
+          <span class="ln-sp__price-pair">
+            <s class="ln-sp__compare-price" data-compare-price></s>
+            <strong class="ln-sp__sale-price" data-sale-price></strong>
+          </span>
+        </span>
+      </label>
+
+      <div class="ln-sp__benefits">
+        {%- for i in (1..5) -%}
+          {%- assign bkey = 'benefit_' | append: i -%}
+          {%- assign bval = block.settings[bkey] -%}
+          {%- if bval != blank -%}
+            <span class="ln-sp__benefit">
+              <svg class="ln-sp__check" width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path d="M2 6.5l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              {{- bval -}}
+              {%- if forloop.last and block.settings.show_tooltip -%}
+                <button class="ln-sp__tooltip-btn" type="button" aria-label="Learn more">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" stroke="currentColor" stroke-width="1"/><path d="M6 5.4v3.4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="6" cy="3.9" r="0.5" fill="currentColor"/></svg>
+                </button>
+              {%- endif -%}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- One-Time Purchase -->
+    <div class="ln-sp__option ln-sp__option--onetime" data-option="onetime">
+      <label class="ln-sp__row" for="ln-sp-once-{{ block.id }}">
+        <input
+          class="ln-sp__radio"
+          type="radio"
+          id="ln-sp-once-{{ block.id }}"
+          name="ln-sp-{{ block.id }}"
+          value="onetime"
+        >
+        <span class="ln-sp__row-content">
+          <span class="ln-sp__row-title">{{ block.settings.onetime_label }}</span>
+          <span class="ln-sp__onetime-price" data-onetime-price></span>
+        </span>
+      </label>
+    </div>
+
+  </div>
+</ln-selling-plan>
+
+<script src="{{ 'ln-selling-plan-selector.js' | asset_url }}" type="module"></script>
+
+{% stylesheet %}
+  .ln-sp {
+    display: block;
+  }
+
+  .ln-sp__heading {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    margin: 0 0 10px;
+  }
+
+  .ln-sp__options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ln-sp__option {
+    border: 1.5px solid var(--color-border, #e0e0e0);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .ln-sp__option.is-active {
+    border-color: #680040;
+    background: #fdf8fa;
+  }
+
+  .ln-sp__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .ln-sp__radio {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: #680040;
+    cursor: pointer;
+  }
+
+  .ln-sp__row-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .ln-sp__row-title {
+    font-size: 0.9375rem;
+    color: var(--color-foreground);
+  }
+
+  .ln-sp__price-pair {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+  }
+
+  .ln-sp__compare-price {
+    font-weight: 400;
+    opacity: 0.55;
+  }
+
+  .ln-sp__sale-price {
+    font-weight: 700;
+    color: var(--color-foreground);
+  }
+
+  .ln-sp__onetime-price {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+  }
+
+  .ln-sp__benefits {
+    display: none;
+    padding: 0 14px 12px 42px;
+    gap: 6px;
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .ln-sp__option--subscribe.is-active .ln-sp__benefits {
+    display: flex;
+  }
+
+  .ln-sp__benefit {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8125rem;
+    color: var(--color-foreground);
+    white-space: nowrap;
+  }
+
+  .ln-sp__check {
+    flex-shrink: 0;
+    color: #680040;
+  }
+
+  .ln-sp__tooltip-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #888;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Selling Plan Selector",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequency:"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_label",
+      "label": "Subscribe label",
+      "default": "Subscribe & Save"
+    },
+    {
+      "type": "range",
+      "id": "save_percent",
+      "label": "Save %",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "text",
+      "id": "onetime_label",
+      "label": "One-time label",
+      "default": "One-Time Purchase"
+    },
+    {
+      "type": "header",
+      "content": "Subscribe Benefits"
+    },
+    {
+      "type": "text",
+      "id": "benefit_1",
+      "label": "Benefit 1",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "benefit_2",
+      "label": "Benefit 2",
+      "default": "Lifetime discount"
+    },
+    {
+      "type": "text",
+      "id": "benefit_3",
+      "label": "Benefit 3",
+      "default": "Free Samples"
+    },
+    {
+      "type": "text",
+      "id": "benefit_4",
+      "label": "Benefit 4",
+      "default": "Set and Forget"
+    },
+    {
+      "type": "text",
+      "id": "benefit_5",
+      "label": "Benefit 5",
+      "default": "Easily skip or cancel anytime"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tooltip",
+      "label": "Show info icon on last benefit",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}
