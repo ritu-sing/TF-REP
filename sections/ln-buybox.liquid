@@ -1,0 +1,354 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --padding-block-start: {{ section.settings['padding-block-start'] }}px;
+    --padding-block-end: {{ section.settings['padding-block-end'] }}px;
+  }
+{% endstyle %}
+
+<ln-buybox-gallery class="ln-buybox__layout color-{{ section.settings.color_scheme }}">
+
+  {%- comment -%} LEFT COLUMN: product image gallery {%- endcomment -%}
+  <div class="ln-buybox__gallery">
+
+    {%- comment -%} Vertical thumbnail strip {%- endcomment -%}
+    <div class="ln-buybox__thumbnails">
+      {% for media in product.media %}
+        {% liquid
+          assign thumb_src    = media.preview_image | image_url: width: 88
+          assign hero_w688    = media.preview_image | image_url: width: 688
+          assign hero_w1376   = media.preview_image | image_url: width: 1376
+          assign hero_srcset  = hero_w688 | append: ' 688w, ' | append: hero_w1376 | append: ' 1376w'
+        %}
+        <img
+          class="ln-buybox__thumb{% if forloop.first %} is-active{% endif %}"
+          src="{{ thumb_src }}"
+          data-src="{{ hero_w688 }}"
+          data-srcset="{{ hero_srcset }}"
+          data-index="{{ forloop.index0 }}"
+          alt="{{ media.alt | default: product.title | escape }}"
+          width="88"
+          height="88"
+          loading="lazy"
+          on:click="/handleThumbClick"
+        >
+      {% endfor %}
+    </div>
+
+    {%- comment -%} Hero image container {%- endcomment -%}
+    <div class="ln-buybox__hero-container">
+
+      {%- comment -%} Inner clip wrapper keeps the image radius without clipping the arrow buttons {%- endcomment -%}
+      <div class="ln-buybox__hero-clip">
+        {% if product.media.size > 0 %}
+          {% liquid
+            assign first_media  = product.media[0]
+            assign main_w688    = first_media.preview_image | image_url: width: 688
+            assign main_w1376   = first_media.preview_image | image_url: width: 1376
+            assign main_srcset  = main_w688 | append: ' 688w, ' | append: main_w1376 | append: ' 1376w'
+          %}
+          <img
+            ref="mainImage"
+            class="ln-buybox__hero-image"
+            src="{{ main_w688 }}"
+            srcset="{{ main_srcset }}"
+            sizes="(min-width: 750px) 688px, 100vw"
+            alt="{{ first_media.alt | default: product.title | escape }}"
+            width="688"
+            height="688"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {% endif %}
+      </div>
+
+      {%- comment -%} Pagination dots {%- endcomment -%}
+      <div class="ln-buybox__dots">
+        {% for media in product.media %}
+          <span
+            class="ln-buybox__dot{% if forloop.first %} is-active{% endif %}"
+            data-index="{{ forloop.index0 }}"
+          ></span>
+        {% endfor %}
+      </div>
+
+      {%- comment -%} BestSeller badge {%- endcomment -%}
+      {% if section.settings.show_bestseller_badge and section.settings.bestseller_label != blank %}
+        <div class="ln-buybox__badge">{{ section.settings.bestseller_label }}</div>
+      {% endif %}
+
+      {%- comment -%} Prev / Next arrow buttons {%- endcomment -%}
+      <button
+        class="ln-buybox__arrow ln-buybox__arrow--prev"
+        ref="prevBtn"
+        on:click="/handlePrev"
+        aria-label="Previous image"
+        type="button"
+      >
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M20 8L12 16L20 24" stroke="#680040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button
+        class="ln-buybox__arrow ln-buybox__arrow--next"
+        ref="nextBtn"
+        on:click="/handleNext"
+        aria-label="Next image"
+        type="button"
+      >
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 8L20 16L12 24" stroke="#680040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+
+  {%- comment -%} RIGHT COLUMN: merchant-configurable theme blocks {%- endcomment -%}
+  <div class="ln-buybox__details">
+    {% content_for 'blocks' %}
+  </div>
+
+</ln-buybox-gallery>
+
+{% stylesheet %}
+  /* ── Layout grid ──────────────────────────────────────────────── */
+  .ln-buybox__layout {
+    display: grid;
+    grid-template-columns: 808fr 568fr;
+    gap: 32px;
+    padding-inline: 64px;
+    max-width: 1536px;
+    margin: 0 auto;
+    padding-block-start: var(--padding-block-start, 40px);
+    padding-block-end: var(--padding-block-end, 40px);
+  }
+
+  /* ── Gallery column ───────────────────────────────────────────── */
+  .ln-buybox__gallery {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  /* ── Thumbnail strip ──────────────────────────────────────────── */
+  .ln-buybox__thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 88px;
+    flex-shrink: 0;
+  }
+
+  .ln-buybox__thumb {
+    width: 88px;
+    height: 88px;
+    border-radius: 4px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .ln-buybox__thumb.is-active {
+    border-color: #680040;
+  }
+
+  /* ── Hero container ───────────────────────────────────────────── */
+  /* overflow: visible so the ±24px arrow buttons are not clipped */
+  .ln-buybox__hero-container {
+    position: relative;
+    flex: 1;
+    max-width: 688px;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    background: #ffffff;
+    overflow: visible;
+  }
+
+  /* Inner clip handles image clipping independently */
+  .ln-buybox__hero-clip {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .ln-buybox__hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Pagination dots ──────────────────────────────────────────── */
+  .ln-buybox__dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .ln-buybox__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fffef5;
+    border: 1px solid #680040;
+    transition: background 0.2s ease;
+    cursor: pointer;
+  }
+
+  .ln-buybox__dot.is-active {
+    background: #680040;
+  }
+
+  /* ── BestSeller badge ─────────────────────────────────────────── */
+  .ln-buybox__badge {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    background: #ffc56e;
+    border-radius: 24px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #680040;
+    line-height: 14px;
+    letter-spacing: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ── Arrow navigation buttons ────────────────────────────────── */
+  .ln-buybox__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #680040;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+    transition: background 0.15s ease;
+  }
+
+  .ln-buybox__arrow:hover {
+    background: #f5e8ef;
+  }
+
+  .ln-buybox__arrow--prev {
+    left: -24px;
+  }
+
+  .ln-buybox__arrow--next {
+    right: -24px;
+  }
+
+  /* ── Details column ───────────────────────────────────────────── */
+  .ln-buybox__details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* ── Mobile overrides ─────────────────────────────────────────── */
+  @media screen and (max-width: 749px) {
+    .ln-buybox__layout {
+      grid-template-columns: 1fr;
+      padding-inline: 16px;
+    }
+
+    .ln-buybox__gallery {
+      flex-direction: column;
+    }
+
+    .ln-buybox__thumbnails {
+      flex-direction: row;
+      overflow-x: auto;
+      height: 88px;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+{% endstylesheet %}
+
+<script src="{{ 'ln-buybox.js' | asset_url }}" type="module"></script>
+
+{% schema %}
+{
+  "name": "Buy Box",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bestseller_badge",
+      "label": "Show bestseller badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bestseller_label",
+      "label": "Bestseller badge text",
+      "default": "BestSeller"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": []
+}
+{% endschema %}
