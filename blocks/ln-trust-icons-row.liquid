@@ -1,3 +1,8 @@
+{%- liquid
+  assign default_svgs = 'parent-owned,3rd-party-tested,allergen-free,usda-organic'
+  assign default_svgs_arr = default_svgs | split: ','
+-%}
+
 <div
   class="ln-trust-icons"
   {{ block.shopify_attributes }}
@@ -6,8 +11,10 @@
   {%- for i in (1..4) -%}
     {%- assign img_key = 'icon_image_' | append: i -%}
     {%- assign lbl_key = 'icon_label_' | append: i -%}
+    {%- assign svg_key = 'icon_svg_' | append: i -%}
     {%- assign img = block.settings[img_key] -%}
     {%- assign lbl = block.settings[lbl_key] -%}
+    {%- assign svg_choice = block.settings[svg_key] | default: default_svgs_arr[forloop.index0] -%}
     {%- if img != blank or lbl != blank -%}
       <div class="ln-trust-icons__item">
         {%- if img != blank -%}
@@ -20,7 +27,48 @@
             %}
           </div>
         {%- else -%}
-          <div class="ln-trust-icons__img-wrap ln-trust-icons__img-wrap--placeholder"></div>
+          <div class="ln-trust-icons__img-wrap ln-trust-icons__svg-wrap">
+            {%- if svg_choice == 'parent-owned' -%}
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="24" cy="24" r="24" fill="#eef1ea"/>
+                <path d="M24 14c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z" fill="#3d1534"/>
+                <path d="M30 31c0 1.1-.9 2-2 2h-8c-1.1 0-2-.9-2-2v-1c0-2.76 2.24-5 5-5h2c2.76 0 5 2.24 5 5v1z" fill="#3d1534"/>
+                <path d="M33 28c1.38 0 2.5-1.12 2.5-2.5S34.38 23 33 23s-2.5 1.12-2.5 2.5S31.62 28 33 28z" fill="#680040"/>
+                <path d="M36 34c0 .55-.45 1-1 1h-4v-.5c0-1.93-1.57-3.5-3.5-3.5H28c1.38-.63 2.5-1.02 3.5-1 1.38.02 2.77.7 3.72 1.76.49.55.78 1.27.78 2.06V34z" fill="#680040"/>
+                <path d="M15 28c1.38 0 2.5-1.12 2.5-2.5S16.38 23 15 23s-2.5 1.12-2.5 2.5S13.62 28 15 28z" fill="#680040"/>
+                <path d="M12 34c0 .55.45 1 1 1h4v-.5c0-1.93 1.57-3.5 3.5-3.5H20c-1.38-.63-2.5-1.02-3.5-1-1.38.02-2.77.7-3.72 1.76-.49.55-.78 1.27-.78 2.06V34z" fill="#680040"/>
+              </svg>
+            {%- elsif svg_choice == '3rd-party-tested' -%}
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="24" cy="24" r="24" fill="#eef1ea"/>
+                <path d="M20 12h8v6l2 2v12a2 2 0 01-2 2H20a2 2 0 01-2-2V20l2-2v-6z" fill="#3d1534" opacity=".2"/>
+                <path d="M20 12h8v6l-8 0v-6z" fill="#3d1534"/>
+                <path d="M22 12h4v6h-4z" fill="#680040"/>
+                <rect x="18" y="18" width="12" height="16" rx="1" stroke="#3d1534" stroke-width="1.5"/>
+                <path d="M21 26l2 2 4-4" stroke="#680040" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            {%- elsif svg_choice == 'allergen-free' -%}
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="24" cy="24" r="24" fill="#eef1ea"/>
+                <circle cx="24" cy="24" r="11" stroke="#3d1534" stroke-width="1.5"/>
+                <path d="M17.5 17.5l13 13" stroke="#680040" stroke-width="2" stroke-linecap="round"/>
+                <path d="M24 18v3M24 27v2M18 24h2M27 24h3M20.4 20.4l1.5 1.5M26.1 26.1l1.5 1.5M20.4 27.6l1.5-1.5M26.1 21.9l1.5-1.5" stroke="#3d1534" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            {%- elsif svg_choice == 'usda-organic' -%}
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="24" cy="24" r="24" fill="#eef1ea"/>
+                <path d="M24 13l2.5 5 5.5.8-4 3.9.95 5.5L24 25.75l-4.95 2.45.95-5.5-4-3.9 5.5-.8L24 13z" fill="#3d1534"/>
+                <circle cx="24" cy="29" r="5" fill="none" stroke="#680040" stroke-width="1.5"/>
+                <path d="M21.5 29c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5" stroke="#680040" stroke-width="1.2" stroke-linecap="round"/>
+                <text x="24" y="37" text-anchor="middle" font-size="4.5" fill="#3d1534" font-weight="700" font-family="sans-serif">ORGANIC</text>
+              </svg>
+            {%- else -%}
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="24" cy="24" r="24" fill="#eef1ea"/>
+                <path d="M16 24l6 6 10-12" stroke="#3d1534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            {%- endif -%}
+          </div>
         {%- endif -%}
         {%- if lbl != blank -%}
           <span class="ln-trust-icons__label">{{ lbl }}</span>
@@ -60,6 +108,16 @@
 
   .ln-trust-icons__img-wrap--placeholder {
     background: var(--color-border, #e0e0e0);
+  }
+
+  .ln-trust-icons__svg-wrap {
+    background: none;
+  }
+
+  .ln-trust-icons__svg-wrap svg {
+    width: 60px;
+    height: 60px;
+    display: block;
   }
 
   .ln-trust-icons__img {

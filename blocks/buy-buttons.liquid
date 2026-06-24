@@ -223,12 +223,14 @@
             add_to_cart_text: add_to_cart_text
           %}
 
-          {% content_for 'block',
-            type: 'accelerated-checkout',
-            id: 'accelerated-checkout',
-            can_add_to_cart: can_add_to_cart,
-            form_obj: form
-          %}
+          {%- if block_settings.show_dynamic_checkout != false -%}
+            {% content_for 'block',
+              type: 'accelerated-checkout',
+              id: 'accelerated-checkout',
+              can_add_to_cart: can_add_to_cart,
+              form_obj: form
+            %}
+          {%- endif -%}
         </div>
         {%- if block_settings.gift_card_form and product.gift_card? -%}
           </span>
@@ -379,6 +381,12 @@
       "id": "stacking",
       "label": "t:settings.always_stack_buttons",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout button (Buy it now)",
+      "default": true
     },
     {
       "type": "checkbox",

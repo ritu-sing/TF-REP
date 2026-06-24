@@ -1,0 +1,474 @@
+{%- liquid
+  assign product_resource = closest.product
+  if request.visual_preview_mode and product_resource == blank
+    assign product_resource = collections.all.products.first
+  endif
+-%}
+
+{% unless product_resource == blank or product_resource.has_only_default_variant %}
+  {% liquid
+    assign button_background_brightness = section.settings.color_scheme.settings.foreground | color_brightness
+    if button_background_brightness < 105
+      assign strikethrough_color_mix = '#000'
+    else
+      assign strikethrough_color_mix = '#fff'
+    endif
+  %}
+
+  <variant-picker
+    class="ln-vp"
+    style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; padding-block-start: {{ block.settings['padding-block-start'] }}px; padding-block-end: {{ block.settings['padding-block-end'] }}px;"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ product_resource.id }}"
+    data-block-id="{{ block.id }}"
+    data-product-url="{{ product_resource.url }}"
+    ref="mainVariantPicker"
+    {% if product.id == product_resource.id %}data-template-product-match="true"{% endif %}
+    {{ block.shopify_attributes }}
+    {% if request.visual_preview_mode %}data-shopify-visual-preview{% endif %}
+  >
+    <form class="variant-picker__form">
+      {%- for product_option in product_resource.options_with_values -%}
+        {%- liquid
+          assign fieldset_index = forloop.index0
+          assign swatch_count = product_option.values | map: 'swatch' | compact | size
+          assign use_swatches = false
+          if swatch_count > 0 and block.settings.show_swatches
+            assign use_swatches = true
+          endif
+        -%}
+
+        <fieldset
+          class="ln-vp__group{% if use_swatches %} ln-vp__group--swatches{% else %} ln-vp__group--pills{% endif %}"
+          data-fieldset-index="{{ fieldset_index }}"
+          ref="fieldsets[]"
+        >
+          <legend class="ln-vp__legend">
+            {{- product_option.name | escape -}}:<span class="ln-vp__selected-val"> {{ product_option.selected_value }}</span>
+          </legend>
+
+          <div class="ln-vp__options">
+            {%- for product_option_value in product_option.values -%}
+              {%- liquid
+                assign badge_text = ''
+                assign per_day_cost = ''
+
+                if block.settings.badge_1_option == product_option.name and block.settings.badge_1_value == product_option_value
+                  assign badge_text = block.settings.badge_1_text
+                elsif block.settings.badge_2_option == product_option.name and block.settings.badge_2_value == product_option_value
+                  assign badge_text = block.settings.badge_2_text
+                elsif block.settings.badge_3_option == product_option.name and block.settings.badge_3_value == product_option_value
+                  assign badge_text = block.settings.badge_3_text
+                endif
+
+                if block.settings.perday_1_option == product_option.name and block.settings.perday_1_value == product_option_value
+                  assign per_day_cost = block.settings.perday_1_cost
+                elsif block.settings.perday_2_option == product_option.name and block.settings.perday_2_value == product_option_value
+                  assign per_day_cost = block.settings.perday_2_cost
+                elsif block.settings.perday_3_option == product_option.name and block.settings.perday_3_value == product_option_value
+                  assign per_day_cost = block.settings.perday_3_cost
+                elsif block.settings.perday_4_option == product_option.name and block.settings.perday_4_value == product_option_value
+                  assign per_day_cost = block.settings.perday_4_cost
+                endif
+              -%}
+
+              <label
+                class="ln-vp__label{% if product_option_value.selected %} is-selected{% endif %}{% if product_option_value.available == false %} is-unavailable{% endif %}{% if use_swatches %} ln-vp__label--swatch{% else %} ln-vp__label--pill{% endif %}"
+              >
+                <input
+                  type="radio"
+                  class="visually-hidden"
+                  name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+                  value="{{ product_option_value | escape }}"
+                  aria-label="{{ product_option_value.name | escape }}{% if product_option_value.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}"
+                  {% if product_option_value.available == false %}aria-disabled="true"{% endif %}
+                  data-previous-checked="false"
+                  data-fieldset-index="{{ fieldset_index }}"
+                  data-input-index="{{ forloop.index0 }}"
+                  data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                  data-option-value-id="{{ product_option_value.id }}"
+                  data-option-available="{{ product_option_value.available }}"
+                  data-connected-product-url="{{ product_option_value.product_url }}"
+                  {% if product_option_value.variant.id %}data-variant-id="{{ product_option_value.variant.id }}"{% endif %}
+                  {% if product_option_value.selected %}data-current-checked="true" checked{% else %}data-current-checked="false"{% endif %}
+                >
+
+                {%- if use_swatches -%}
+                  <span class="ln-vp__swatch-visual">
+                    {%- liquid
+                      assign featured_media = product_option_value.variant.featured_media
+                      if featured_media == blank and product_option_value.product_url
+                        assign featured_media = product_option_value.variant.product.featured_media
+                      endif
+                    -%}
+                    {%- render 'swatch',
+                      swatch: product_option_value.swatch,
+                      variant_image: featured_media,
+                      mode: 'unscaled'
+                    -%}
+                  </span>
+                  <span class="ln-vp__option-name">{{ product_option_value | escape }}</span>
+                {%- else -%}
+                  <span class="ln-vp__pill-inner">
+                    <span class="ln-vp__option-name">{{ product_option_value | escape }}</span>
+                    {%- if per_day_cost != blank -%}
+                      <span class="ln-vp__perday">{{ per_day_cost }}</span>
+                    {%- endif -%}
+                  </span>
+                {%- endif -%}
+
+                {%- if badge_text != blank -%}
+                  <span class="ln-vp__badge">{{ badge_text }}</span>
+                {%- endif -%}
+
+                {% render 'strikethrough-variant', product_option: product_option_value %}
+              </label>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- endfor -%}
+    </form>
+  </variant-picker>
+
+  <script src="{{ 'ln-pdp-variant-picker.js' | asset_url }}" type="module"></script>
+{% endunless %}
+
+{% stylesheet %}
+  .ln-vp {
+    display: block;
+  }
+
+  .ln-vp__group {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ln-vp__group + .ln-vp__group {
+    margin-block-start: 14px;
+  }
+
+  .ln-vp__legend {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    margin-block-end: 10px;
+    display: block;
+    width: 100%;
+  }
+
+  .ln-vp__selected-val {
+    font-weight: 400;
+    color: var(--color-foreground);
+    opacity: 0.7;
+  }
+
+  .ln-vp__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  /* ── Swatch style (Flavor) ── */
+  .ln-vp__group--swatches .ln-vp__options {
+    gap: 10px;
+  }
+
+  .ln-vp__label--swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    position: relative;
+    padding: 4px;
+    border-radius: 50px;
+    border: 2px solid transparent;
+    transition: border-color 0.15s;
+  }
+
+  .ln-vp__label--swatch.is-selected {
+    border-color: var(--color-foreground);
+  }
+
+  .ln-vp__label--swatch.is-unavailable {
+    opacity: 0.4;
+  }
+
+  .ln-vp__swatch-visual {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .ln-vp__swatch-visual .swatch {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .ln-vp__label--swatch .ln-vp__option-name {
+    font-size: 0.8125rem;
+    color: var(--color-foreground);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* ── Pill style (Bottle Size) ── */
+  .ln-vp__label--pill {
+    display: inline-flex;
+    cursor: pointer;
+    border: 1.5px solid var(--color-border, #e0e0e0);
+    border-radius: 8px;
+    padding: 10px 16px;
+    position: relative;
+    transition: border-color 0.15s, background-color 0.15s;
+    min-width: 100px;
+    background: var(--color-background, #fff);
+  }
+
+  .ln-vp__label--pill:hover {
+    border-color: var(--color-foreground);
+  }
+
+  .ln-vp__label--pill.is-selected {
+    border-color: #680040;
+    background: #3d1534;
+    color: #fff;
+  }
+
+  .ln-vp__label--pill.is-selected .ln-vp__option-name,
+  .ln-vp__label--pill.is-selected .ln-vp__perday {
+    color: #fff;
+  }
+
+  .ln-vp__label--pill.is-unavailable {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .ln-vp__pill-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .ln-vp__option-name {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    line-height: 1.2;
+  }
+
+  .ln-vp__perday {
+    font-size: 0.8125rem;
+    color: var(--color-foreground);
+    opacity: 0.65;
+  }
+
+  /* ── Badge ── */
+  .ln-vp__badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #680040;
+    color: #fff;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 20px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .ln-vp__label--swatch .ln-vp__badge {
+    top: -8px;
+    font-size: 0.5625rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ln-vp__label--pill {
+      min-width: 80px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Variant Picker (PDP)",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_swatches",
+      "label": "Show color swatches",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Badges"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add a badge to a specific option value. Option name is case-sensitive."
+    },
+    {
+      "type": "text",
+      "id": "badge_1_option",
+      "label": "Badge 1 — Option name",
+      "default": "Flavor"
+    },
+    {
+      "type": "text",
+      "id": "badge_1_value",
+      "label": "Badge 1 — Option value",
+      "default": "Strawberry"
+    },
+    {
+      "type": "text",
+      "id": "badge_1_text",
+      "label": "Badge 1 — Badge text",
+      "default": "MOST POPULAR"
+    },
+    {
+      "type": "text",
+      "id": "badge_2_option",
+      "label": "Badge 2 — Option name",
+      "default": "Bottle Size"
+    },
+    {
+      "type": "text",
+      "id": "badge_2_value",
+      "label": "Badge 2 — Option value",
+      "default": "180 Gummies"
+    },
+    {
+      "type": "text",
+      "id": "badge_2_text",
+      "label": "Badge 2 — Badge text",
+      "default": "BEST VALUE"
+    },
+    {
+      "type": "text",
+      "id": "badge_3_option",
+      "label": "Badge 3 — Option name"
+    },
+    {
+      "type": "text",
+      "id": "badge_3_value",
+      "label": "Badge 3 — Option value"
+    },
+    {
+      "type": "text",
+      "id": "badge_3_text",
+      "label": "Badge 3 — Badge text"
+    },
+    {
+      "type": "header",
+      "content": "Per-Day Costs"
+    },
+    {
+      "type": "paragraph",
+      "content": "Show a per-day cost below an option value button."
+    },
+    {
+      "type": "text",
+      "id": "perday_1_option",
+      "label": "Slot 1 — Option name",
+      "default": "Bottle Size"
+    },
+    {
+      "type": "text",
+      "id": "perday_1_value",
+      "label": "Slot 1 — Option value",
+      "default": "90 Gummies"
+    },
+    {
+      "type": "text",
+      "id": "perday_1_cost",
+      "label": "Slot 1 — Per-day cost",
+      "default": "$0.27 / day"
+    },
+    {
+      "type": "text",
+      "id": "perday_2_option",
+      "label": "Slot 2 — Option name",
+      "default": "Bottle Size"
+    },
+    {
+      "type": "text",
+      "id": "perday_2_value",
+      "label": "Slot 2 — Option value",
+      "default": "180 Gummies"
+    },
+    {
+      "type": "text",
+      "id": "perday_2_cost",
+      "label": "Slot 2 — Per-day cost",
+      "default": "$0.17 / day"
+    },
+    {
+      "type": "text",
+      "id": "perday_3_option",
+      "label": "Slot 3 — Option name"
+    },
+    {
+      "type": "text",
+      "id": "perday_3_value",
+      "label": "Slot 3 — Option value"
+    },
+    {
+      "type": "text",
+      "id": "perday_3_cost",
+      "label": "Slot 3 — Per-day cost"
+    },
+    {
+      "type": "text",
+      "id": "perday_4_option",
+      "label": "Slot 4 — Option name"
+    },
+    {
+      "type": "text",
+      "id": "perday_4_value",
+      "label": "Slot 4 — Option value"
+    },
+    {
+      "type": "text",
+      "id": "perday_4_cost",
+      "label": "Slot 4 — Per-day cost"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

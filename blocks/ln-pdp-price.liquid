@@ -1,0 +1,193 @@
+{%- liquid
+  assign product_resource = closest.product
+  assign selected_variant = product_resource.selected_or_first_available_variant
+  assign spacing_top = block.settings['padding-block-start']
+  assign spacing_bottom = block.settings['padding-block-end']
+
+  assign show_badge = false
+  if selected_variant.compare_at_price and selected_variant.compare_at_price > selected_variant.price
+    assign show_badge = true
+    assign discount_pct = selected_variant.compare_at_price | minus: selected_variant.price | times: 100 | divided_by: selected_variant.compare_at_price | round
+    assign badge_label = discount_pct | append: '% OFF'
+  elsif block.settings.badge_text != blank
+    assign show_badge = true
+    assign badge_label = block.settings.badge_text
+  endif
+-%}
+
+<ln-pdp-price
+  class="ln-pdp-price"
+  data-section-id="{{ section.id }}"
+  data-perday-option="{{ block.settings.perday_option | escape }}"
+  data-perday-map="{{ block.settings.perday_1_value | escape }}|{{ block.settings.perday_1_cost | escape }};{{ block.settings.perday_2_value | escape }}|{{ block.settings.perday_2_cost | escape }};{{ block.settings.perday_3_value | escape }}|{{ block.settings.perday_3_cost | escape }};{{ block.settings.perday_4_value | escape }}|{{ block.settings.perday_4_cost | escape }}"
+  style="padding-block-start: {{ spacing_top }}px; padding-block-end: {{ spacing_bottom }}px;"
+  {{ block.shopify_attributes }}
+>
+  <div class="ln-pdp-price__row">
+    <span class="ln-pdp-price__sale" data-ln-price>
+      {{- selected_variant.price | money -}}
+    </span>
+
+    {%- if selected_variant.compare_at_price and selected_variant.compare_at_price > selected_variant.price -%}
+      <s class="ln-pdp-price__compare" data-ln-compare>
+        {{- selected_variant.compare_at_price | money -}}
+      </s>
+    {%- else -%}
+      <s class="ln-pdp-price__compare" data-ln-compare style="display:none"></s>
+    {%- endif -%}
+
+    {%- if show_badge -%}
+      <span class="ln-pdp-price__badge" data-ln-badge>{{ badge_label }}</span>
+    {%- else -%}
+      <span class="ln-pdp-price__badge" data-ln-badge style="display:none"></span>
+    {%- endif -%}
+
+    <span class="ln-pdp-price__perday" data-ln-perday></span>
+  </div>
+</ln-pdp-price>
+
+<script src="{{ 'ln-pdp-price.js' | asset_url }}" type="module"></script>
+
+{% stylesheet %}
+  .ln-pdp-price__row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .ln-pdp-price__sale {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-foreground);
+  }
+
+  .ln-pdp-price__compare {
+    font-size: 1rem;
+    color: var(--color-foreground);
+    opacity: 0.55;
+    font-weight: 400;
+  }
+
+  .ln-pdp-price__badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    background: #3d1534;
+    border-radius: 4px;
+    padding: 3px 8px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+
+  .ln-pdp-price__perday {
+    font-size: 0.875rem;
+    color: var(--color-foreground);
+    opacity: 0.65;
+    white-space: nowrap;
+  }
+
+  .ln-pdp-price__perday:empty {
+    display: none;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Price (PDP)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text (fallback when no compare price)",
+      "info": "e.g. 10% OFF — shown only if the product has no compare-at price set.",
+      "default": "10% OFF"
+    },
+    {
+      "type": "header",
+      "content": "Per-Day Cost"
+    },
+    {
+      "type": "paragraph",
+      "content": "Show a per-day cost in the price row based on the selected option value."
+    },
+    {
+      "type": "text",
+      "id": "perday_option",
+      "label": "Option name to match",
+      "default": "Bottle Size",
+      "info": "Case-sensitive. e.g. 'Bottle Size'"
+    },
+    {
+      "type": "text",
+      "id": "perday_1_value",
+      "label": "Slot 1 — Option value",
+      "default": "90 Gummies"
+    },
+    {
+      "type": "text",
+      "id": "perday_1_cost",
+      "label": "Slot 1 — Per-day text",
+      "default": "($0.27 / day)"
+    },
+    {
+      "type": "text",
+      "id": "perday_2_value",
+      "label": "Slot 2 — Option value",
+      "default": "180 Gummies"
+    },
+    {
+      "type": "text",
+      "id": "perday_2_cost",
+      "label": "Slot 2 — Per-day text",
+      "default": "($0.17 / day)"
+    },
+    {
+      "type": "text",
+      "id": "perday_3_value",
+      "label": "Slot 3 — Option value"
+    },
+    {
+      "type": "text",
+      "id": "perday_3_cost",
+      "label": "Slot 3 — Per-day text"
+    },
+    {
+      "type": "text",
+      "id": "perday_4_value",
+      "label": "Slot 4 — Option value"
+    },
+    {
+      "type": "text",
+      "id": "perday_4_cost",
+      "label": "Slot 4 — Per-day text"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

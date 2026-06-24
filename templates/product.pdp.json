@@ -121,24 +121,20 @@
                   "blocks": {}
                 },
                 "product_price": {
-                  "type": "price",
+                  "type": "ln-pdp-price",
                   "settings": {
-                    "show_sale_price_first": true,
-                    "show_installments": false,
-                    "show_tax_info": false,
-                    "type_preset": "paragraph",
-                    "width": "100%",
-                    "alignment": "left",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1.125rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "color": "var(--color-foreground)",
+                    "badge_text": "10% OFF",
+                    "perday_option": "Bottle Size",
+                    "perday_1_value": "90 Gummies",
+                    "perday_1_cost": "($0.27 / day)",
+                    "perday_2_value": "180 Gummies",
+                    "perday_2_cost": "($0.17 / day)",
+                    "perday_3_value": "",
+                    "perday_3_cost": "",
+                    "perday_4_value": "",
+                    "perday_4_cost": "",
                     "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-block-end": 4
                   },
                   "blocks": {}
                 }
@@ -170,15 +166,32 @@
               "blocks": {}
             },
             "variant_picker": {
-              "type": "variant-picker",
+              "type": "ln-pdp-variant-picker",
               "settings": {
-                "variant_style": "buttons",
                 "show_swatches": true,
-                "alignment": "left",
+                "badge_1_option": "Flavor",
+                "badge_1_value": "Strawberry",
+                "badge_1_text": "MOST POPULAR",
+                "badge_2_option": "Bottle Size",
+                "badge_2_value": "180 Gummies",
+                "badge_2_text": "BEST VALUE",
+                "badge_3_option": "",
+                "badge_3_value": "",
+                "badge_3_text": "",
+                "perday_1_option": "Bottle Size",
+                "perday_1_value": "90 Gummies",
+                "perday_1_cost": "$0.27 / day",
+                "perday_2_option": "Bottle Size",
+                "perday_2_value": "180 Gummies",
+                "perday_2_cost": "$0.17 / day",
+                "perday_3_option": "",
+                "perday_3_value": "",
+                "perday_3_cost": "",
+                "perday_4_option": "",
+                "perday_4_value": "",
+                "perday_4_cost": "",
                 "padding-block-start": 4,
-                "padding-block-end": 4,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-block-end": 4
               },
               "blocks": {}
             },
@@ -215,6 +228,7 @@
               "type": "buy-buttons",
               "settings": {
                 "stacking": true,
+                "show_dynamic_checkout": false,
                 "show_pickup_availability": false,
                 "padding-block-start": 4,
                 "padding-block-end": 0,
