@@ -333,6 +333,65 @@
         "show_bestseller_badge": true
       }
     },
+    "ln_ingredients": {
+      "type": "ln-ingredients",
+      "blocks": {
+        "ingredient_1": {
+          "type": "ingredient-item",
+          "settings": {
+            "name": "Vitamin C",
+            "description": "Immune support"
+          }
+        },
+        "ingredient_2": {
+          "type": "ingredient-item",
+          "settings": {
+            "name": "Vitamin D3",
+            "description": "Bone health"
+          }
+        },
+        "ingredient_3": {
+          "type": "ingredient-item",
+          "settings": {
+            "name": "Zinc",
+            "description": "Growth & immunity"
+          }
+        },
+        "ingredient_4": {
+          "type": "ingredient-item",
+          "settings": {
+            "name": "Iodine",
+            "description": "Brain development"
+          }
+        },
+        "ingredient_5": {
+          "type": "ingredient-item",
+          "settings": {
+            "name": "B Vitamins",
+            "description": "Energy & mood"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_1",
+        "ingredient_2",
+        "ingredient_3",
+        "ingredient_4",
+        "ingredient_5"
+      ],
+      "settings": {
+        "heading": "Key Ingredients",
+        "subheading": "Clinically studied nutrients, crafted for growing bodies",
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "columns": 5,
+        "mobile_columns": "3",
+        "icon_size": 100,
+        "gap": 24,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
     "product_recommendations": {
       "type": "product-recommendations",
       "blocks": {
@@ -458,6 +517,7 @@
   },
   "order": [
     "main",
+    "ln_ingredients",
     "product_recommendations"
   ]
 }
