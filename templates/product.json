@@ -368,58 +368,138 @@
     "ln_ingredients": {
       "type": "ln-ingredients",
       "blocks": {
-        "ingredient_1": {
+        "ing_vita": {
           "type": "ingredient-item",
           "settings": {
+            "tab_index": 1,
+            "name": "Vitamin A",
+            "description": "Sourced from carrots, sweet potatoes, spinach, and broccoli to support healthy vision and immune function.",
+            "source_text": "Mention the source"
+          }
+        },
+        "ing_vitc": {
+          "type": "ingredient-item",
+          "settings": {
+            "tab_index": 1,
             "name": "Vitamin C",
-            "description": "Immune support"
+            "description": "From oranges, strawberries, and broccoli for immune support.",
+            "source_text": "Mention the source"
           }
         },
-        "ingredient_2": {
+        "ing_vitd": {
           "type": "ingredient-item",
           "settings": {
+            "tab_index": 1,
             "name": "Vitamin D3",
-            "description": "Bone health"
+            "description": "Sourced from carrots, sweet potatoes, spinach, and broccoli to support healthy vision and immune function.",
+            "source_text": "Mention the source"
           }
         },
-        "ingredient_3": {
+        "ing_vite": {
           "type": "ingredient-item",
           "settings": {
+            "tab_index": 1,
+            "name": "Vitamin E",
+            "description": "Sourced from carrots, sweet potatoes, spinach, and broccoli to support healthy vision and immune function.",
+            "source_text": "Mention the source"
+          }
+        },
+        "ing_zinc": {
+          "type": "ingredient-item",
+          "settings": {
+            "tab_index": 1,
             "name": "Zinc",
-            "description": "Growth & immunity"
+            "description": "Essential mineral for growth, immunity, and cell function.",
+            "source_text": "Mention the source"
           }
         },
-        "ingredient_4": {
+        "ing_elder": {
           "type": "ingredient-item",
           "settings": {
-            "name": "Iodine",
-            "description": "Brain development"
+            "tab_index": 2,
+            "name": "Elderberry",
+            "description": "Rich in antioxidants to support immune health naturally.",
+            "source_text": "Mention the source"
           }
         },
-        "ingredient_5": {
+        "ing_elder_vitc": {
           "type": "ingredient-item",
           "settings": {
-            "name": "B Vitamins",
-            "description": "Energy & mood"
+            "tab_index": 2,
+            "name": "Vitamin C",
+            "description": "From oranges, strawberries, and broccoli for immune support.",
+            "source_text": "Mention the source"
+          }
+        },
+        "ing_probiotics": {
+          "type": "ingredient-item",
+          "settings": {
+            "tab_index": 3,
+            "name": "Probiotics",
+            "description": "Live cultures to support gut health and digestion.",
+            "source_text": "Mention the source"
+          }
+        },
+        "ing_prebiotics": {
+          "type": "ingredient-item",
+          "settings": {
+            "tab_index": 3,
+            "name": "Prebiotics",
+            "description": "Fiber-based nutrients to feed the good bacteria.",
+            "source_text": "Mention the source"
+          }
+        },
+        "ing_vitd3": {
+          "type": "ingredient-item",
+          "settings": {
+            "tab_index": 4,
+            "name": "Vitamin D3",
+            "description": "Supports bone strength, calcium absorption, and immunity.",
+            "source_text": "Mention the source"
+          }
+        },
+        "ing_vitk2": {
+          "type": "ingredient-item",
+          "settings": {
+            "tab_index": 4,
+            "name": "Vitamin K2",
+            "description": "Directs calcium to bones and keeps arteries clear.",
+            "source_text": "Mention the source"
           }
         }
       },
       "block_order": [
-        "ingredient_1",
-        "ingredient_2",
-        "ingredient_3",
-        "ingredient_4",
-        "ingredient_5"
+        "ing_vita",
+        "ing_vitc",
+        "ing_vitd",
+        "ing_vite",
+        "ing_zinc",
+        "ing_elder",
+        "ing_elder_vitc",
+        "ing_probiotics",
+        "ing_prebiotics",
+        "ing_vitd3",
+        "ing_vitk2"
       ],
       "settings": {
-        "heading": "Key Ingredients",
-        "subheading": "Clinically studied nutrients, crafted for growing bodies",
+        "heading": "Real Food Ingredients",
+        "subheading": "Unlike most vitamins that start with candy, we start with organic fruits and veggies, delivering essential nutrients the way nature intended.",
+        "heading_color": "#3d1534",
+        "card_bg_color": "#f5ede8",
+        "accent_color": "#680040",
+        "tab_1_label": "Multivitamin",
+        "tab_2_label": "Elderberry",
+        "tab_3_label": "Pre & Probiotics",
+        "tab_4_label": "Vitamin D3 & K2",
+        "allergen_1_label": "Soy",
+        "allergen_2_label": "Eggs",
+        "allergen_3_label": "Dairy",
+        "allergen_4_label": "Peanuts",
+        "allergen_5_label": "Tree Nuts",
+        "allergen_6_label": "Shell Fish",
+        "allergen_7_label": "Wheat",
         "color_scheme": "scheme-1",
         "section_width": "page-width",
-        "columns": 5,
-        "mobile_columns": "3",
-        "icon_size": 100,
-        "gap": 24,
         "padding-block-start": 48,
         "padding-block-end": 48
       }

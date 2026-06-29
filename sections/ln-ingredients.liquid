@@ -2,16 +2,16 @@
   #shopify-section-{{ section.id }} {
     --padding-block-start: {{ section.settings['padding-block-start'] }}px;
     --padding-block-end: {{ section.settings['padding-block-end'] }}px;
-    --ln-ingredients-columns: {{ section.settings.columns }};
-    --ln-ingredients-mobile-columns: {{ section.settings.mobile_columns }};
-    --ln-ingredients-icon-size: {{ section.settings.icon_size }}px;
-    --ln-ingredients-gap: {{ section.settings.gap }}px;
+    --ln-ing-heading-color: {{ section.settings.heading_color }};
+    --ln-ing-card-bg: {{ section.settings.card_bg_color }};
+    --ln-ing-accent: {{ section.settings.accent_color }};
   }
 {% endstyle %}
 
-<div class="ln-ingredients color-{{ section.settings.color_scheme }} ln-ingredients--{{ section.settings.section_width }}">
-  {% if section.settings.heading != blank or section.settings.subheading != blank %}
-    <div class="ln-ingredients__header">
+<ln-ingredients-section class="ln-ingredients color-{{ section.settings.color_scheme }} ln-ingredients--{{ section.settings.section_width }}">
+
+  <div class="ln-ingredients__header">
+    <div class="ln-ingredients__header-text">
       {% if section.settings.heading != blank %}
         <h2 class="ln-ingredients__heading">{{ section.settings.heading }}</h2>
       {% endif %}
@@ -19,133 +19,478 @@
         <p class="ln-ingredients__subheading">{{ section.settings.subheading }}</p>
       {% endif %}
     </div>
-  {% endif %}
 
-  {% if section.blocks.size > 0 %}
-    <ul class="ln-ingredients__grid" role="list">
-      {% for block in section.blocks %}
-        <li class="ln-ingredients__item" {{ block.shopify_attributes }}>
-          <div class="ln-ingredients__icon-wrap">
-            {% if block.settings.icon != blank %}
-              {{ block.settings.icon | image_url: width: 200 | image_tag:
-                widths: '100, 200',
-                loading: 'lazy',
-                alt: block.settings.name,
-                class: 'ln-ingredients__icon'
-              }}
-            {% else %}
-              <div class="ln-ingredients__icon-placeholder"></div>
-            {% endif %}
+    <nav class="ln-ingredients__tabs" role="tablist" aria-label="Product types">
+      {%- assign first_active_tab = true -%}
+      {%- for i in (1..4) -%}
+        {%- assign tab_key = 'tab_' | append: i | append: '_label' -%}
+        {%- assign tab_label = section.settings[tab_key] -%}
+        {%- if tab_label != blank -%}
+          <button
+            class="ln-ingredients__tab{% if first_active_tab %} is-active{% endif %}"
+            role="tab"
+            data-tab="{{ i }}"
+            aria-selected="{% if first_active_tab %}true{% else %}false{% endif %}"
+          >{{ tab_label }}</button>
+          {%- assign first_active_tab = false -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+  </div>
+
+  {%- assign panel_count = 0 -%}
+  {%- for i in (1..4) -%}
+    {%- assign tab_key = 'tab_' | append: i | append: '_label' -%}
+    {%- assign tab_label = section.settings[tab_key] -%}
+    {%- if tab_label != blank -%}
+      {%- assign is_first_panel = false -%}
+      {%- if panel_count == 0 -%}{%- assign is_first_panel = true -%}{%- endif -%}
+      <div
+        class="ln-ingredients__panel{% if is_first_panel %} is-active{% endif %}"
+        data-panel="{{ i }}"
+        {% unless is_first_panel %}hidden{% endunless %}
+        role="tabpanel"
+      >
+        <div class="ln-ingredients__carousel">
+          <button class="ln-ingredients__arrow ln-ingredients__arrow--prev" aria-label="Previous">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M11 13.5L6.5 9L11 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="ln-ingredients__track" data-track>
+            {%- for block in section.blocks -%}
+              {%- if block.settings.tab_index == i -%}
+                <article class="ln-ingredients__card" {{ block.shopify_attributes }}>
+                  <div class="ln-ingredients__card-image">
+                    {%- if block.settings.image != blank -%}
+                      {{ block.settings.image | image_url: width: 480 | image_tag:
+                        widths: '240, 480',
+                        loading: 'lazy',
+                        alt: block.settings.name,
+                        class: 'ln-ingredients__card-img'
+                      }}
+                    {%- else -%}
+                      <div class="ln-ingredients__card-img-placeholder"></div>
+                    {%- endif -%}
+                  </div>
+                  <div class="ln-ingredients__card-body">
+                    {%- if block.settings.name != blank -%}
+                      <h3 class="ln-ingredients__card-name">{{ block.settings.name }}</h3>
+                    {%- endif -%}
+                    {%- if block.settings.description != blank -%}
+                      <p class="ln-ingredients__card-desc">{{ block.settings.description }}</p>
+                    {%- endif -%}
+                    {%- if block.settings.source_text != blank -%}
+                      <p class="ln-ingredients__card-source"><strong>Source:</strong> {{ block.settings.source_text }}</p>
+                    {%- endif -%}
+                  </div>
+                </article>
+              {%- endif -%}
+            {%- endfor -%}
           </div>
-          {% if block.settings.name != blank %}
-            <span class="ln-ingredients__name">{{ block.settings.name }}</span>
-          {% endif %}
-          {% if block.settings.description != blank %}
-            <span class="ln-ingredients__description">{{ block.settings.description }}</span>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-</div>
+
+          <button class="ln-ingredients__arrow ln-ingredients__arrow--next" aria-label="Next">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M7 4.5L11.5 9L7 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      {%- assign panel_count = panel_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  <div class="ln-ingredients__footer">
+    <div class="ln-ingredients__accent-line"></div>
+
+    {%- assign has_allergens = false -%}
+    {%- for j in (1..8) -%}
+      {%- assign ak = 'allergen_' | append: j | append: '_label' -%}
+      {%- if section.settings[ak] != blank -%}
+        {%- assign has_allergens = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_allergens -%}
+      <ul class="ln-ingredients__allergens" role="list">
+        {%- for j in (1..8) -%}
+          {%- assign al_key = 'allergen_' | append: j | append: '_label' -%}
+          {%- assign ai_key = 'allergen_' | append: j | append: '_icon' -%}
+          {%- assign al_label = section.settings[al_key] -%}
+          {%- if al_label != blank -%}
+            <li class="ln-ingredients__allergen">
+              <div class="ln-ingredients__allergen-circle">
+                {%- if section.settings[ai_key] != blank -%}
+                  {{ section.settings[ai_key] | image_url: width: 80 | image_tag:
+                    widths: '40, 80',
+                    loading: 'lazy',
+                    alt: al_label,
+                    class: 'ln-ingredients__allergen-icon'
+                  }}
+                {%- else -%}
+                  <span class="ln-ingredients__allergen-abbr">{{ al_label | upcase | slice: 0, 3 }}</span>
+                {%- endif -%}
+              </div>
+              <span class="ln-ingredients__allergen-label">{{ al_label | upcase }}</span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+
+</ln-ingredients-section>
+
+<script src="{{ 'ln-ingredients.js' | asset_url }}" type="module"></script>
 
 {% stylesheet %}
-  .ln-ingredients {
+  ln-ingredients-section {
+    display: block;
     padding-block-start: var(--padding-block-start, 48px);
     padding-block-end: var(--padding-block-end, 48px);
-    padding-inline: 64px;
+  }
+
+  .ln-ingredients {
+    padding-inline: 40px;
   }
 
   .ln-ingredients--page-width {
-    max-width: var(--page-content-width, 1200px);
+    max-width: var(--page-content-width, 1280px);
     margin-inline: auto;
   }
 
+  /* ── Header ─────────────────────────────────────────────────── */
   .ln-ingredients__header {
-    text-align: center;
-    margin-block-end: 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-block-end: 28px;
+  }
+
+  .ln-ingredients__header-text {
+    flex: 0 1 520px;
   }
 
   .ln-ingredients__heading {
-    margin: 0 0 8px;
+    margin: 0 0 10px;
     font-family: var(--font-heading--family, inherit);
     font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    color: var(--ln-ing-heading-color, #3d1534);
   }
 
   .ln-ingredients__subheading {
     margin: 0;
     font-family: var(--font-body--family, inherit);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-foreground);
     opacity: 0.75;
+    max-width: 420px;
   }
 
-  .ln-ingredients__grid {
-    display: grid;
-    grid-template-columns: repeat(var(--ln-ingredients-columns, 5), 1fr);
-    gap: var(--ln-ingredients-gap, 24px);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .ln-ingredients__item {
+  /* ── Tabs ────────────────────────────────────────────────────── */
+  .ln-ingredients__tabs {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    text-align: center;
-  }
-
-  .ln-ingredients__icon-wrap {
-    width: var(--ln-ingredients-icon-size, 100px);
-    height: var(--ln-ingredients-icon-size, 100px);
-    border-radius: 50%;
-    overflow: hidden;
+    align-items: flex-end;
+    gap: 28px;
     flex-shrink: 0;
   }
 
-  .ln-ingredients__icon {
+  .ln-ingredients__tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0 0 8px;
+    cursor: pointer;
+    font-family: var(--font-body--family, inherit);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    opacity: 0.45;
+    transition: opacity 0.18s ease, border-color 0.18s ease;
+    white-space: nowrap;
+  }
+
+  .ln-ingredients__tab:hover {
+    opacity: 0.75;
+  }
+
+  .ln-ingredients__tab.is-active {
+    opacity: 1;
+    border-bottom-color: var(--ln-ing-accent, #680040);
+  }
+
+  /* ── Panel ───────────────────────────────────────────────────── */
+  .ln-ingredients__panel {
+    display: block;
+  }
+
+  .ln-ingredients__panel[hidden] {
+    display: none;
+  }
+
+  /* ── Carousel ────────────────────────────────────────────────── */
+  .ln-ingredients__carousel {
+    position: relative;
+    /* Allow arrows to sit on edge without overflow */
+    margin-inline: -20px;
+    padding-inline: 20px;
+    overflow: hidden;
+  }
+
+  .ln-ingredients__track {
+    display: flex;
+    gap: 16px;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-block: 4px; /* avoid clipping card shadows */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ln-ingredients__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── Cards ───────────────────────────────────────────────────── */
+  .ln-ingredients__card {
+    flex: 0 0 calc(25% - 12px);
+    scroll-snap-align: start;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: var(--ln-ing-card-bg, #f5ede8);
+  }
+
+  .ln-ingredients__card-image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .ln-ingredients__card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
 
-  .ln-ingredients__icon-placeholder {
+  .ln-ingredients__card-img-placeholder {
     width: 100%;
     height: 100%;
-    background-color: var(--color-border, #e0ddd9);
+    background-color: #e8e0db;
   }
 
-  .ln-ingredients__name {
-    font-family: var(--font-subheading--family, var(--font-body--family, inherit));
-    font-weight: 600;
-    font-size: 0.875rem;
-    line-height: 1.3;
+  .ln-ingredients__card-body {
+    padding: 16px;
   }
 
-  .ln-ingredients__description {
+  .ln-ingredients__card-name {
+    margin: 0 0 8px;
+    font-family: var(--font-heading--family, inherit);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: var(--color-foreground);
+  }
+
+  .ln-ingredients__card-desc {
+    margin: 0 0 8px;
+    font-family: var(--font-body--family, inherit);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-foreground);
+    opacity: 0.85;
+  }
+
+  .ln-ingredients__card-source {
+    margin: 0;
     font-family: var(--font-body--family, inherit);
     font-size: 0.75rem;
-    opacity: 0.7;
-    line-height: 1.4;
+    color: var(--color-foreground);
+    opacity: 0.55;
   }
 
+  /* ── Arrows ─────────────────────────────────────────────────── */
+  .ln-ingredients__arrow {
+    position: absolute;
+    top: 36%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.2s ease, box-shadow 0.15s ease;
+    color: var(--color-foreground);
+    padding: 0;
+  }
+
+  .ln-ingredients__arrow:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .ln-ingredients__arrow--prev {
+    left: 0;
+  }
+
+  .ln-ingredients__arrow--next {
+    right: 0;
+  }
+
+  /* ── Footer ─────────────────────────────────────────────────── */
+  .ln-ingredients__footer {
+    margin-block-start: 28px;
+  }
+
+  .ln-ingredients__accent-line {
+    width: 48px;
+    height: 3px;
+    background-color: var(--ln-ing-accent, #680040);
+    margin-block-end: 20px;
+    border-radius: 2px;
+  }
+
+  .ln-ingredients__allergens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .ln-ingredients__allergen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ln-ingredients__allergen-circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+  }
+
+  .ln-ingredients__allergen-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ln-ingredients__allergen-abbr {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-foreground);
+  }
+
+  .ln-ingredients__allergen-label {
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* ── Mobile ─────────────────────────────────────────────────── */
   @media screen and (max-width: 749px) {
     .ln-ingredients {
-      padding-inline: 16px;
-    }
-
-    .ln-ingredients__icon-wrap {
-      width: 72px;
-      height: 72px;
-    }
-
-    .ln-ingredients__grid {
-      grid-template-columns: repeat(var(--ln-ingredients-mobile-columns, 3), 1fr);
+      padding-inline: 20px;
     }
 
     .ln-ingredients__header {
-      margin-block-end: 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      margin-block-end: 20px;
+    }
+
+    .ln-ingredients__heading {
+      font-size: 1.75rem;
+    }
+
+    .ln-ingredients__subheading {
+      max-width: none;
+    }
+
+    .ln-ingredients__tabs {
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      gap: 20px;
+      width: 100%;
+      padding-block-end: 2px;
+    }
+
+    .ln-ingredients__tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Mobile: grid instead of carousel */
+    .ln-ingredients__carousel {
+      margin-inline: 0;
+      padding-inline: 0;
+      overflow: visible;
+    }
+
+    .ln-ingredients__track {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+
+    .ln-ingredients__card {
+      flex: none;
+      width: auto;
+    }
+
+    .ln-ingredients__arrow {
+      display: none;
+    }
+
+    /* Allergen row scrolls on mobile */
+    .ln-ingredients__allergens {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      gap: 16px;
+      padding-block-end: 4px;
+    }
+
+    .ln-ingredients__allergens::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ln-ingredients__allergen {
+      flex-shrink: 0;
     }
   }
 {% endstylesheet %}
@@ -159,13 +504,150 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Key Ingredients"
+      "default": "Real Food Ingredients"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Unlike most vitamins that start with candy, we start with organic fruits and veggies, delivering essential nutrients the way nature intended."
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#3d1534"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background color",
+      "default": "#f5ede8"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color (tab underline, divider)",
+      "default": "#680040"
+    },
+    {
+      "type": "header",
+      "content": "Tabs"
     },
     {
       "type": "text",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "Clinically studied nutrients, crafted for growing bodies"
+      "id": "tab_1_label",
+      "label": "Tab 1",
+      "default": "Multivitamin"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_label",
+      "label": "Tab 2",
+      "default": "Elderberry"
+    },
+    {
+      "type": "text",
+      "id": "tab_3_label",
+      "label": "Tab 3",
+      "default": "Pre & Probiotics"
+    },
+    {
+      "type": "text",
+      "id": "tab_4_label",
+      "label": "Tab 4",
+      "default": "Vitamin D3 & K2"
+    },
+    {
+      "type": "header",
+      "content": "Allergen Information"
+    },
+    {
+      "type": "image_picker",
+      "id": "allergen_1_icon",
+      "label": "Allergen 1 icon"
+    },
+    {
+      "type": "text",
+      "id": "allergen_1_label",
+      "label": "Allergen 1 label",
+      "default": "Soy"
+    },
+    {
+      "type": "image_picker",
+      "id": "allergen_2_icon",
+      "label": "Allergen 2 icon"
+    },
+    {
+      "type": "text",
+      "id": "allergen_2_label",
+      "label": "Allergen 2 label",
+      "default": "Eggs"
+    },
+    {
+      "type": "image_picker",
+      "id": "allergen_3_icon",
+      "label": "Allergen 3 icon"
+    },
+    {
+      "type": "text",
+      "id": "allergen_3_label",
+      "label": "Allergen 3 label",
+      "default": "Dairy"
+    },
+    {
+      "type": "image_picker",
+      "id": "allergen_4_icon",
+      "label": "Allergen 4 icon"
+    },
+    {
+      "type": "text",
+      "id": "allergen_4_label",
+      "label": "Allergen 4 label",
+      "default": "Peanuts"
+    },
+    {
+      "type": "image_picker",
+      "id": "allergen_5_icon",
+      "label": "Allergen 5 icon"
+    },
+    {
+      "type": "text",
+      "id": "allergen_5_label",
+      "label": "Allergen 5 label",
+      "default": "Tree Nuts"
+    },
+    {
+      "type": "image_picker",
+      "id": "allergen_6_icon",
+      "label": "Allergen 6 icon"
+    },
+    {
+      "type": "text",
+      "id": "allergen_6_label",
+      "label": "Allergen 6 label",
+      "default": "Shell Fish"
+    },
+    {
+      "type": "image_picker",
+      "id": "allergen_7_icon",
+      "label": "Allergen 7 icon"
+    },
+    {
+      "type": "text",
+      "id": "allergen_7_label",
+      "label": "Allergen 7 label",
+      "default": "Wheat"
+    },
+    {
+      "type": "image_picker",
+      "id": "allergen_8_icon",
+      "label": "Allergen 8 icon"
+    },
+    {
+      "type": "text",
+      "id": "allergen_8_label",
+      "label": "Allergen 8 label"
     },
     {
       "type": "header",
@@ -180,45 +662,6 @@
         { "value": "full-width", "label": "Full width" }
       ],
       "default": "page-width"
-    },
-    {
-      "type": "range",
-      "id": "columns",
-      "label": "Columns (desktop)",
-      "min": 3,
-      "max": 7,
-      "step": 1,
-      "default": 5
-    },
-    {
-      "type": "select",
-      "id": "mobile_columns",
-      "label": "Columns (mobile)",
-      "options": [
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" }
-      ],
-      "default": "3"
-    },
-    {
-      "type": "range",
-      "id": "icon_size",
-      "label": "Icon size",
-      "min": 60,
-      "max": 160,
-      "step": 4,
-      "unit": "px",
-      "default": 100
-    },
-    {
-      "type": "range",
-      "id": "gap",
-      "label": "Grid gap",
-      "min": 8,
-      "max": 64,
-      "step": 4,
-      "unit": "px",
-      "default": 24
     },
     {
       "type": "header",
@@ -261,21 +704,36 @@
       "name": "Ingredient",
       "settings": [
         {
+          "type": "range",
+          "id": "tab_index",
+          "label": "Tab",
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "default": 1
+        },
+        {
           "type": "image_picker",
-          "id": "icon",
-          "label": "Icon image"
+          "id": "image",
+          "label": "Image"
         },
         {
           "type": "text",
           "id": "name",
           "label": "Name",
-          "default": "Vitamin C"
+          "default": "Vitamin A"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Sourced from carrots, sweet potatoes, spinach, and broccoli to support healthy vision and immune function."
         },
         {
           "type": "text",
-          "id": "description",
-          "label": "Description",
-          "default": "Immune support"
+          "id": "source_text",
+          "label": "Source text",
+          "default": "Mention the source"
         }
       ]
     }
@@ -286,23 +744,47 @@
       "blocks": [
         {
           "type": "ingredient-item",
-          "settings": { "name": "Vitamin C", "description": "Immune support" }
+          "settings": { "tab_index": 1, "name": "Vitamin A", "description": "Sourced from carrots, sweet potatoes, spinach, and broccoli to support healthy vision and immune function.", "source_text": "Mention the source" }
         },
         {
           "type": "ingredient-item",
-          "settings": { "name": "Vitamin D3", "description": "Bone health" }
+          "settings": { "tab_index": 1, "name": "Vitamin C", "description": "From oranges, strawberries, and broccoli for immune support.", "source_text": "Mention the source" }
         },
         {
           "type": "ingredient-item",
-          "settings": { "name": "Zinc", "description": "Growth & immunity" }
+          "settings": { "tab_index": 1, "name": "Vitamin D3", "description": "Sourced from carrots, sweet potatoes, spinach, and broccoli to support healthy vision and immune function.", "source_text": "Mention the source" }
         },
         {
           "type": "ingredient-item",
-          "settings": { "name": "Iodine", "description": "Brain development" }
+          "settings": { "tab_index": 1, "name": "Vitamin E", "description": "Sourced from carrots, sweet potatoes, spinach, and broccoli to support healthy vision and immune function.", "source_text": "Mention the source" }
         },
         {
           "type": "ingredient-item",
-          "settings": { "name": "B Vitamins", "description": "Energy & mood" }
+          "settings": { "tab_index": 1, "name": "Zinc", "description": "Essential mineral for growth, immunity, and cell function.", "source_text": "Mention the source" }
+        },
+        {
+          "type": "ingredient-item",
+          "settings": { "tab_index": 2, "name": "Elderberry", "description": "Rich in antioxidants to support immune health naturally.", "source_text": "Mention the source" }
+        },
+        {
+          "type": "ingredient-item",
+          "settings": { "tab_index": 2, "name": "Vitamin C", "description": "From oranges, strawberries, and broccoli for immune support.", "source_text": "Mention the source" }
+        },
+        {
+          "type": "ingredient-item",
+          "settings": { "tab_index": 3, "name": "Probiotics", "description": "Live cultures to support gut health and digestion.", "source_text": "Mention the source" }
+        },
+        {
+          "type": "ingredient-item",
+          "settings": { "tab_index": 3, "name": "Prebiotics", "description": "Fiber-based nutrients to feed the good bacteria.", "source_text": "Mention the source" }
+        },
+        {
+          "type": "ingredient-item",
+          "settings": { "tab_index": 4, "name": "Vitamin D3", "description": "Supports bone strength, calcium absorption, and immunity.", "source_text": "Mention the source" }
+        },
+        {
+          "type": "ingredient-item",
+          "settings": { "tab_index": 4, "name": "Vitamin K2", "description": "Directs calcium to bones and keeps arteries clear.", "source_text": "Mention the source" }
         }
       ]
     }
