@@ -1,0 +1,107 @@
+{%- assign product_resource = closest.product -%}
+
+{% style %}
+  #block-{{ block.id }} .ln-pdp-title__heading {
+    font-family: var(--font-{{ block.settings.font_family }}--family, inherit);
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    {% unless block.settings.font_color == blank %}color: {{ block.settings.font_color }};{% endunless %}
+  }
+{% endstyle %}
+
+<div
+  id="block-{{ block.id }}"
+  class="ln-pdp-title"
+  {{ block.shopify_attributes }}
+  style="padding-block-start: {{ block.settings['padding-block-start'] }}px; padding-block-end: {{ block.settings['padding-block-end'] }}px;"
+>
+  <h1 class="ln-pdp-title__heading">{{ product_resource.title }}</h1>
+</div>
+
+{% stylesheet %}
+  .ln-pdp-title {
+    display: block;
+  }
+
+  .ln-pdp-title__heading {
+    margin: 0;
+    line-height: 1.15;
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product Title",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 16,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra-bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Text color"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

@@ -42,28 +42,14 @@
           },
           "blocks": {
             "product_title": {
-              "type": "text",
+              "type": "ln-pdp-title",
               "name": "Product title",
               "settings": {
-                "text": "<h1>{{ closest.product.title }}</h1>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-heading--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
+                "font_family": "heading",
+                "font_size": 36,
+                "font_weight": "700",
                 "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-block-end": 0
               },
               "blocks": {}
             },
