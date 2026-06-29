@@ -1,0 +1,495 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "ln-buybox",
+      "blocks": {
+        "review_main": {
+          "type": "review",
+          "settings": {
+            "type_preset": "paragraph",
+            "alignment": "left",
+            "width": "100%"
+          },
+          "blocks": {}
+        },
+        "title_price_group": {
+          "type": "group",
+          "name": "Title & Price",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 6,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 6,
+            "padding-block-end": 4,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_title": {
+              "type": "text",
+              "name": "Product title",
+              "settings": {
+                "text": "<h1>{{ closest.product.title }}</h1>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-heading--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_price": {
+              "type": "ln-pdp-price",
+              "settings": {
+                "badge_text": "10% OFF",
+                "perday_option": "Bottle Size",
+                "perday_1_value": "90 Gummies",
+                "perday_1_cost": "($0.27 / day)",
+                "perday_2_value": "180 Gummies",
+                "perday_2_cost": "($0.17 / day)",
+                "perday_3_value": "",
+                "perday_3_cost": "",
+                "perday_4_value": "",
+                "perday_4_cost": "",
+                "padding-block-start": 0,
+                "padding-block-end": 4
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_title",
+            "product_price"
+          ]
+        },
+        "bullet_benefits": {
+          "type": "ln-bullet-benefits",
+          "settings": {
+            "benefit_1": "13 Essential vitamins & iodine for brain, immunity & mood.",
+            "benefit_2": "Made from real fruit, no sugar cane or synthetics",
+            "benefit_3": "Clinician backed, health-care worker approved",
+            "benefit_4": "Made for picky eaters - 77% love the taste immediately",
+            "icon_color": "#4a7c4e",
+            "padding-block-start": 4,
+            "padding-block-end": 4
+          },
+          "blocks": {}
+        },
+        "divider_1": {
+          "type": "_divider",
+          "settings": {
+            "thickness": 1,
+            "corner_radius": "square",
+            "width_percent": 100,
+            "padding-block-start": 4,
+            "padding-block-end": 4
+          },
+          "blocks": {}
+        },
+        "variant_picker": {
+          "type": "ln-pdp-variant-picker",
+          "settings": {
+            "show_swatches": true,
+            "badge_1_option": "Flavor",
+            "badge_1_value": "Strawberry",
+            "badge_1_text": "MOST POPULAR",
+            "badge_2_option": "Bottle Size",
+            "badge_2_value": "180 Gummies",
+            "badge_2_text": "BEST VALUE",
+            "badge_3_option": "",
+            "badge_3_value": "",
+            "badge_3_text": "",
+            "perday_1_option": "Bottle Size",
+            "perday_1_value": "90 Gummies",
+            "perday_1_cost": "$0.27 / day",
+            "perday_2_option": "Bottle Size",
+            "perday_2_value": "180 Gummies",
+            "perday_2_cost": "$0.17 / day",
+            "perday_3_option": "",
+            "perday_3_value": "",
+            "perday_3_cost": "",
+            "perday_4_option": "",
+            "perday_4_value": "",
+            "perday_4_cost": "",
+            "padding-block-start": 4,
+            "padding-block-end": 4
+          },
+          "blocks": {}
+        },
+        "selling_plan_selector": {
+          "type": "ln-selling-plan-selector",
+          "settings": {
+            "heading": "Frequency:",
+            "subscribe_label": "Subscribe & Save",
+            "save_percent": 10,
+            "onetime_label": "One-Time Purchase",
+            "benefit_1": "Free Shipping",
+            "benefit_2": "Lifetime discount",
+            "benefit_3": "Free Samples",
+            "benefit_4": "Set and Forget",
+            "benefit_5": "Easily skip or cancel anytime",
+            "show_tooltip": true,
+            "padding-block-start": 4,
+            "padding-block-end": 4
+          },
+          "blocks": {}
+        },
+        "hsa_note": {
+          "type": "ln-hsa-note",
+          "settings": {
+            "show": true,
+            "text": "Pay with HSA/FSA – Use your pre-tax dollars",
+            "show_info_icon": true,
+            "padding-block-start": 4,
+            "padding-block-end": 4
+          },
+          "blocks": {}
+        },
+        "buy_buttons": {
+          "type": "buy-buttons",
+          "settings": {
+            "stacking": true,
+            "show_dynamic_checkout": false,
+            "show_pickup_availability": false,
+            "padding-block-start": 4,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "quantity": {
+              "type": "quantity",
+              "static": true,
+              "settings": {},
+              "blocks": {}
+            },
+            "add-to-cart": {
+              "type": "add-to-cart",
+              "static": true,
+              "settings": {
+                "style_class": "button"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "trust_line": {
+          "type": "ln-trust-line",
+          "settings": {
+            "item_1_icon": "truck",
+            "item_1_text": "Free Shipping",
+            "item_2_icon": "shield",
+            "item_2_text": "100 Days Money Back Guarantee",
+            "padding-block-start": 8,
+            "padding-block-end": 4
+          },
+          "blocks": {}
+        },
+        "stack_upsell": {
+          "type": "ln-stack-upsell",
+          "settings": {
+            "heading": "Stack Gummies, Unlock Rewards",
+            "subtitle": "Buy 2, Get 1 Free - for life! Buy more, get a Free Llama Toy!",
+            "congrats_text": "Congratulations! You've unlocked a reward!",
+            "tier_1_qty": 1,
+            "tier_2_qty": 2,
+            "tier_2_sublabel": "FREE BOTTLE",
+            "tier_3_qty": 3,
+            "tier_4_qty": 4,
+            "tier_4_sublabel": "MYSTERY GIFT",
+            "max_products": 6,
+            "add_btn_text": "ADD",
+            "default_stars": 4,
+            "default_review_count": 5676,
+            "padding-block-start": 16,
+            "padding-block-end": 8
+          },
+          "blocks": {}
+        },
+        "customer_testimonial": {
+          "type": "text",
+          "name": "Customer Testimonial",
+          "settings": {
+            "text": "<p><em>&ldquo;We&rsquo;ve struggled to find a vitamin that meets my paediatrician&rsquo;s standards. These passed the test &mdash; and my kids actually take them!&rdquo;</em></p><p>&#9733; Amy H, Working Mom</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "color": "",
+            "background": true,
+            "background_color": "#f5f0f2",
+            "corner_radius": 8,
+            "padding-block-start": 16,
+            "padding-block-end": 16,
+            "padding-inline-start": 16,
+            "padding-inline-end": 16
+          },
+          "blocks": {}
+        },
+        "trust_icons": {
+          "type": "ln-trust-icons-row",
+          "settings": {
+            "icon_label_1": "Parent Owned",
+            "icon_label_2": "3rd Party Tested",
+            "icon_label_3": "Allergen Free",
+            "icon_label_4": "USDA Organic",
+            "padding-block-start": 20,
+            "padding-block-end": 8
+          },
+          "blocks": {}
+        },
+        "divider_before_faq": {
+          "type": "_divider",
+          "settings": {
+            "thickness": 1,
+            "corner_radius": "square",
+            "width_percent": 100,
+            "padding-block-start": 8,
+            "padding-block-end": 0
+          },
+          "blocks": {}
+        },
+        "product_accordion": {
+          "type": "accordion",
+          "settings": {},
+          "blocks": {
+            "accordion_key_benefits": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Key Benefits",
+                "open_by_default": true
+              },
+              "blocks": {}
+            },
+            "accordion_ingredients": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Ingredients",
+                "open_by_default": false
+              },
+              "blocks": {}
+            },
+            "accordion_how_to_use": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How To Use",
+                "open_by_default": false
+              },
+              "blocks": {}
+            },
+            "accordion_quality": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Quality Standards",
+                "open_by_default": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "accordion_key_benefits",
+            "accordion_ingredients",
+            "accordion_how_to_use",
+            "accordion_quality"
+          ]
+        }
+      },
+      "block_order": [
+        "review_main",
+        "title_price_group",
+        "bullet_benefits",
+        "divider_1",
+        "variant_picker",
+        "selling_plan_selector",
+        "hsa_note",
+        "buy_buttons",
+        "trust_line",
+        "stack_upsell",
+        "customer_testimonial",
+        "trust_icons",
+        "divider_before_faq",
+        "product_accordion"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding-block-start": 24,
+        "padding-block-end": 60,
+        "bestseller_label": "BestSeller",
+        "show_bestseller_badge": true
+      }
+    },
+    "product_recommendations": {
+      "type": "product-recommendations",
+      "blocks": {
+        "header_text": {
+          "type": "text",
+          "name": "Header",
+          "settings": {
+            "text": "<h3>You may also like</h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h4",
+            "font": "var(--font-heading--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "Product card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "paragraph",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "gallery",
+            "title",
+            "price"
+          ]
+        }
+      },
+      "block_order": [
+        "header_text"
+      ],
+      "name": "Recommended products",
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product_recommendations"
+  ]
+}

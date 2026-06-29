@@ -58,6 +58,12 @@
         "desktop_image_position": "right",
         "show_trust_badges": true,
         "color_scheme": "scheme-7",
+        "heading_font": "heading",
+        "heading_size": "auto",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_size": "auto",
+        "body_weight": "",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -112,6 +118,12 @@
         "icons_shape": "none",
         "section_width": "page-width",
         "color_scheme": "scheme-1",
+        "heading_font": "heading",
+        "heading_size": "auto",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_size": "auto",
+        "body_weight": "",
         "padding-block-start": 60,
         "padding-block-end": 60
       }
@@ -218,6 +230,12 @@
         "button_url": "",
         "shipping_text": "Delivered every month",
         "guarantee_text": "100 Days Money Back Guarantee",
+        "heading_font": "heading",
+        "heading_size": "auto",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_size": "auto",
+        "body_weight": "",
         "section_width": "page-width",
         "color_scheme": "scheme-1",
         "padding-block-start": 0,
@@ -531,9 +549,9 @@
           "type": "tab",
           "settings": {
             "tab_label": "KIDS",
-            "collection": "",
+            "collection": "kids-1",
             "max_products": 8,
-            "cta_text": "SHOP ALL KIDS",
+            "cta_text": "SHOP ALL",
             "cta_url": ""
           }
         },
@@ -572,6 +590,12 @@
         "columns": 4,
         "section_width": "page-width",
         "color_scheme": "scheme-1",
+        "heading_font": "heading",
+        "heading_size": "auto",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_size": "auto",
+        "body_weight": "",
         "padding-block-start": 60,
         "padding-block-end": 60
       }
@@ -759,6 +783,12 @@
         "section_width": "page-width",
         "video_columns": 3,
         "color_scheme": "scheme-1",
+        "heading_font": "heading",
+        "heading_size": "auto",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_size": "auto",
+        "body_weight": "",
         "padding-block-start": 60,
         "padding-block-end": 60
       }
@@ -851,6 +881,12 @@
         "cta_text_color": "#ffffff",
         "section_width": "page-width",
         "color_scheme": "scheme-9",
+        "heading_font": "heading",
+        "heading_size": "auto",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_size": "auto",
+        "body_weight": "",
         "padding-block-start": 60,
         "padding-block-end": 60
       }
@@ -902,6 +938,10 @@
         "subheading_size": 16,
         "review_text_size": 14,
         "expert_name_size": 14,
+        "heading_font": "heading",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_weight": "",
         "section_bg_color": "#9b1b6e",
         "heading_color": "#ffffff",
         "subheading_color": "#ffffff",
