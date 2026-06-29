@@ -268,19 +268,24 @@
   @media screen and (max-width: 749px) {
     .ln-buybox__layout {
       grid-template-columns: 1fr;
-      padding-inline: 16px;
-    }
-
-    .ln-buybox__gallery {
-      flex-direction: column;
+      padding-inline: 0;
     }
 
     .ln-buybox__thumbnails {
-      flex-direction: row;
-      overflow-x: auto;
-      height: 88px;
-      width: 100%;
-      -webkit-overflow-scrolling: touch;
+      display: none;
+    }
+
+    .ln-buybox__hero-container {
+      max-width: none;
+    }
+
+    .ln-buybox__details {
+      padding-block-start: 32px;
+      padding-inline: 16px;
+    }
+
+    .ln-buybox__arrow {
+      display: none;
     }
   }
 {% endstylesheet %}
