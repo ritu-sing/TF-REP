@@ -1,5 +1,15 @@
+{% style %}
+  #block-{{ block.id }}.ln-hsa-note,
+  #block-{{ block.id }} .ln-hsa-note__text {
+    font-family: var(--font-{{ block.settings.font_family }}--family, inherit);
+    font-size: {{ block.settings.font_size }}px;
+    {% unless block.settings.font_color == blank %}color: {{ block.settings.font_color }};{% endunless %}
+  }
+{% endstyle %}
+
 {%- if block.settings.show -%}
 <div
+  id="block-{{ block.id }}"
   class="ln-hsa-note"
   {{ block.shopify_attributes }}
   style="padding-block-start: {{ block.settings['padding-block-start'] }}px; padding-block-end: {{ block.settings['padding-block-end'] }}px;"
@@ -69,6 +79,37 @@
       "id": "show_info_icon",
       "label": "Show info icon",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Text color"
     },
     {
       "type": "range",

@@ -1,6 +1,18 @@
 {%- assign save_pct = block.settings.save_percent -%}
 
+{% style %}
+  #block-{{ block.id }} .ln-sp__heading,
+  #block-{{ block.id }} .ln-sp__row-title,
+  #block-{{ block.id }} .ln-sp__benefit,
+  #block-{{ block.id }} .ln-sp__onetime-price {
+    font-family: var(--font-{{ block.settings.font_family }}--family, inherit);
+    font-size: {{ block.settings.font_size }}px;
+    {% unless block.settings.font_color == blank %}color: {{ block.settings.font_color }};{% endunless %}
+  }
+{% endstyle %}
+
 <ln-selling-plan
+  id="block-{{ block.id }}"
   class="ln-sp"
   data-section-id="{{ section.id }}"
   data-save-percent="{{ save_pct }}"
@@ -272,6 +284,37 @@
       "id": "show_tooltip",
       "label": "Show info icon on last benefit",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Text color"
     },
     {
       "type": "header",

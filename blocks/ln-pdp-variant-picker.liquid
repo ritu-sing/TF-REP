@@ -5,6 +5,17 @@
   endif
 -%}
 
+{% style %}
+  #block-{{ block.id }} .ln-vp__legend,
+  #block-{{ block.id }} .ln-vp__option-name,
+  #block-{{ block.id }} .ln-vp__selected-val,
+  #block-{{ block.id }} .ln-vp__perday {
+    font-family: var(--font-{{ block.settings.font_family }}--family, inherit);
+    font-size: {{ block.settings.font_size }}px;
+    {% unless block.settings.font_color == blank %}color: {{ block.settings.font_color }};{% endunless %}
+  }
+{% endstyle %}
+
 {% unless product_resource == blank or product_resource.has_only_default_variant %}
   {% liquid
     assign button_background_brightness = section.settings.color_scheme.settings.foreground | color_brightness
@@ -16,6 +27,7 @@
   %}
 
   <variant-picker
+    id="block-{{ block.id }}"
     class="ln-vp"
     style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; padding-block-start: {{ block.settings['padding-block-start'] }}px; padding-block-end: {{ block.settings['padding-block-end'] }}px;"
     data-section-id="{{ section.id }}"
@@ -444,6 +456,37 @@
       "type": "text",
       "id": "perday_4_cost",
       "label": "Slot 4 — Per-day cost"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Text color"
     },
     {
       "type": "header",

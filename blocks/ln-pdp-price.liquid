@@ -15,7 +15,18 @@
   endif
 -%}
 
+{% style %}
+  #block-{{ block.id }} .ln-pdp-price__sale,
+  #block-{{ block.id }} .ln-pdp-price__compare,
+  #block-{{ block.id }} .ln-pdp-price__perday {
+    font-family: var(--font-{{ block.settings.font_family }}--family, inherit);
+    font-size: {{ block.settings.font_size }}px;
+    {% unless block.settings.font_color == blank %}color: {{ block.settings.font_color }};{% endunless %}
+  }
+{% endstyle %}
+
 <ln-pdp-price
+  id="block-{{ block.id }}"
   class="ln-pdp-price"
   data-section-id="{{ section.id }}"
   data-perday-option="{{ block.settings.perday_option | escape }}"
@@ -163,6 +174,37 @@
       "type": "text",
       "id": "perday_4_cost",
       "label": "Slot 4 — Per-day text"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Text color"
     },
     {
       "type": "header",

@@ -1,7 +1,23 @@
 {%- assign stack_col = block.settings.stack_collection -%}
 {%- assign max_products = block.settings.max_products | default: 6 -%}
 
+{% style %}
+  #block-{{ block.id }} .ln-stack__heading,
+  #block-{{ block.id }} .ln-stack__subtitle,
+  #block-{{ block.id }} .ln-stack__card-name {
+    font-family: var(--font-{{ block.settings.font_family }}--family, inherit);
+    {% unless block.settings.font_color == blank %}color: {{ block.settings.font_color }};{% endunless %}
+  }
+  #block-{{ block.id }} .ln-stack__heading {
+    font-size: {{ block.settings.font_size }}px;
+  }
+  #block-{{ block.id }} .ln-stack__subtitle {
+    font-size: {{ block.settings.font_size | minus: 3 }}px;
+  }
+{% endstyle %}
+
 <ln-stack-upsell
+  id="block-{{ block.id }}"
   class="ln-stack"
   data-tier1="{{ block.settings.tier_1_qty }}"
   data-tier2="{{ block.settings.tier_2_qty }}"
@@ -675,6 +691,37 @@
       "id": "default_review_count",
       "label": "Default review count",
       "default": 5676
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Heading font size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Text color"
     },
     {
       "type": "header",
