@@ -5,6 +5,8 @@
     --ln-ing-heading-color: {{ section.settings.heading_color }};
     --ln-ing-card-bg: {{ section.settings.card_bg_color }};
     --ln-ing-accent: {{ section.settings.accent_color }};
+    --ln-ing-heading-font: var(--font-{{ section.settings.heading_font }}--family, inherit);
+    --ln-ing-heading-size: {{ section.settings.heading_size }}px;
   }
 {% endstyle %}
 
@@ -104,41 +106,47 @@
   <div class="ln-ingredients__footer">
     <div class="ln-ingredients__accent-line"></div>
 
-    {%- assign has_allergens = false -%}
-    {%- for j in (1..8) -%}
-      {%- assign ak = 'allergen_' | append: j | append: '_label' -%}
-      {%- if section.settings[ak] != blank -%}
-        {%- assign has_allergens = true -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
+    {% if section.settings.allergen_section_heading != blank %}
+      <p class="ln-ingredients__allergen-heading">{{ section.settings.allergen_section_heading }}</p>
+    {% endif %}
 
-    {%- if has_allergens -%}
-      <ul class="ln-ingredients__allergens" role="list">
-        {%- for j in (1..8) -%}
-          {%- assign al_key = 'allergen_' | append: j | append: '_label' -%}
-          {%- assign ai_key = 'allergen_' | append: j | append: '_icon' -%}
-          {%- assign al_label = section.settings[al_key] -%}
-          {%- if al_label != blank -%}
-            <li class="ln-ingredients__allergen">
-              <div class="ln-ingredients__allergen-circle">
-                {%- if section.settings[ai_key] != blank -%}
-                  {{ section.settings[ai_key] | image_url: width: 80 | image_tag:
-                    widths: '40, 80',
-                    loading: 'lazy',
-                    alt: al_label,
-                    class: 'ln-ingredients__allergen-icon'
-                  }}
-                {%- else -%}
-                  <span class="ln-ingredients__allergen-abbr">{{ al_label | upcase | slice: 0, 3 }}</span>
-                {%- endif -%}
-              </div>
-              <span class="ln-ingredients__allergen-label">{{ al_label | upcase }}</span>
-            </li>
-          {%- endif -%}
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
+    {% if section.settings.show_allergen_section %}
+      {%- assign has_allergens = false -%}
+      {%- for j in (1..8) -%}
+        {%- assign ak = 'allergen_' | append: j | append: '_label' -%}
+        {%- if section.settings[ak] != blank -%}
+          {%- assign has_allergens = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if has_allergens -%}
+        <ul class="ln-ingredients__allergens" role="list">
+          {%- for j in (1..8) -%}
+            {%- assign al_key = 'allergen_' | append: j | append: '_label' -%}
+            {%- assign ai_key = 'allergen_' | append: j | append: '_icon' -%}
+            {%- assign al_label = section.settings[al_key] -%}
+            {%- if al_label != blank -%}
+              <li class="ln-ingredients__allergen">
+                <div class="ln-ingredients__allergen-circle">
+                  {%- if section.settings[ai_key] != blank -%}
+                    {{ section.settings[ai_key] | image_url: width: 80 | image_tag:
+                      widths: '40, 80',
+                      loading: 'lazy',
+                      alt: al_label,
+                      class: 'ln-ingredients__allergen-icon'
+                    }}
+                  {%- else -%}
+                    <span class="ln-ingredients__allergen-abbr">{{ al_label | upcase | slice: 0, 3 }}</span>
+                  {%- endif -%}
+                </div>
+                <span class="ln-ingredients__allergen-label">{{ al_label | upcase }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    {% endif %}
   </div>
 
 </ln-ingredients-section>
@@ -176,9 +184,9 @@
 
   .ln-ingredients__heading {
     margin: 0 0 10px;
-    font-family: var(--font-heading--family, inherit);
+    font-family: var(--ln-ing-heading-font, var(--font-heading--family, inherit));
     font-weight: 700;
-    font-size: 2.5rem;
+    font-size: var(--ln-ing-heading-size, 2.5rem);
     line-height: 1.1;
     color: var(--ln-ing-heading-color, #3d1534);
   }
@@ -417,6 +425,17 @@
     line-height: 1.2;
   }
 
+  .ln-ingredients__allergen-heading {
+    margin: 0 0 14px;
+    font-family: var(--font-body--family, inherit);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    opacity: 0.6;
+  }
+
   /* ── Mobile ─────────────────────────────────────────────────── */
   @media screen and (max-width: 749px) {
     .ln-ingredients {
@@ -475,6 +494,10 @@
       display: none;
     }
 
+    .ln-ingredients__allergen-heading {
+      margin-block-end: 10px;
+    }
+
     /* Allergen row scrolls on mobile */
     .ln-ingredients__allergens {
       flex-wrap: nowrap;
@@ -519,6 +542,28 @@
       "default": "#3d1534"
     },
     {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
       "type": "color",
       "id": "card_bg_color",
       "label": "Card background color",
@@ -561,6 +606,18 @@
     {
       "type": "header",
       "content": "Allergen Information"
+    },
+    {
+      "type": "text",
+      "id": "allergen_section_heading",
+      "label": "Allergen section heading",
+      "default": "Free of these common allergens"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_allergen_section",
+      "label": "Show allergen-free section",
+      "default": true
     },
     {
       "type": "image_picker",
