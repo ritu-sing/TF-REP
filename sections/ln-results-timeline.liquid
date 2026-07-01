@@ -26,7 +26,7 @@
       {% if section.settings.image != blank %}
         {{ section.settings.image | image_url: width: 900 | image_tag:
           widths: '400, 600, 900',
-          loading: 'lazy',
+          loading: 'eager',
           class: 'ln-timeline__image',
           alt: section.settings.heading | strip_html
         }}
@@ -127,23 +127,24 @@
 
   /* ── Image column (desktop left) ── */
   .ln-timeline__image-col {
-    display: flex;
-    flex-direction: column;
+    position: relative;
     overflow: hidden;
     min-height: 440px;
   }
 
+  /* Absolute fill — works regardless of how parent height is resolved */
   .ln-timeline__image {
-    flex: 1;
+    position: absolute;
+    inset: 0;
     width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
-    min-height: 0;
   }
 
   .ln-timeline__image-placeholder {
-    flex: 1;
-    min-height: 440px;
+    position: absolute;
+    inset: 0;
     background: #f0e8e0;
   }
 
