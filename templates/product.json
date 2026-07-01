@@ -504,138 +504,359 @@
         "padding-block-end": 48
       }
     },
-    "product_recommendations": {
-      "type": "product-recommendations",
+    "comparison_table_section": {
+      "type": "comparison-table",
       "blocks": {
-        "header_text": {
-          "type": "text",
-          "name": "Header",
+        "row_1": {
+          "type": "row",
           "settings": {
-            "text": "<h3>You may also like</h3>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h4",
-            "font": "var(--font-heading--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "label": "Made With",
+            "llama_value": "Fruits & Veggies",
+            "llama_has": true,
+            "competitor_value": "Sugar & Sweeteners",
+            "competitor_has": false
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "Product card",
-          "static": true,
+        "row_2": {
+          "type": "row",
           "settings": {
-            "product_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "gallery": {
-              "type": "_product-card-gallery",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "title": {
-              "type": "product-title",
-              "settings": {
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price": {
-              "type": "price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "paragraph",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "gallery",
-            "title",
-            "price"
-          ]
+            "label": "Vitamins",
+            "llama_value": "Whole Food",
+            "llama_has": true,
+            "competitor_value": "Synthetic",
+            "competitor_has": false
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "Certified Organic",
+            "llama_value": "",
+            "llama_has": true,
+            "competitor_value": "",
+            "competitor_has": false
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "Vegan & Allergen Free",
+            "llama_value": "",
+            "llama_has": true,
+            "competitor_value": "",
+            "competitor_has": false
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Tastes Like",
+            "llama_value": "Real Fruit",
+            "llama_has": true,
+            "competitor_value": "Candy",
+            "competitor_has": false
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "label": "Money Back Guarantee",
+            "llama_value": "100 Days",
+            "llama_has": true,
+            "competitor_value": "",
+            "competitor_has": false
+          }
         }
       },
       "block_order": [
-        "header_text"
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
       ],
-      "name": "Recommended products",
       "settings": {
-        "product": "{{ closest.product }}",
-        "recommendation_type": "related",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 4,
-        "columns": 4,
-        "mobile_columns": "2",
-        "columns_gap": 12,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
+        "heading": "The Difference Is Clear...",
+        "llama_col_label": "LLAMA NATURALS",
+        "competitor_col_label": "REGULAR GUMMIES",
+        "show_cta": true,
+        "cta_text": "SHOP NOW",
+        "cta_url": "",
+        "section_bg_color": "#fffef5",
+        "llama_col_bg": "#ffc56e",
+        "llama_col_fg": "#680040",
+        "check_icon_color": "#680040",
+        "cross_icon_color": "#e05a4e",
+        "cta_bg_color": "#680040",
+        "cta_text_color": "#ffffff",
         "section_width": "page-width",
-        "gap": 28,
+        "color_scheme": "scheme-9",
+        "heading_font": "heading",
+        "heading_size": "auto",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_size": "auto",
+        "body_weight": "",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
+    "experts_review_section": {
+      "type": "experts-review",
+      "blocks": {
+        "expert_1": {
+          "type": "expert-card",
+          "settings": {
+            "expert_image": "shopify://shop_images/expert-image-1f3f4d047d5a_430x_b8dac100-67a0-44ad-9788-297a8141a1d0.webp",
+            "expert_name": "Dr. Maria Chen",
+            "expert_title": "Pediatric Nutritionist, RD",
+            "expert_organization": "Children's Wellness Institute",
+            "review_text": "As a pediatric nutritionist, I'm continually asked for clean supplement recommendations. Llama Naturals checks every box: whole-food vitamins, no synthetic additives, and allergen-free. These are the gummies I confidently recommend to my patients' families."
+          }
+        },
+        "expert_2": {
+          "type": "expert-card",
+          "settings": {
+            "expert_image": "shopify://shop_images/expert-image-803cf730-fc67-4b4c-9d51-356149faee12-45dba73d8109_430x_b412cd06-b8fe-426f-a711-b19a136b2fc4.webp",
+            "expert_name": "Dr. James Okafor",
+            "expert_title": "Family Physician, MD",
+            "expert_organization": "Integrative Family Health",
+            "review_text": "I've reviewed dozens of children's supplement brands in my practice. What sets Llama Naturals apart is the USDA Organic certification combined with third-party lab testing. Parents can trust exactly what they're giving their kids."
+          }
+        },
+        "expert_3": {
+          "type": "expert-card",
+          "settings": {
+            "expert_image": "shopify://shop_images/expert-image-2dd5f2dc-851c-402e-8d62-61e0f90bb17d-255c8dd178e3_430x_0561156a-53e6-42c9-945d-36d61a34143e.webp",
+            "expert_name": "Sarah Brennan",
+            "expert_title": "Registered Dietitian, MS",
+            "expert_organization": "Pediatric Nutrition Partners",
+            "review_text": "The bioavailability of whole-food-sourced vitamins versus synthetic alternatives is not even close. Llama Naturals made the right choice sourcing nutrients from real fruits and vegetables. My clients see the difference in their children's energy and wellbeing."
+          }
+        }
+      },
+      "block_order": [
+        "expert_1",
+        "expert_2",
+        "expert_3"
+      ],
+      "settings": {
+        "heading": "Approved By The Experts",
+        "heading_alignment": "center",
+        "subheading": "Recommending what's best for you and your family",
+        "heading_size": 36,
+        "subheading_size": 16,
+        "review_text_size": 14,
+        "expert_name_size": 14,
+        "heading_font": "heading",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_weight": "",
+        "section_bg_color": "#9b1b6e",
+        "heading_color": "#ffffff",
+        "subheading_color": "#ffffff",
+        "card_bg_color": "#ffffff",
+        "card_border_color": "#e5e5e5",
+        "review_text_color": "#333333",
+        "expert_name_color": "#680040",
+        "expert_title_color": "#680040",
+        "expert_org_color": "#680040",
+        "card_border_radius": 14,
+        "info_position": "top",
+        "columns": 3,
+        "gap": 24,
+        "photo_size": 100,
+        "photo_border_color": "#ffffff",
+        "photo_border_width": 0,
+        "show_watermark": true,
+        "watermark_image": "shopify://shop_images/vector-5d28e86a-697d-4379-8d65-91cb249af82a-04d806cf5e3f_430x_093d01dc-0102-4d4d-8055-4eb58199f078.webp",
+        "watermark_layer": "front",
+        "watermark_color": "#333333",
+        "watermark_opacity": 23,
+        "watermark_size": 160,
+        "watermark_1_x": 33,
+        "watermark_1_y": 50,
+        "watermark_2_x": 67,
+        "watermark_2_y": 50,
+        "watermark_1_x_mobile": 50,
+        "watermark_1_y_mobile": 25,
+        "watermark_2_x_mobile": 50,
+        "watermark_2_y_mobile": 75,
+        "show_arrows": true,
+        "icons_style": "chevron",
+        "icons_shape": "circle",
+        "section_width": "page-width",
+        "color_scheme": "scheme-58084d4c-a86e-4d0a-855e-a0966e5043f7",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
+    "founder_story_section": {
+      "type": "founder-story",
+      "settings": {
+        "image": "shopify://shop_images/cold-candy-v3-founders_430x_5cd6e0d4-8332-4e6a-bbed-dd1cfa72abab.webp",
+        "eyebrow": "",
+        "heading": "<p>Created by parents who were tired of candy vitamins</p>",
+        "quote": "",
+        "body": "<p>Frustrated by sugary, artificial vitamins, dads Kevin & Brad created a truly healthy option for their kids and yours.</p>",
+        "founder_name": "",
+        "founder_title": "",
+        "button_text": "Read our story",
+        "button_link": "",
+        "button_style": "filled",
+        "button_bg_color": "#680040",
+        "button_text_color": "#ffffff",
+        "button_border_radius": 84,
+        "button_full_width": false,
+        "button_max_width": 208,
+        "show_signature": false,
+        "image_position": "left",
+        "section_width": "page-width",
+        "section_bg_color": "#9ed7ef",
+        "heading_color": "#680040",
+        "body_color": "#680040",
+        "eyebrow_color": "",
         "color_scheme": "scheme-1",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
+    "tabbed_carousel_main": {
+      "type": "tabbed-carousel",
+      "blocks": {
+        "tab_0": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "KIDS",
+            "collection": "kids-1",
+            "max_products": 8,
+            "cta_text": "SHOP ALL",
+            "cta_url": ""
+          }
+        },
+        "tab_1": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "ADULTS",
+            "collection": "",
+            "max_products": 8,
+            "cta_text": "SHOP ALL ADULTS",
+            "cta_url": ""
+          }
+        },
+        "tab_2": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "BUNDLE & SAVE",
+            "collection": "",
+            "max_products": 8,
+            "cta_text": "SHOP ALL BUNDLES",
+            "cta_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "tab_0",
+        "tab_1",
+        "tab_2"
+      ],
+      "settings": {
+        "heading": "More Nutrition For Your Kid",
+        "show_guarantee": true,
+        "guarantee_heading": "100-Day Money-Back Guarantee",
+        "guarantee_subtext": "No Returns, No Hassle, No Questions.",
+        "icons_style": "chevron",
+        "columns": 4,
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "heading_font": "heading",
+        "heading_size": "auto",
+        "heading_weight": "",
+        "body_font": "body",
+        "body_size": "auto",
+        "body_weight": "",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
+    "faqs_section": {
+      "type": "faqs",
+      "blocks": {
+        "faq_1": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are your gummies USDA Organic?",
+            "answer": "<p>Yes! All of our gummies are USDA Certified Organic. We source real fruits and vegetables to deliver nutrition without synthetic additives or pesticide residues.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_2": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are they safe for picky eaters?",
+            "answer": "<p>Absolutely. Our gummies taste like real fruit because they are made from real fruit. In our studies, 77% of kids love the taste immediately — even the pickiest eaters.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_3": {
+          "type": "faq-item",
+          "settings": {
+            "question": "What is your money-back guarantee?",
+            "answer": "<p>We stand behind every bottle with a 100-day money-back guarantee. If you or your child are not completely satisfied, contact us for a full refund — no returns required.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_4": {
+          "type": "faq-item",
+          "settings": {
+            "question": "How often should my child take the gummies?",
+            "answer": "<p>We recommend one serving per day with or without food. Each serving delivers the essential vitamins and nutrients your child needs for daily wellness support.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_5": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Do you offer a subscription option?",
+            "answer": "<p>Yes! Subscribe and save to receive your favorite Llama Naturals gummies on a schedule that works for you. Subscribers enjoy an ongoing discount and can skip or cancel anytime with no hassle.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
+      "settings": {
+        "heading": "Still Wondering?",
+        "subtext": "",
+        "heading_alignment": "center",
+        "icon_style": "plus",
+        "heading_color": "#680040",
+        "subtext_color": "",
+        "question_color": "",
+        "answer_color": "",
+        "divider_color": "",
+        "icon_color": "",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "row_spacing": 20,
+        "padding-block-start": 32,
+        "padding-block-end": 60
       }
     }
   },
   "order": [
     "main",
     "ln_ingredients",
-    "product_recommendations"
+    "comparison_table_section",
+    "experts_review_section",
+    "founder_story_section",
+    "tabbed_carousel_main",
+    "faqs_section"
   ]
 }
