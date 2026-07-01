@@ -12,9 +12,13 @@
     --ln-tl-body-font: var(--font-{{ section.settings.body_font }}--family, inherit);
     --ln-tl-body-size: {{ section.settings.body_size }}px;
     --ln-tl-item-heading-size: {{ section.settings.item_heading_size | default: 16 }}px;
+    --ln-tl-period-size: {{ section.settings.period_label_size }}px;
     {% if section.settings.heading_color != blank %}--ln-tl-heading-color: {{ section.settings.heading_color }};{% endif %}
     {% if section.settings.subheading_color != blank %}--ln-tl-subheading-color: {{ section.settings.subheading_color }};{% endif %}
     {% if section.settings.body_color != blank %}--ln-tl-body-color: {{ section.settings.body_color }};{% endif %}
+    {% if section.settings.period_label_color != blank %}--ln-tl-period-color: {{ section.settings.period_label_color }};{% endif %}
+    {% if section.settings.icon_bg_color != blank %}--ln-tl-icon-bg: {{ section.settings.icon_bg_color }};{% endif %}
+    {% if section.settings.image_col_bg_color != blank %}--ln-tl-img-col-bg: {{ section.settings.image_col_bg_color }};{% endif %}
   }
 {% endstyle %}
 
@@ -74,10 +78,11 @@
               {% endunless %}
             </div>
             <div class="ln-timeline__item-body">
-              {% if block.settings.heading != blank or block.settings.period_label != blank %}
-                <h3 class="ln-timeline__item-heading">
-                  {%- if block.settings.period_label != blank -%}{{ block.settings.period_label }}: {%- endif -%}{{ block.settings.heading }}
-                </h3>
+              {% if block.settings.period_label != blank %}
+                <p class="ln-timeline__item-period">{{ block.settings.period_label }}</p>
+              {% endif %}
+              {% if block.settings.heading != blank %}
+                <h3 class="ln-timeline__item-heading">{{ block.settings.heading }}</h3>
               {% endif %}
               {% if block.settings.description != blank %}
                 <p class="ln-timeline__item-desc">{{ block.settings.description }}</p>
@@ -128,7 +133,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: #f0e8e0;
+    background-color: var(--ln-tl-img-col-bg, #f0e8e0);
     min-height: 500px;
   }
 
@@ -200,7 +205,7 @@
     justify-content: center;
     flex-shrink: 0;
     overflow: hidden;
-    background: transparent;
+    background-color: var(--ln-tl-icon-bg, transparent);
   }
 
   .ln-timeline__icon-wrap img {
@@ -226,6 +231,17 @@
 
   .ln-timeline__item:last-child .ln-timeline__item-body {
     padding-block-end: 0;
+  }
+
+  .ln-timeline__item-period {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    font-family: var(--ln-tl-heading-font, var(--font-heading--family, inherit));
+    font-size: var(--ln-tl-period-size, 11px);
+    color: var(--ln-tl-period-color, var(--ln-tl-accent, #680040));
+    margin: 0 0 4px;
+    line-height: 1.2;
   }
 
   .ln-timeline__item-heading {
@@ -462,6 +478,32 @@
       "id": "cta_text_color",
       "label": "CTA text color",
       "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "period_label_color",
+      "label": "Period label color"
+    },
+    {
+      "type": "range",
+      "id": "period_label_size",
+      "label": "Period label size",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Icon background color"
+    },
+    {
+      "type": "color",
+      "id": "image_col_bg_color",
+      "label": "Image column background",
+      "default": "#f0e8e0"
     },
     {
       "type": "header",
