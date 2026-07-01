@@ -3,7 +3,7 @@
     --padding-block-start: {{ section.settings['padding-block-start'] }}px;
     --padding-block-end: {{ section.settings['padding-block-end'] }}px;
     --ln-tl-accent: {{ section.settings.accent_color }};
-    --ln-tl-connector-color: {{ section.settings.connector_color }};
+    --ln-tl-connector: {{ section.settings.connector_color }};
     --ln-tl-cta-bg: {{ section.settings.cta_bg_color }};
     --ln-tl-cta-text: {{ section.settings.cta_text_color }};
     --ln-tl-heading-font: var(--font-{{ section.settings.heading_font }}--family, inherit);
@@ -11,11 +11,9 @@
     --ln-tl-heading-weight: {{ section.settings.heading_weight }};
     --ln-tl-body-font: var(--font-{{ section.settings.body_font }}--family, inherit);
     --ln-tl-body-size: {{ section.settings.body_size }}px;
-    --ln-tl-period-font: var(--font-{{ section.settings.period_font }}--family, inherit);
-    --ln-tl-period-size: {{ section.settings.period_size }}px;
+    --ln-tl-item-heading-size: {{ section.settings.item_heading_size | default: 16 }}px;
     {% if section.settings.heading_color != blank %}--ln-tl-heading-color: {{ section.settings.heading_color }};{% endif %}
     {% if section.settings.subheading_color != blank %}--ln-tl-subheading-color: {{ section.settings.subheading_color }};{% endif %}
-    {% if section.settings.period_color != blank %}--ln-tl-period-color: {{ section.settings.period_color }};{% endif %}
     {% if section.settings.body_color != blank %}--ln-tl-body-color: {{ section.settings.body_color }};{% endif %}
   }
 {% endstyle %}
@@ -23,46 +21,86 @@
 <ln-timeline class="ln-timeline color-{{ section.settings.color_scheme }} ln-timeline--{{ section.settings.section_width }}">
   <div class="ln-timeline__inner">
 
-    <div class="ln-timeline__header">
-      {% if section.settings.heading != blank %}
-        <h2 class="ln-timeline__heading">{{ section.settings.heading | strip_html }}</h2>
-      {% endif %}
-      {% if section.settings.subheading != blank %}
-        <p class="ln-timeline__subheading">{{ section.settings.subheading }}</p>
+    {%- comment -%}Desktop: left column image{%- endcomment -%}
+    <div class="ln-timeline__image-col">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 900 | image_tag:
+          widths: '400, 600, 900',
+          loading: 'lazy',
+          class: 'ln-timeline__image',
+          alt: section.settings.heading | strip_html
+        }}
+      {% else %}
+        <div class="ln-timeline__image-placeholder"></div>
       {% endif %}
     </div>
 
-    <div class="ln-timeline__track" ref="track">
-      {% for block in section.blocks %}
-        <div class="ln-timeline__item" {{ block.shopify_attributes }}>
-          <div class="ln-timeline__marker"></div>
-          {% if block.settings.icon != blank %}
-            <div class="ln-timeline__icon">
-              {{ block.settings.icon | image_url: width: 96 | image_tag:
-                widths: '48, 96',
-                loading: 'lazy',
-                alt: block.settings.heading
-              }}
-            </div>
-          {% endif %}
-          <span class="ln-timeline__period">{{ block.settings.period_label }}</span>
-          <div class="ln-timeline__content">
-            {% if block.settings.heading != blank %}
-              <h3 class="ln-timeline__item-heading">{{ block.settings.heading }}</h3>
-            {% endif %}
-            {% if block.settings.description != blank %}
-              <p class="ln-timeline__item-desc">{{ block.settings.description }}</p>
-            {% endif %}
-          </div>
-        </div>
-      {% endfor %}
-    </div>
+    {%- comment -%}Right column: header + mobile image + items + footnote{%- endcomment -%}
+    <div class="ln-timeline__content-col">
 
-    {% if section.settings.cta_text != blank and section.settings.cta_url != blank %}
-      <div class="ln-timeline__cta">
-        <a href="{{ section.settings.cta_url }}" class="ln-timeline__cta-btn">{{ section.settings.cta_text }}</a>
+      <div class="ln-timeline__header">
+        {% if section.settings.heading != blank %}
+          <h2 class="ln-timeline__heading">{{ section.settings.heading | strip_html }}</h2>
+        {% endif %}
+        {% if section.settings.subheading != blank %}
+          <p class="ln-timeline__subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
       </div>
-    {% endif %}
+
+      {%- comment -%}Mobile only: image appears between header and timeline items{%- endcomment -%}
+      {% if section.settings.image != blank %}
+        <div class="ln-timeline__image-mobile" aria-hidden="true">
+          {{ section.settings.image | image_url: width: 800 | image_tag:
+            widths: '400, 600, 800',
+            loading: 'lazy',
+            class: 'ln-timeline__image-mobile__img',
+            alt: ''
+          }}
+        </div>
+      {% endif %}
+
+      <div class="ln-timeline__track" ref="track">
+        {% for block in section.blocks %}
+          <div class="ln-timeline__item" {{ block.shopify_attributes }}>
+            <div class="ln-timeline__item-marker-col">
+              <div class="ln-timeline__icon-wrap">
+                {% if block.settings.icon != blank %}
+                  {{ block.settings.icon | image_url: width: 64 | image_tag:
+                    widths: '32, 64',
+                    loading: 'lazy',
+                    alt: ''
+                  }}
+                {% endif %}
+              </div>
+              {% unless forloop.last %}
+                <div class="ln-timeline__connector-line"></div>
+              {% endunless %}
+            </div>
+            <div class="ln-timeline__item-body">
+              {% if block.settings.heading != blank or block.settings.period_label != blank %}
+                <h3 class="ln-timeline__item-heading">
+                  {%- if block.settings.period_label != blank -%}{{ block.settings.period_label }}: {%- endif -%}{{ block.settings.heading }}
+                </h3>
+              {% endif %}
+              {% if block.settings.description != blank %}
+                <p class="ln-timeline__item-desc">{{ block.settings.description }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.footnote != blank %}
+        <p class="ln-timeline__footnote">{{ section.settings.footnote }}</p>
+      {% endif %}
+
+      {% if section.settings.cta_text != blank and section.settings.cta_url != blank %}
+        <div class="ln-timeline__cta">
+          <a href="{{ section.settings.cta_url }}" class="ln-timeline__cta-btn">{{ section.settings.cta_text }}</a>
+        </div>
+      {% endif %}
+
+    </div>
 
   </div>
 </ln-timeline>
@@ -72,43 +110,71 @@
 {% stylesheet %}
   ln-timeline {
     display: block;
-    padding-block-start: var(--padding-block-start, 60px);
-    padding-block-end: var(--padding-block-end, 60px);
+    overflow: hidden;
   }
 
-  .ln-timeline {
-    padding-inline: 40px;
+  /* ── Inner 2-col grid ── */
+  .ln-timeline__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
   }
 
-  .ln-timeline--page-width {
+  .ln-timeline--page-width .ln-timeline__inner {
     max-width: var(--page-content-width, 1280px);
     margin-inline: auto;
   }
 
-  /* ── Inner container ──────────────────────────────────────────── */
-  .ln-timeline__inner {
+  /* ── Image column (desktop left) ── */
+  .ln-timeline__image-col {
+    overflow: hidden;
+    position: relative;
+    min-height: 440px;
+  }
+
+  .ln-timeline__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ln-timeline__image-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 440px;
+    background: #f0e8e0;
+  }
+
+  /* Mobile image: hidden on desktop */
+  .ln-timeline__image-mobile {
+    display: none;
+  }
+
+  /* ── Content column (desktop right) ── */
+  .ln-timeline__content-col {
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    justify-content: center;
+    gap: 28px;
+    padding-block-start: var(--padding-block-start, 60px);
+    padding-block-end: var(--padding-block-end, 60px);
+    padding-inline-start: 52px;
+    padding-inline-end: 40px;
   }
 
-  /* ── Header ───────────────────────────────────────────────────── */
-  .ln-timeline__header {
-    text-align: center;
-  }
-
+  /* ── Section heading / subheading ── */
   .ln-timeline__heading {
-    margin: 0 0 12px;
+    margin: 0 0 10px;
     font-family: var(--ln-tl-heading-font, var(--font-heading--family, inherit));
-    font-weight: var(--ln-tl-heading-weight, 700);
     font-size: var(--ln-tl-heading-size, 2.25rem);
+    font-weight: var(--ln-tl-heading-weight, 700);
     line-height: 1.15;
     color: var(--ln-tl-heading-color, var(--color-foreground));
   }
 
   .ln-timeline__subheading {
-    margin: 0 auto;
-    max-width: 560px;
+    margin: 0;
     font-family: var(--ln-tl-body-font, var(--font-body--family, inherit));
     font-size: var(--ln-tl-body-size, 1rem);
     line-height: 1.55;
@@ -116,80 +182,71 @@
     opacity: 0.75;
   }
 
-  /* ── Track (horizontal connector) ────────────────────────────── */
+  /* ── Track: vertical list of items ── */
   .ln-timeline__track {
     display: flex;
-    position: relative;
-    gap: 0;
+    flex-direction: column;
   }
 
-  .ln-timeline__track::before {
-    content: '';
-    position: absolute;
-    top: 8px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--ln-tl-connector-color, #e0d5c7);
-    z-index: 0;
-  }
-
-  /* ── Items ────────────────────────────────────────────────────── */
+  /* ── Single timeline item ── */
   .ln-timeline__item {
-    flex: 1;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  /* ── Left column: circle icon + connector ── */
+  .ln-timeline__item-marker-col {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    position: relative;
-    padding-inline: 16px;
-  }
-
-  .ln-timeline__marker {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: var(--ln-tl-accent, #680040);
-    border: 3px solid var(--ln-tl-connector-color, #e0d5c7);
-    z-index: 1;
-    position: relative;
     flex-shrink: 0;
-    margin-block-end: 16px;
+    width: 48px;
   }
 
-  .ln-timeline__icon {
+  .ln-timeline__icon-wrap {
     width: 48px;
     height: 48px;
-    margin-block-end: 8px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ln-tl-accent, #680040);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: transparent;
   }
 
-  .ln-timeline__icon img {
-    width: 100%;
-    height: 100%;
+  .ln-timeline__icon-wrap img {
+    width: 26px;
+    height: 26px;
     object-fit: contain;
-    display: block;
   }
 
-  .ln-timeline__period {
-    display: block;
-    font-family: var(--ln-tl-period-font, var(--font-accent--family, inherit));
-    font-size: var(--ln-tl-period-size, 0.875rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--ln-tl-period-color, var(--ln-tl-accent, #680040));
-    margin-block-end: 8px;
-  }
-
-  .ln-timeline__content {
+  .ln-timeline__connector-line {
+    width: 1.5px;
     flex: 1;
+    min-height: 20px;
+    background-color: var(--ln-tl-connector, #d0c5b5);
+    margin-block: 6px;
+  }
+
+  /* ── Item text body ── */
+  .ln-timeline__item-body {
+    flex: 1;
+    padding-block-start: 10px;
+    padding-block-end: 24px;
+  }
+
+  .ln-timeline__item:last-child .ln-timeline__item-body {
+    padding-block-end: 0;
   }
 
   .ln-timeline__item-heading {
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     font-family: var(--ln-tl-heading-font, var(--font-heading--family, inherit));
+    font-size: var(--ln-tl-item-heading-size, 1rem);
     font-weight: 700;
-    font-size: 1.0625rem;
     line-height: 1.3;
     color: var(--ln-tl-heading-color, var(--color-foreground));
   }
@@ -203,11 +260,17 @@
     opacity: 0.8;
   }
 
-  /* ── CTA ──────────────────────────────────────────────────────── */
-  .ln-timeline__cta {
-    text-align: center;
+  /* ── Footnote ── */
+  .ln-timeline__footnote {
+    margin: 0;
+    font-family: var(--ln-tl-body-font, var(--font-body--family, inherit));
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--ln-tl-body-color, var(--color-foreground));
+    opacity: 0.55;
   }
 
+  /* ── CTA ── */
   .ln-timeline__cta-btn {
     display: inline-block;
     padding: 14px 32px;
@@ -215,7 +278,6 @@
     color: var(--ln-tl-cta-text, #ffffff);
     text-decoration: none;
     border-radius: 84px;
-    font-family: var(--ln-tl-body-font, var(--font-body--family, inherit));
     font-weight: 600;
     font-size: 1rem;
     letter-spacing: 0.03em;
@@ -226,52 +288,34 @@
     opacity: 0.9;
   }
 
-  /* ── Mobile ───────────────────────────────────────────────────── */
+  /* ── Mobile ── */
   @media screen and (max-width: 749px) {
-    .ln-timeline {
-      padding-inline: 20px;
-    }
-
     .ln-timeline__inner {
-      gap: 32px;
+      grid-template-columns: 1fr;
     }
 
-    .ln-timeline__header {
-      text-align: left;
-    }
-
-    .ln-timeline__subheading {
-      margin-inline: 0;
-    }
-
-    .ln-timeline__track {
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .ln-timeline__track::before {
+    /* Hide desktop image column */
+    .ln-timeline__image-col {
       display: none;
     }
 
-    .ln-timeline__item {
-      flex-direction: row;
-      align-items: flex-start;
-      text-align: left;
-      padding-inline: 0;
-      gap: 16px;
+    /* Show mobile image between header and items */
+    .ln-timeline__image-mobile {
+      display: block;
     }
 
-    .ln-timeline__marker {
-      margin-block-end: 0;
-      margin-block-start: 4px;
-      flex-shrink: 0;
+    .ln-timeline__image-mobile__img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
     }
 
-    .ln-timeline__icon {
-      width: 40px;
-      height: 40px;
-      margin-block-end: 0;
-      flex-shrink: 0;
+    .ln-timeline__content-col {
+      padding-inline-start: 20px;
+      padding-inline-end: 20px;
+      gap: 24px;
     }
   }
 {% endstylesheet %}
@@ -286,27 +330,36 @@
       "content": "Content"
     },
     {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (left column)"
+    },
+    {
       "type": "richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "<p>See Real Results Over Time</p>"
+      "default": "<p>Results Timeline</p>"
     },
     {
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "What to expect when you make the switch to real food vitamins."
+      "default": "What to expect and when you will begin noticing results"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote text"
     },
     {
       "type": "text",
       "id": "cta_text",
-      "label": "CTA text",
-      "default": "Shop Now"
+      "label": "CTA button text"
     },
     {
       "type": "url",
       "id": "cta_url",
-      "label": "CTA URL"
+      "label": "CTA button URL"
     },
     {
       "type": "header",
@@ -327,7 +380,7 @@
     {
       "type": "range",
       "id": "heading_size",
-      "label": "Heading size",
+      "label": "Section heading size",
       "min": 20,
       "max": 64,
       "step": 2,
@@ -363,8 +416,8 @@
     },
     {
       "type": "range",
-      "id": "body_size",
-      "label": "Body size",
+      "id": "item_heading_size",
+      "label": "Item heading size",
       "min": 12,
       "max": 24,
       "step": 1,
@@ -372,26 +425,14 @@
       "default": 16
     },
     {
-      "type": "select",
-      "id": "period_font",
-      "label": "Period label font",
-      "options": [
-        { "value": "body", "label": "Body" },
-        { "value": "subheading", "label": "Subheading" },
-        { "value": "heading", "label": "Heading" },
-        { "value": "accent", "label": "Accent" }
-      ],
-      "default": "accent"
-    },
-    {
       "type": "range",
-      "id": "period_size",
-      "label": "Period label size",
-      "min": 10,
+      "id": "body_size",
+      "label": "Description text size",
+      "min": 12,
       "max": 24,
       "step": 1,
       "unit": "px",
-      "default": 14
+      "default": 15
     },
     {
       "type": "header",
@@ -409,30 +450,25 @@
     },
     {
       "type": "color",
-      "id": "period_color",
-      "label": "Period label color"
-    },
-    {
-      "type": "color",
       "id": "body_color",
       "label": "Body text color"
     },
     {
       "type": "color",
       "id": "accent_color",
-      "label": "Accent color",
+      "label": "Accent / icon border color",
       "default": "#680040"
     },
     {
       "type": "color",
       "id": "connector_color",
       "label": "Connector line color",
-      "default": "#e0d5c7"
+      "default": "#d0c5b5"
     },
     {
       "type": "color",
       "id": "cta_bg_color",
-      "label": "CTA background color",
+      "label": "CTA background",
       "default": "#680040"
     },
     {
@@ -494,7 +530,7 @@
         {
           "type": "text",
           "id": "period_label",
-          "label": "Period label",
+          "label": "Period label (e.g. WEEK 1-2)",
           "default": "Week 1"
         },
         {
@@ -523,33 +559,33 @@
         {
           "type": "timeline-item",
           "settings": {
-            "period_label": "Day 1",
-            "heading": "First Gummy Down",
-            "description": "Your child takes their first Llama Naturals gummy — real fruit flavour they will actually love."
+            "period_label": "WEEK 1-2",
+            "heading": "The Fight Is Over",
+            "description": "Kids ask for their gummy before you even remember. No bribing. No battles."
           }
         },
         {
           "type": "timeline-item",
           "settings": {
-            "period_label": "Week 1",
-            "heading": "Building the Habit",
-            "description": "Daily vitamins become part of the routine as key nutrients begin accumulating in the body."
+            "period_label": "Week 2-4",
+            "heading": "Peace Of Mind",
+            "description": "Picky eating days stop stressing you out. Real nutrition from real food."
           }
         },
         {
           "type": "timeline-item",
           "settings": {
-            "period_label": "Month 1",
-            "heading": "Feeling the Difference",
-            "description": "Parents report improved energy, mood and fewer sick days as vitamin levels optimise."
+            "period_label": "Month 1-2",
+            "heading": "Parents Notice A Difference",
+            "description": "59% of families report visible changes in energy, appetite, or mood.*"
           }
         },
         {
           "type": "timeline-item",
           "settings": {
-            "period_label": "Month 3+",
-            "heading": "Lasting Wellness",
-            "description": "Consistent whole-food nutrition supports long-term immune function, growth, and brain health."
+            "period_label": "Month 3 And Beyond",
+            "heading": "The Whole Family Is In",
+            "description": "Kids are set. Parents start ordering for themselves."
           }
         }
       ]

@@ -510,51 +510,51 @@
         "timeline_1": {
           "type": "timeline-item",
           "settings": {
-            "period_label": "Day 1",
-            "heading": "First Gummy Down",
-            "description": "Your child takes their first Llama Naturals gummy — real fruit flavour they will actually love."
+            "period_label": "WEEK 1-2",
+            "heading": "The Fight Is Over",
+            "description": "Kids ask for their gummy before you even remember. No bribing. No battles."
           }
         },
         "timeline_2": {
           "type": "timeline-item",
           "settings": {
-            "period_label": "Week 1",
-            "heading": "Building the Habit",
-            "description": "Daily vitamins become part of the routine as key nutrients begin accumulating in the body."
+            "period_label": "Week 2-4",
+            "heading": "Peace Of Mind",
+            "description": "Picky eating days stop stressing you out. Real nutrition from real food."
           }
         },
         "timeline_3": {
           "type": "timeline-item",
           "settings": {
-            "period_label": "Month 1",
-            "heading": "Feeling the Difference",
-            "description": "Parents report improved energy, mood and fewer sick days as vitamin levels optimise."
+            "period_label": "Month 1-2",
+            "heading": "Parents Notice A Difference",
+            "description": "59% of families report visible changes in energy, appetite, or mood.*"
           }
         },
         "timeline_4": {
           "type": "timeline-item",
           "settings": {
-            "period_label": "Month 3+",
-            "heading": "Lasting Wellness",
-            "description": "Consistent whole-food nutrition supports long-term immune function, growth, and brain health."
+            "period_label": "Month 3 And Beyond",
+            "heading": "The Whole Family Is In",
+            "description": "Kids are set. Parents start ordering for themselves."
           }
         }
       },
       "block_order": ["timeline_1", "timeline_2", "timeline_3", "timeline_4"],
       "settings": {
-        "heading": "<p>Real Results Over Time</p>",
-        "subheading": "What to expect when you make the switch to real food vitamins.",
-        "cta_text": "Shop Now",
+        "heading": "<p>Results Timeline</p>",
+        "subheading": "What to expect and when you will begin noticing results",
+        "footnote": "*Based on a 2025 survey of 313 customers. Not a clinical study.",
+        "cta_text": "",
         "cta_url": "",
         "heading_font": "heading",
         "heading_size": 36,
         "heading_weight": "700",
         "body_font": "body",
-        "body_size": 16,
-        "period_font": "accent",
-        "period_size": 14,
+        "item_heading_size": 16,
+        "body_size": 15,
         "accent_color": "#680040",
-        "connector_color": "#e0d5c7",
+        "connector_color": "#d0c5b5",
         "cta_bg_color": "#680040",
         "cta_text_color": "#ffffff",
         "section_width": "page-width",
