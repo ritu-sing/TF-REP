@@ -21,19 +21,16 @@
 <ln-timeline class="ln-timeline color-{{ section.settings.color_scheme }} ln-timeline--{{ section.settings.section_width }}">
   <div class="ln-timeline__inner">
 
-    {%- comment -%}Desktop: left column image{%- endcomment -%}
-    <div class="ln-timeline__image-col">
+    {%- comment -%}Desktop: left column image — background-image fills reliably regardless of height context{%- endcomment -%}
+    <div class="ln-timeline__image-col"
       {% if section.settings.image != blank %}
-        {{ section.settings.image | image_url: width: 900 | image_tag:
-          widths: '400, 600, 900',
-          loading: 'eager',
-          class: 'ln-timeline__image',
-          alt: section.settings.heading | strip_html
-        }}
-      {% else %}
-        <div class="ln-timeline__image-placeholder"></div>
+        style="background-image: url('{{ section.settings.image | image_url: width: 1200 }}')"
       {% endif %}
-    </div>
+      {% if section.settings.image != blank %}
+        role="img"
+        aria-label="{{ section.settings.heading | strip_html }}"
+      {% endif %}
+    ></div>
 
     {%- comment -%}Right column: header + mobile image + items + footnote{%- endcomment -%}
     <div class="ln-timeline__content-col">
@@ -126,26 +123,13 @@
   }
 
   /* ── Image column (desktop left) ── */
+  /* background-image fills reliably — no img height-resolution issues */
   .ln-timeline__image-col {
-    position: relative;
-    overflow: hidden;
-    min-height: 440px;
-  }
-
-  /* Absolute fill — works regardless of how parent height is resolved */
-  .ln-timeline__image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .ln-timeline__image-placeholder {
-    position: absolute;
-    inset: 0;
-    background: #f0e8e0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f0e8e0;
+    min-height: 500px;
   }
 
   /* Mobile image: hidden on desktop */
