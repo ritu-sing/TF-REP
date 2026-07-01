@@ -476,6 +476,65 @@
         "padding-block-end": 48
       }
     },
+    "results_timeline": {
+      "type": "ln-results-timeline",
+      "blocks": {
+        "timeline_1": {
+          "type": "timeline-item",
+          "settings": {
+            "period_label": "Day 1",
+            "heading": "First Gummy Down",
+            "description": "Your child takes their first Llama Naturals gummy — real fruit flavour they will actually love."
+          }
+        },
+        "timeline_2": {
+          "type": "timeline-item",
+          "settings": {
+            "period_label": "Week 1",
+            "heading": "Building the Habit",
+            "description": "Daily vitamins become part of the routine as key nutrients begin accumulating in the body."
+          }
+        },
+        "timeline_3": {
+          "type": "timeline-item",
+          "settings": {
+            "period_label": "Month 1",
+            "heading": "Feeling the Difference",
+            "description": "Parents report improved energy, mood and fewer sick days as vitamin levels optimise."
+          }
+        },
+        "timeline_4": {
+          "type": "timeline-item",
+          "settings": {
+            "period_label": "Month 3+",
+            "heading": "Lasting Wellness",
+            "description": "Consistent whole-food nutrition supports long-term immune function, growth, and brain health."
+          }
+        }
+      },
+      "block_order": ["timeline_1", "timeline_2", "timeline_3", "timeline_4"],
+      "settings": {
+        "heading": "<p>Real Results Over Time</p>",
+        "subheading": "What to expect when you make the switch to real food vitamins.",
+        "cta_text": "Shop Now",
+        "cta_url": "",
+        "heading_font": "heading",
+        "heading_size": 36,
+        "heading_weight": "700",
+        "body_font": "body",
+        "body_size": 16,
+        "period_font": "accent",
+        "period_size": 14,
+        "accent_color": "#680040",
+        "connector_color": "#e0d5c7",
+        "cta_bg_color": "#680040",
+        "cta_text_color": "#ffffff",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
     "comparison_table_section": {
       "type": "comparison-table",
       "blocks": {
@@ -825,6 +884,7 @@
   "order": [
     "main",
     "ln_ingredients",
+    "results_timeline",
     "comparison_table_section",
     "experts_review_section",
     "founder_story_section",
