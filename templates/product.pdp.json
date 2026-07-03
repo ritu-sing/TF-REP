@@ -15,12 +15,9 @@
         "review_main": {
           "type": "review",
           "settings": {
-            "stars_style": "shaded",
-            "show_number": true,
-            "rating_color": "primary",
             "type_preset": "paragraph",
-            "width": "100%",
-            "alignment": "left"
+            "alignment": "left",
+            "width": "100%"
           },
           "blocks": {}
         },
@@ -32,7 +29,6 @@
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
-            "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "flex-start",
             "gap": 6,
@@ -41,23 +37,13 @@
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "height": "fit",
-            "custom_height": 100,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
             "padding-block-start": 6,
             "padding-block-end": 4,
             "padding-inline-start": 0,
@@ -71,7 +57,6 @@
                 "font_family": "heading",
                 "font_size": 36,
                 "font_weight": "700",
-                "font_color": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0
               },
@@ -90,19 +75,13 @@
                 "perday_3_cost": "",
                 "perday_4_value": "",
                 "perday_4_cost": "",
-                "font_family": "body",
-                "font_size": 18,
-                "font_color": "",
                 "padding-block-start": 0,
                 "padding-block-end": 4
               },
               "blocks": {}
             }
           },
-          "block_order": [
-            "product_title",
-            "product_price"
-          ]
+          "block_order": ["product_title", "product_price"]
         },
         "bullet_benefits": {
           "type": "ln-bullet-benefits",
@@ -111,10 +90,7 @@
             "benefit_2": "Made from real fruit, no sugar cane or synthetics",
             "benefit_3": "Clinician backed, health-care worker approved",
             "benefit_4": "Made for picky eaters - 77% love the taste immediately",
-            "icon_color": "#000000",
-            "font_family": "body",
-            "font_size": 15,
-            "font_color": "",
+            "icon_color": "#4a7c4e",
             "padding-block-start": 4,
             "padding-block-end": 4
           },
@@ -156,9 +132,6 @@
             "perday_4_option": "",
             "perday_4_value": "",
             "perday_4_cost": "",
-            "font_family": "body",
-            "font_size": 15,
-            "font_color": "",
             "padding-block-start": 4,
             "padding-block-end": 4
           },
@@ -168,7 +141,7 @@
           "type": "ln-selling-plan-selector",
           "settings": {
             "heading": "Frequency:",
-            "subscribe_label": "Subscribe & Save 10%",
+            "subscribe_label": "Subscribe & Save",
             "save_percent": 10,
             "onetime_label": "One-Time Purchase",
             "benefit_1": "Free Shipping",
@@ -177,9 +150,6 @@
             "benefit_4": "Set and Forget",
             "benefit_5": "Easily skip or cancel anytime",
             "show_tooltip": true,
-            "font_family": "body",
-            "font_size": 15,
-            "font_color": "",
             "padding-block-start": 4,
             "padding-block-end": 4
           },
@@ -189,11 +159,8 @@
           "type": "ln-hsa-note",
           "settings": {
             "show": true,
-            "text": "Pay with HSA/FSA Use your pre-tax dollars",
+            "text": "Pay with HSA/FSA – Use your pre-tax dollars",
             "show_info_icon": true,
-            "font_family": "body",
-            "font_size": 14,
-            "font_color": "",
             "padding-block-start": 4,
             "padding-block-end": 4
           },
@@ -205,7 +172,6 @@
             "stacking": true,
             "show_dynamic_checkout": false,
             "show_pickup_availability": false,
-            "gift_card_form": true,
             "padding-block-start": 4,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -225,12 +191,6 @@
                 "style_class": "button"
               },
               "blocks": {}
-            },
-            "accelerated-checkout": {
-              "type": "accelerated-checkout",
-              "static": true,
-              "settings": {},
-              "blocks": {}
             }
           },
           "block_order": []
@@ -242,9 +202,6 @@
             "item_1_text": "Free Shipping",
             "item_2_icon": "shield",
             "item_2_text": "100 Days Money Back Guarantee",
-            "font_family": "body",
-            "font_size": 13,
-            "font_color": "",
             "padding-block-start": 8,
             "padding-block-end": 4
           },
@@ -254,24 +211,18 @@
           "type": "ln-stack-upsell",
           "settings": {
             "heading": "Stack Gummies, Unlock Rewards",
-            "subtitle": "Buy 2, Get 1 Free - for life! Buy more, get a Free Llama Toy! Subscription only.",
+            "subtitle": "Buy 2, Get 1 Free - for life! Buy more, get a Free Llama Toy!",
             "congrats_text": "Congratulations! You've unlocked a reward!",
             "tier_1_qty": 1,
-            "tier_1_sublabel": "",
             "tier_2_qty": 2,
             "tier_2_sublabel": "FREE BOTTLE",
             "tier_3_qty": 3,
-            "tier_3_sublabel": "",
             "tier_4_qty": 4,
             "tier_4_sublabel": "MYSTERY GIFT",
-            "stack_collection": "",
             "max_products": 6,
             "add_btn_text": "ADD",
             "default_stars": 4,
             "default_review_count": 5676,
-            "font_family": "body",
-            "font_size": 17,
-            "font_color": "",
             "padding-block-start": 16,
             "padding-block-end": 8
           },
@@ -281,17 +232,13 @@
           "type": "text",
           "name": "Customer Testimonial",
           "settings": {
-            "text": "<p><em>&ldquo;We&rsquo;ve struggled to find a vitamin that meets my paediatrician&rsquo;s standards. These passed the test &mdash; and my kids actually take them!&rdquo;</em></p><p>&#9733; Amy H. Working Mom</p>",
+            "text": "<p><em>&ldquo;We&rsquo;ve struggled to find a vitamin that meets my paediatrician&rsquo;s standards. These passed the test &mdash; and my kids actually take them!&rdquo;</em></p><p>&#9733; Amy H, Working Mom</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
-            "font_size": "1.25rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
+            "font_size": "1rem",
             "color": "",
             "background": true,
             "background_color": "#f5f0f2",
@@ -310,9 +257,6 @@
             "icon_label_2": "3rd Party Tested",
             "icon_label_3": "Allergen Free",
             "icon_label_4": "USDA Organic",
-            "font_family": "body",
-            "font_size": 12,
-            "font_color": "",
             "padding-block-start": 20,
             "padding-block-end": 8
           },
@@ -331,68 +275,21 @@
         },
         "product_accordion": {
           "type": "accordion",
-          "settings": {
-            "icon": "caret",
-            "dividers": true,
-            "type_preset": "h6",
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
+          "settings": {},
           "blocks": {
             "accordion_key_benefits": {
               "type": "_accordion-row",
               "settings": {
                 "heading": "Key Benefits",
-                "open_by_default": true,
-                "icon": "none",
-                "width": 20
+                "open_by_default": true
               },
-              "blocks": {
-                "key_benefits_text": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>This formula delivers essential vitamins for whole body health. Vitamins A, C, D, E, and K support immunity, bones, vision, heart health, and antioxidant protection. B vitamins help turn food into energy, support brain and nerve function, and promote healthy blood cells and metabolism.</p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "#000000",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 8,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "key_benefits_text"
-              ]
+              "blocks": {}
             },
             "accordion_ingredients": {
               "type": "_accordion-row",
               "settings": {
                 "heading": "Ingredients",
-                "open_by_default": false,
-                "icon": "none",
-                "width": 20
+                "open_by_default": false
               },
               "blocks": {}
             },
@@ -400,9 +297,7 @@
               "type": "_accordion-row",
               "settings": {
                 "heading": "How To Use",
-                "open_by_default": false,
-                "icon": "none",
-                "width": 20
+                "open_by_default": false
               },
               "blocks": {}
             },
@@ -410,9 +305,7 @@
               "type": "_accordion-row",
               "settings": {
                 "heading": "Quality Standards",
-                "open_by_default": false,
-                "icon": "none",
-                "width": 20
+                "open_by_default": false
               },
               "blocks": {}
             }
@@ -434,8 +327,8 @@
         "selling_plan_selector",
         "hsa_note",
         "buy_buttons",
-        "trust_line",
         "stack_upsell",
+        "trust_line",
         "customer_testimonial",
         "trust_icons",
         "divider_before_faq",
@@ -443,10 +336,10 @@
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "show_bestseller_badge": true,
+        "padding-block-start": 24,
+        "padding-block-end": 60,
         "bestseller_label": "BestSeller",
-        "padding-block-start": 0,
-        "padding-block-end": 60
+        "show_bestseller_badge": true
       }
     },
     "ln_ingredients": {
@@ -569,8 +462,6 @@
         "heading": "Real Food Ingredients",
         "subheading": "Unlike most vitamins that start with candy, we start with organic fruits and veggies, delivering essential nutrients the way nature intended.",
         "heading_color": "#3d1534",
-        "heading_font": "heading",
-        "heading_size": 40,
         "card_bg_color": "#f5ede8",
         "accent_color": "#680040",
         "tab_1_label": "Multivitamin",
@@ -579,6 +470,8 @@
         "tab_4_label": "Vitamin D3 & K2",
         "allergen_section_heading": "Free of these common allergens",
         "show_allergen_section": true,
+        "heading_font": "heading",
+        "heading_size": 40,
         "allergen_1_label": "Soy",
         "allergen_2_label": "Eggs",
         "allergen_3_label": "Dairy",
@@ -586,9 +479,8 @@
         "allergen_5_label": "Tree Nuts",
         "allergen_6_label": "Shell Fish",
         "allergen_7_label": "Wheat",
-        "allergen_8_label": "",
-        "section_width": "page-width",
         "color_scheme": "scheme-1",
+        "section_width": "page-width",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -629,14 +521,8 @@
           }
         }
       },
-      "block_order": [
-        "timeline_1",
-        "timeline_2",
-        "timeline_3",
-        "timeline_4"
-      ],
+      "block_order": ["timeline_1", "timeline_2", "timeline_3", "timeline_4"],
       "settings": {
-        "image": "shopify://shop_images/llama-naturals-june-2024-shot-19-mobile-14816191.jpg",
         "heading": "<p>Results Timeline</p>",
         "subheading": "What to expect and when you will begin noticing results",
         "footnote": "*Based on a 2025 survey of 313 customers. Not a clinical study.",
@@ -648,13 +534,13 @@
         "body_font": "body",
         "item_heading_size": 16,
         "body_size": 15,
-        "heading_color": "#680040",
-        "subheading_color": "",
-        "body_color": "",
         "accent_color": "#680040",
         "connector_color": "#d0c5b5",
         "cta_bg_color": "#680040",
         "cta_text_color": "#ffffff",
+        "period_label_color": "#680040",
+        "icon_bg_color": "",
+        "image_col_bg_color": "#f0e8e0",
         "section_width": "page-width",
         "color_scheme": "scheme-1",
         "padding-block-start": 60,

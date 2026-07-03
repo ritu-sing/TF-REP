@@ -9,8 +9,9 @@
  */
 {
   "current": {
-    "logo_height": 36,
-    "logo_height_mobile": 28,
+    "logo": "shopify://shop_images/ln_logo.svg",
+    "logo_height": 12,
+    "logo_height_mobile": 13,
     "type_body_font": "inter_n4",
     "type_subheading_font": "inter_n5",
     "type_heading_font": "inter_n7",
@@ -81,7 +82,7 @@
       "scheme-1": {
         "settings": {
           "background": "#ffffff",
-          "foreground_heading": "#000000",
+          "foreground_heading": "#680040",
           "foreground": "#000000cf",
           "primary": "#000000cf",
           "primary_hover": "#000000",
