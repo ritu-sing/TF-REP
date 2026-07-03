@@ -53,10 +53,20 @@
   # theme-check-disable UniqueStaticBlockId
   capture menu
     content_for 'block', type: '_header-menu', id: 'header-menu'
+    for block in section.blocks
+      if block.type == '_nav-link'
+        content_for 'block', type: '_nav-link', id: block.id
+      endif
+    endfor
   endcapture
 
   capture drawer_menu
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
+    for block in section.blocks
+      if block.type == '_nav-link'
+        content_for 'block', type: '_nav-link', id: block.id
+      endif
+    endfor
   endcapture
 
   capture navigation_bar
@@ -1706,6 +1716,9 @@
       "default": "default",
       "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
     }
+  ],
+  "blocks": [
+    { "type": "_nav-link" }
   ],
   "presets": []
 }

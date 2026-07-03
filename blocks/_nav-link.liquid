@@ -1,0 +1,48 @@
+{% if block.settings.label != blank %}
+  <a
+    href="{{ block.settings.link | default: '#' }}"
+    {{ block.shopify_attributes }}
+    class="ln-nav-link"
+  >
+    {{- block.settings.label -}}
+  </a>
+{% endif %}
+
+{% stylesheet %}
+  .ln-nav-link {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-heading--family);
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.25;
+    color: var(--color-foreground);
+    text-decoration: none;
+    padding-inline: calc(var(--gap-xl) / 2);
+    white-space: nowrap;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Nav link",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Link text",
+      "default": "Menu item"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link URL"
+    }
+  ]
+}
+{% endschema %}

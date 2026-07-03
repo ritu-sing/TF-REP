@@ -75,8 +75,28 @@
             "drawer_dividers": false
           },
           "blocks": {}
+        },
+        "nav_link_new_arrivals": {
+          "type": "_nav-link",
+          "settings": {
+            "label": "New Arrivals",
+            "link": "/collections/new"
+          },
+          "blocks": {}
+        },
+        "nav_link_blog": {
+          "type": "_nav-link",
+          "settings": {
+            "label": "Blog",
+            "link": "/blogs/news"
+          },
+          "blocks": {}
         }
       },
+      "block_order": [
+        "nav_link_new_arrivals",
+        "nav_link_blog"
+      ],
       "settings": {
         "logo_position": "left",
         "menu_position": "center",
