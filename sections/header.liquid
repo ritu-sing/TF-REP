@@ -53,20 +53,10 @@
   # theme-check-disable UniqueStaticBlockId
   capture menu
     content_for 'block', type: '_header-menu', id: 'header-menu'
-    for block in section.blocks
-      if block.type == '_nav-link'
-        content_for 'block', type: '_nav-link', id: block.id
-      endif
-    endfor
   endcapture
 
   capture drawer_menu
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
-    for block in section.blocks
-      if block.type == '_nav-link'
-        content_for 'block', type: '_nav-link', id: block.id
-      endif
-    endfor
   endcapture
 
   capture navigation_bar
@@ -197,6 +187,11 @@
     assign transparent_color_scheme_value = 'bottom'
   endif
 %}
+
+{% comment %}Capture dynamic _nav-link theme blocks once; append to both menu and drawer_menu captures.{% endcomment %}
+{% capture dynamic_nav_links %}{%- content_for 'blocks' -%}{% endcapture %}
+{% assign menu = menu | append: dynamic_nav_links %}
+{% assign drawer_menu = drawer_menu | append: dynamic_nav_links %}
 
 {% capture localization_markup %}
   {% liquid
