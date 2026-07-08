@@ -118,6 +118,16 @@
     position: absolute;
     inset: 0;
   }
+
+  @media screen and (max-width: 749px) {
+    .announcement-bar__slider .slideshow-control {
+      display: none;
+    }
+
+    .announcement-bar__slides {
+      width: 100%;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -197,7 +207,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 15
+      "default": 10
     },
     {
       "type": "range",
@@ -207,7 +217,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 15
+      "default": 10
     }
   ],
   "presets": [
