@@ -1,0 +1,549 @@
+{%- comment -%} ln-results-timeline.liquid — Horizontal results timeline section {%- endcomment -%}
+
+{%- liquid
+  case section.settings.heading_font
+    when 'heading'
+      assign rt_heading_font = 'var(--font-heading--family)'
+    when 'subheading'
+      assign rt_heading_font = 'var(--font-subheading--family)'
+    when 'accent'
+      assign rt_heading_font = 'var(--font-accent--family)'
+    else
+      assign rt_heading_font = 'var(--font-body--family)'
+  endcase
+
+  case section.settings.body_font
+    when 'heading'
+      assign rt_body_font = 'var(--font-heading--family)'
+    when 'subheading'
+      assign rt_body_font = 'var(--font-subheading--family)'
+    when 'accent'
+      assign rt_body_font = 'var(--font-accent--family)'
+    else
+      assign rt_body_font = 'var(--font-body--family)'
+  endcase
+
+  if section.settings.icon_bg_color != blank
+    assign rt_icon_bg = section.settings.icon_bg_color
+  else
+    assign rt_icon_bg = section.settings.accent_color
+  endif
+
+  if section.settings.heading_weight != blank
+    assign rt_heading_weight = section.settings.heading_weight
+  else
+    assign rt_heading_weight = '700'
+  endif
+-%}
+
+{% style %}
+  #section-{{ section.id }} {
+    --rt-accent: {{ section.settings.accent_color }};
+    --rt-connector: {{ section.settings.connector_color }};
+    --rt-period-color: {{ section.settings.period_label_color }};
+    --rt-icon-bg: {{ rt_icon_bg }};
+    --rt-cta-bg: {{ section.settings.cta_bg_color }};
+    --rt-cta-fg: {{ section.settings.cta_text_color }};
+    --rt-heading-font: {{ rt_heading_font }};
+    --rt-heading-size: {{ section.settings.heading_size }}px;
+    --rt-heading-weight: {{ rt_heading_weight }};
+    --rt-body-font: {{ rt_body_font }};
+    --rt-item-heading-size: {{ section.settings.item_heading_size }}px;
+    --rt-body-size: {{ section.settings.body_size }}px;
+  }
+{% endstyle %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<section
+  id="section-{{ section.id }}"
+  class="results-timeline spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-padding', settings: section.settings %}"
+>
+  <div class="results-timeline__body">
+
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="results-timeline__header">
+        {%- if section.settings.heading != blank -%}
+          <div class="results-timeline__heading">{{ section.settings.heading }}</div>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="results-timeline__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="results-timeline__track">
+        {%- for block in section.blocks -%}
+          <div
+            class="results-timeline__item"
+            {{ block.shopify_attributes }}
+          >
+            <div class="results-timeline__item-top">
+              {%- if block.settings.period_label != blank -%}
+                <span class="results-timeline__period">{{ block.settings.period_label }}</span>
+              {%- endif -%}
+              <div class="results-timeline__dot"></div>
+              {%- unless forloop.last -%}
+                <div class="results-timeline__connector" aria-hidden="true"></div>
+              {%- endunless -%}
+            </div>
+            <div class="results-timeline__item-body">
+              {%- if block.settings.heading != blank -%}
+                <h3 class="results-timeline__item-heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="results-timeline__item-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_text != blank and section.settings.cta_url != blank -%}
+      <div class="results-timeline__cta-wrap">
+        <a class="results-timeline__cta-btn" href="{{ section.settings.cta_url }}">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="results-timeline__footnote">{{ section.settings.footnote }}</p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .results-timeline__body {
+    width: 100%;
+  }
+
+  .results-timeline__header {
+    text-align: center;
+    margin-block-end: 48px;
+  }
+
+  .results-timeline__heading {
+    font-family: var(--rt-heading-font, var(--font-heading--family));
+    font-size: var(--rt-heading-size, 36px);
+    font-weight: var(--rt-heading-weight, 700);
+    line-height: 1.2;
+    color: inherit;
+    margin-block: 0 12px;
+  }
+
+  .results-timeline__heading > * {
+    margin: 0;
+  }
+
+  .results-timeline__subheading {
+    font-family: var(--rt-body-font, var(--font-body--family));
+    font-size: var(--rt-body-size, 15px);
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0.75;
+  }
+
+  /* Desktop: horizontal track */
+  .results-timeline__track {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .results-timeline__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .results-timeline__item-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    position: relative;
+    padding-inline-end: 16px;
+  }
+
+  .results-timeline__period {
+    font-family: var(--rt-body-font, var(--font-body--family));
+    font-size: calc(var(--rt-body-size, 15px) * 0.8);
+    font-weight: 700;
+    color: var(--rt-period-color, var(--rt-accent, #680040));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+
+  .results-timeline__dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--rt-icon-bg, var(--rt-accent, #680040));
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .results-timeline__connector {
+    position: absolute;
+    top: calc(var(--rt-body-size, 15px) * 0.8 * 1.2 + 8px + 8px);
+    inset-inline-start: 16px;
+    width: calc(100% - 16px);
+    height: 2px;
+    background: var(--rt-connector, #d0c5b5);
+    z-index: 0;
+  }
+
+  .results-timeline__item-body {
+    padding-inline-end: 24px;
+  }
+
+  .results-timeline__item-heading {
+    font-family: var(--rt-heading-font, var(--font-heading--family));
+    font-size: var(--rt-item-heading-size, 16px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: inherit;
+    margin-block: 0 8px;
+  }
+
+  .results-timeline__item-desc {
+    font-family: var(--rt-body-font, var(--font-body--family));
+    font-size: var(--rt-body-size, 15px);
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0.75;
+  }
+
+  .results-timeline__cta-wrap {
+    margin-block-start: 48px;
+    text-align: center;
+  }
+
+  .results-timeline__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    background: var(--rt-cta-bg, #680040);
+    color: var(--rt-cta-fg, #ffffff);
+    border-radius: 100px;
+    font-family: var(--rt-body-font, var(--font-body--family));
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  .results-timeline__footnote {
+    margin-block-start: 24px;
+    margin-block-end: 0;
+    text-align: center;
+    font-family: var(--rt-body-font, var(--font-body--family));
+    font-size: calc(var(--rt-body-size, 15px) * 0.8);
+    line-height: 1.5;
+    opacity: 0.55;
+  }
+
+  /* Mobile: vertical stacked layout */
+  @media screen and (max-width: 749px) {
+    .results-timeline__header {
+      margin-block-end: 32px;
+    }
+
+    .results-timeline__heading {
+      font-size: clamp(24px, 6vw, var(--rt-heading-size, 36px));
+    }
+
+    .results-timeline__track {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .results-timeline__item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 0 16px;
+      align-items: start;
+    }
+
+    .results-timeline__item-top {
+      align-items: center;
+      padding-inline-end: 0;
+      padding-block-end: 24px;
+    }
+
+    .results-timeline__connector {
+      top: calc(var(--rt-body-size, 15px) * 0.8 * 1.2 + 8px + 8px + 16px);
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: calc(100% - var(--rt-body-size, 15px) * 0.8 * 1.2 - 32px);
+    }
+
+    .results-timeline__item-body {
+      padding-inline-end: 0;
+      padding-block-end: 24px;
+    }
+
+    .results-timeline__item:last-child .results-timeline__item-body {
+      padding-block-end: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Results Timeline",
+  "blocks": [
+    {
+      "type": "timeline-item",
+      "name": "Timeline item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "period_label",
+          "label": "Period label",
+          "default": "Week 1-2"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "First Results"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Describe what happens during this period."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Results Timeline</p>"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "What to expect and when you will begin noticing results"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "number",
+      "id": "heading_size",
+      "label": "Heading size (px)",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "", "label": "Default" },
+        { "value": "100", "label": "Thin" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "number",
+      "id": "item_heading_size",
+      "label": "Item heading size (px)",
+      "default": 16
+    },
+    {
+      "type": "number",
+      "id": "body_size",
+      "label": "Body text size (px)",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#680040"
+    },
+    {
+      "type": "color",
+      "id": "connector_color",
+      "label": "Connector line color",
+      "default": "#d0c5b5"
+    },
+    {
+      "type": "color",
+      "id": "period_label_color",
+      "label": "Period label color",
+      "default": "#680040"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Icon background color",
+      "default": ""
+    },
+    {
+      "type": "color",
+      "id": "image_col_bg_color",
+      "label": "Image column background",
+      "default": "#f0e8e0"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "Button background",
+      "default": "#680040"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Results Timeline",
+      "blocks": {
+        "timeline_1": {
+          "type": "timeline-item",
+          "settings": {
+            "period_label": "Week 1-2",
+            "heading": "First Results",
+            "description": "Kids ask for their gummy before you even remember. No bribing. No battles."
+          }
+        },
+        "timeline_2": {
+          "type": "timeline-item",
+          "settings": {
+            "period_label": "Week 2-4",
+            "heading": "Peace Of Mind",
+            "description": "Picky eating days stop stressing you out. Real nutrition from real food."
+          }
+        },
+        "timeline_3": {
+          "type": "timeline-item",
+          "settings": {
+            "period_label": "Month 1-2",
+            "heading": "Parents Notice A Difference",
+            "description": "59% of families report visible changes in energy, appetite, or mood."
+          }
+        }
+      },
+      "block_order": ["timeline_1", "timeline_2", "timeline_3"]
+    }
+  ]
+}
+{% endschema %}
