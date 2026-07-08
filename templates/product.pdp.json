@@ -16,8 +16,8 @@
           "type": "review",
           "settings": {
             "type_preset": "paragraph",
-            "alignment": "left",
-            "width": "100%"
+            "width": "100%",
+            "alignment": "left"
           },
           "blocks": {}
         },
@@ -81,7 +81,10 @@
               "blocks": {}
             }
           },
-          "block_order": ["product_title", "product_price"]
+          "block_order": [
+            "product_title",
+            "product_price"
+          ]
         },
         "bullet_benefits": {
           "type": "ln-bullet-benefits",
@@ -170,7 +173,6 @@
           "type": "buy-buttons",
           "settings": {
             "stacking": true,
-            "show_dynamic_checkout": false,
             "show_pickup_availability": false,
             "padding-block-start": 4,
             "padding-block-end": 0,
@@ -336,10 +338,10 @@
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "padding-block-start": 24,
-        "padding-block-end": 60,
+        "show_bestseller_badge": true,
         "bestseller_label": "BestSeller",
-        "show_bestseller_badge": true
+        "padding-block-start": 24,
+        "padding-block-end": 60
       }
     },
     "ln_ingredients": {
@@ -462,6 +464,8 @@
         "heading": "Real Food Ingredients",
         "subheading": "Unlike most vitamins that start with candy, we start with organic fruits and veggies, delivering essential nutrients the way nature intended.",
         "heading_color": "#3d1534",
+        "heading_font": "heading",
+        "heading_size": 40,
         "card_bg_color": "#f5ede8",
         "accent_color": "#680040",
         "tab_1_label": "Multivitamin",
@@ -470,8 +474,6 @@
         "tab_4_label": "Vitamin D3 & K2",
         "allergen_section_heading": "Free of these common allergens",
         "show_allergen_section": true,
-        "heading_font": "heading",
-        "heading_size": 40,
         "allergen_1_label": "Soy",
         "allergen_2_label": "Eggs",
         "allergen_3_label": "Dairy",
@@ -479,8 +481,8 @@
         "allergen_5_label": "Tree Nuts",
         "allergen_6_label": "Shell Fish",
         "allergen_7_label": "Wheat",
-        "color_scheme": "scheme-1",
         "section_width": "page-width",
+        "color_scheme": "scheme-1",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -521,7 +523,12 @@
           }
         }
       },
-      "block_order": ["timeline_1", "timeline_2", "timeline_3", "timeline_4"],
+      "block_order": [
+        "timeline_1",
+        "timeline_2",
+        "timeline_3",
+        "timeline_4"
+      ],
       "settings": {
         "heading": "<p>Results Timeline</p>",
         "subheading": "What to expect and when you will begin noticing results",
