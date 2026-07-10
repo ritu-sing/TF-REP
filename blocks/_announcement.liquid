@@ -52,12 +52,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 16px;
     width: 100%;
   }
 
   .announcement-bar__content .announcement-bar__text {
     min-width: 0;
+    line-height: 1.4;
   }
 
   .announcement-bar__btn {
@@ -66,26 +67,26 @@
     justify-content: center;
     flex-shrink: 0;
     white-space: nowrap;
-    padding: 6px 16px;
+    padding: 5px 16px;
     border-radius: 100px;
     background-color: rgb(var(--color-foreground-rgb));
     color: rgb(var(--color-background-rgb));
     font-weight: 600;
-    font-size: 0.75rem;
-    line-height: 1.5;
+    font-size: 0.6875rem;
+    line-height: 1.4;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     transition: opacity 0.2s;
 
     &:hover {
-      opacity: 0.85;
+      opacity: 0.8;
     }
   }
 
   @media screen and (max-width: 749px) {
     .announcement-bar__content {
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -95,8 +96,8 @@
     }
 
     .announcement-bar__btn {
-      padding: 5px 12px;
-      font-size: 0.75rem;
+      padding: 4px 12px;
+      font-size: 0.6875rem;
     }
   }
 

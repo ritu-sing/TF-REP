@@ -39,7 +39,9 @@
 {% stylesheet %}
   .announcement-bar {
     border-block-end: var(--border-bottom-width) solid var(--color-border);
-    min-height: 48px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
 
   .announcement-bar__slider {
@@ -127,12 +129,6 @@
 
     .announcement-bar__slides {
       width: 100%;
-    }
-
-    .announcement-bar {
-      min-height: 44px;
-      display: flex;
-      align-items: center;
     }
 
     .announcement-bar__slider {
