@@ -228,8 +228,8 @@
           "type": "ln-stack-upsell",
           "settings": {
             "heading": "Stack Gummies, Unlock Rewards",
-            "subtitle": "Buy 2, Get 1 Free - for life! Buy more, get a Free Llama Toy! Subscription only.",
-            "congrats_text": "Congratulations! You've unlocked a reward!",
+            "subtitle": "Buy 2, Get 1 Free. Buy more, get a Free Llama Toy!",
+            "congrats_text": "Congratulations! You've got Elderberry Free for life!",
             "tier_1_qty": 1,
             "tier_2_qty": 2,
             "tier_2_sublabel": "FREE BOTTLE",
