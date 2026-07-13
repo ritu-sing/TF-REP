@@ -93,7 +93,7 @@
             "benefit_2": "Made from real fruit, no sugar cane or synthetics",
             "benefit_3": "Clinician backed, health-care worker approved",
             "benefit_4": "Made for picky eaters - 77% love the taste immediately",
-            "icon_color": "#4a7c4e",
+            "icon_color": "#000000",
             "padding-block-start": 4,
             "padding-block-end": 4
           },
@@ -243,7 +243,7 @@
             "font_size": "1rem",
             "color": "",
             "background": true,
-            "background_color": "#f5f0f2",
+            "background_color": "#fbe5ee",
             "corner_radius": 8,
             "padding-block-start": 16,
             "padding-block-end": 16,
@@ -329,8 +329,8 @@
         "selling_plan_selector",
         "hsa_note",
         "buy_buttons",
-        "stack_upsell",
         "trust_line",
+        "stack_upsell",
         "customer_testimonial",
         "trust_icons",
         "divider_before_faq",
@@ -340,8 +340,8 @@
         "color_scheme": "scheme-1",
         "show_bestseller_badge": true,
         "bestseller_label": "BestSeller",
-        "padding-block-start": 24,
-        "padding-block-end": 60
+        "padding-block-start": 0,
+        "padding-block-end": 40
       }
     },
     "ln_ingredients": {
