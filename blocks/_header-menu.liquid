@@ -253,10 +253,12 @@
     height: 100%;
   }
 
-  /* Wider top-level link spacing on desktop to match the Figma itemSpacing for the primary nav */
+  /* Wider top-level link spacing on desktop to match the Figma itemSpacing for the primary nav.
+     No theme token reaches this width, so the raw Figma value is used directly (see figma-interpretation
+     rule: raw value is correct when no matching token exists and a token would under-shoot the design). */
   @media screen and (min-width: 750px) {
     .menu-list:not(.menu-list--mobile) {
-      --menu-horizontal-gap: var(--gap-3xl);
+      --menu-horizontal-gap: 64px;
     }
   }
 

@@ -413,8 +413,8 @@
   }
 
   .header {
-    /* Set header paddings based on height setting */
-    --header-padding: var(--padding-md);
+    /* Set header paddings based on height setting - generous vertical breathing room for a boutique/premium feel */
+    --header-padding: var(--padding-2xl);
     --font-paragraph--line-height: 1;
     --header-content-transition-timing: 0s;
 
@@ -887,8 +887,9 @@
   }
 
   .header-actions__action:not(.account-button) svg {
-    width: var(--icon-size-md);
-    height: var(--icon-size-md);
+    /* Slightly more refined/slender icon size for a boutique header */
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
   }
 
   .header:has(#Details-menu-drawer-container[open]) {
@@ -1230,7 +1231,7 @@
           "label": "t:options.right"
         }
       ],
-      "default": "right",
+      "default": "left",
       "visible_if": "{{ section.settings.show_search }}"
     },
     {
