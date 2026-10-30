@@ -537,11 +537,15 @@
   }
 
   header-actions {
+    /* Wider gap between account/cart icons for a boutique/premium feel, matching the
+       spacious 64px top-level menu gap used elsewhere in the header (see figma-interpretation
+       rule: raw/token value chosen to match the generous Figma spacing, not the Horizon default). */
     display: flex;
-    gap: var(--gap-lg);
+    gap: var(--gap-xl);
 
     @media screen and (max-width: 749px) {
       justify-self: flex-end;
+      gap: var(--gap-lg);
     }
   }
 

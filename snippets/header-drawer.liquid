@@ -1047,6 +1047,9 @@
     font-size: var(--menu-top-level-font-size);
     line-height: var(--menu-top-level-font-line-height);
     text-transform: var(--menu-top-level-font-case);
+    /* Match the letter-spacing used on the desktop top-level menu links so the mobile
+       drawer's typography is consistent with the Figma desktop nav. */
+    letter-spacing: var(--menu-top-level-letter-spacing, 0.06em);
     color: var(--menu-top-level-font-color);
     justify-content: space-between;
 
