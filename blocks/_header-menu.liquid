@@ -253,6 +253,13 @@
     height: 100%;
   }
 
+  /* Wider top-level link spacing on desktop to match the Figma itemSpacing for the primary nav */
+  @media screen and (min-width: 750px) {
+    .menu-list:not(.menu-list--mobile) {
+      --menu-horizontal-gap: var(--gap-3xl);
+    }
+  }
+
   .menu-list__list {
     display: flex;
     justify-content: var(--grid-area-alignment);
@@ -277,6 +284,7 @@
     font-size: var(--menu-top-level-font-size);
     line-height: var(--menu-top-level-font-line-height);
     text-transform: var(--menu-top-level-font-case);
+    letter-spacing: 0.06em;
     color: var(--menu-top-level-font-color);
     text-decoration: none;
     display: flex;
